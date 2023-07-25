@@ -1,8 +1,8 @@
-"""initial migration
+"""initial migrate
 
-Revision ID: be4b159db887
+Revision ID: e2a95deab049
 Revises: 
-Create Date: 2023-07-24 22:38:12.672118
+Create Date: 2023-07-25 13:57:41.905565
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'be4b159db887'
+revision = 'e2a95deab049'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,8 +34,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('first_name', sa.String(), nullable=False),
     sa.Column('last_name', sa.String(), nullable=False),
-    sa.Column('email', sa.String(), nullable=True),
-    sa.Column('address', sa.String(), nullable=True),
+    sa.Column('email', sa.String(), nullable=False),
+    sa.Column('address', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('events',
@@ -49,8 +49,8 @@ def upgrade():
     )
     op.create_table('orders',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('order_date', sa.DateTime(), nullable=True),
-    sa.Column('total_price', sa.Float(), nullable=True),
+    sa.Column('order_date', sa.DateTime(), nullable=False),
+    sa.Column('total_price', sa.Float(), nullable=False),
     sa.Column('customer_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['customer_id'], ['customers.id'], name=op.f('fk_orders_customer_id_customers')),
     sa.PrimaryKeyConstraint('id')
@@ -69,7 +69,7 @@ def upgrade():
     op.create_table('order_items',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=False),
-    sa.Column('price', sa.Float(), nullable=False),
+    sa.Column('quantity_price', sa.Float(), nullable=False),
     sa.Column('order_id', sa.Integer(), nullable=True),
     sa.Column('product_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['order_id'], ['orders.id'], name=op.f('fk_order_items_order_id_orders')),

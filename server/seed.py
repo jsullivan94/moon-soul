@@ -1,78 +1,92 @@
 from faker import Faker
-import random
-
-# import your models here
-from models import Event, Product, Category, Order, OrderItem, Customer
 from config import db, app
+from models import Admin, Event, Product, Category, Order, OrderItem, Customer
 
+# Create a Faker instance
 fake = Faker()
+
 with app.app_context():
-    # seed categories
-    categories = ['Vinyl', 'Clothing']
-    for category_name in categories:
-        category = Category(name=category_name)
-        db.session.add(category)
-    db.session.commit()
+    # Clear all tables
+    db.session.query(Admin).delete()
+    db.session.query(Event).delete()
+    db.session.query(Product).delete()
+    db.session.query(Category).delete()
+    db.session.query(Order).delete()
+    db.session.query(OrderItem).delete()
+    db.session.query(Customer).delete()
 
-    # seed products
-    for _ in range(10):
-        product = Product(
-            name=fake.word(),
-            price=random.uniform(10.0, 100.0),
-            inventory=random.randint(1, 100),
-            image_path=fake.image_url(),
-            description=fake.text(),
-            category_id=random.choice([c.id for c in Category.query.all()])
-        )
-        db.session.add(product)
-    db.session.commit()
+    # Create and add fake Admin
+    admin = Admin(
+        username=fake.unique.user_name()
+    )
+    admin.password_hash = fake.password(length=10)
+    db.session.add(admin)
 
-    # seed events
+    # Create and add fake Events
     for _ in range(10):
         event = Event(
             image_path=fake.image_url(),
             title=fake.catch_phrase(),
-            date=fake.future_date(end_date="+1y"),
-            location=fake.city(),
-            price=random.randint(0, 100)
+            date=fake.date_time_this_year(),
+            location=fake.address(),
+            price=fake.random_int(min=0, max=1000)
         )
         db.session.add(event)
-    db.session.commit()
 
-    # seed customers
+    # Create and add fake Categories
+    categories = []
+    for _ in range(5):
+        category = Category(
+            name=fake.unique.word()
+        )
+        categories.append(category)
+        db.session.add(category)
+
+    # Create and add fake Products
+    products = []
+    for _ in range(20):
+        product = Product(
+            name=fake.unique.word(),
+            price=fake.random_number(digits=2),
+            inventory=fake.random_int(min=0, max=100),
+            image_path=fake.image_url(),
+            description=fake.sentence(),
+            category_id=fake.random_element(elements=[category.id for category in categories])
+        )
+        products.append(product)
+        db.session.add(product)
+
+    # Create and add fake Customers
+    customers = []
     for _ in range(10):
         customer = Customer(
             first_name=fake.first_name(),
             last_name=fake.last_name(),
-            email=fake.email(),
+            email=fake.unique.email(),
             address=fake.address()
         )
+        customers.append(customer)
         db.session.add(customer)
+
     db.session.commit()
 
-    # seed orders
-    for _ in range(10):
-        customer_id=random.choice([c.id for c in Customer.query.all()])
+    # Create and add fake Orders and OrderItems
+    for customer in customers:
         order = Order(
-            total_price=0,  # initial value, to be updated when OrderItems are added
-            customer_id=customer_id
+            total_price=fake.random_number(digits=2),
+            customer_id=customer.id
         )
         db.session.add(order)
-        db.session.commit()  # commit here to generate an order id
+        db.session.flush()  # to make sure order has id
 
-        # seed order items for this order
-        for _ in range(random.randint(1, 3)):  # each order has 1-3 items
-            product_id=random.choice([p.id for p in Product.query.all()])
-            product_price=Product.query.filter(Product.id==product_id).one().price
-            quantity=random.randint(1, 3)  # each item has a quantity of 1-3
+        for _ in range(fake.random_int(min=1, max=5)):  # each order has 1-5 items
             order_item = OrderItem(
-                quantity=quantity,
-                price=product_price,
+                quantity=fake.random_int(min=1, max=5),
+                quantity_price=fake.random_number(digits=2),
                 order_id=order.id,
-                product_id=product_id
+                product_id=fake.random_element(elements=[product.id for product in products])
             )
             db.session.add(order_item)
-            order.total_price += product_price * quantity  # update the order's total price
 
+    # Commit the changes
     db.session.commit()
-
