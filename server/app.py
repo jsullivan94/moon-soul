@@ -1,8 +1,63 @@
 from flask import request, make_response, jsonify, session, Flask
 from sqlalchemy.exc import IntegrityError
+from dotenv import load_dotenv
+
+
+import json
+import os
+import stripe 
+
 
 from config import *
 from models import *
+
+
+load_dotenv()
+
+
+
+# stripe tests
+stripe.api_key = os.getenv("SK_TEST")
+
+def calculate_order_amount(items):
+    total = 0
+
+    for item in items:
+        
+        total += item['quantity'] * item['price']
+
+    total_in_cents = int(total * 100)
+
+    return total_in_cents
+
+
+
+@app.route('/create-payment-intent', methods=['POST'])
+def create_payment():
+    try:
+        data = json.loads(request.data)
+        # Create a PaymentIntent with the order amount and currency
+        intent = stripe.PaymentIntent.create(
+            amount=calculate_order_amount(data['items']),
+            currency='usd',
+            automatic_payment_methods={
+                'enabled': True,
+            },
+        )
+        return jsonify({
+            'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
+
+
+
+
+
+
+
+
 
 @app.route('/')
 def index():
