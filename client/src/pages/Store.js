@@ -1,18 +1,9 @@
 import ProductCard from "../components/ProductCard";
 import { useState, useEffect } from "react";
 
-function Store ( { setCart, cart }) {
+function Store ( { products, setCart, cart }) {
 
     
-    const [products, setProducts] = useState([])
-
-
-    useEffect(() => {
-        fetch('/products')
-        .then(r => r.json())
-        .then(r => setProducts(r))
-    }, [])
-
     const items = products.map(product => {
         return(
             

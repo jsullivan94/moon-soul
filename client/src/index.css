@@ -122,3 +122,47 @@
 .navbar a:hover, .navbar button:hover {
     color: #ddd;
 }
+
+/* product details */
+
+
+.product-details-page {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.product-img-page {
+    height: 400px;
+    width: 400px;
+    object-fit: cover;
+}
+
+.product-name-page {
+    font-size: 2em;
+    margin-top: 0.5em;
+}
+
+.product-price-page {
+    font-size: 1.5em;
+    color: #009900;
+    margin-bottom: 1em;
+}
+
+.product-description-page {
+    font-size: 1em;
+    margin-bottom: 2em;
+}
+
+.add-to-cart-btn {
+    background-color: #009900;
+    color: white;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

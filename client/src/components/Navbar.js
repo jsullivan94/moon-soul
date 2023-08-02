@@ -15,7 +15,7 @@ function Navbar(){
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
             <Link to="/store">Store</Link>
-            <Link to="/events">Events</Link>
+            {/* <Link to="/events">Events</Link> */}
             <button onClick={() => navigate("/cart")}>My Cart</button>
         </div>
     )

@@ -35,7 +35,7 @@ class Event(db.Model, SerializerMixin):
 class Product(db.Model, SerializerMixin):
     __tablename__ = "products"
 
-    serialize_rules=('-order_items.product', '-category.product', '-order_items.order',)
+    serialize_rules=('-order_items.product', '-category.product', '-order_items.order', '-cart_items.product')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -46,6 +46,7 @@ class Product(db.Model, SerializerMixin):
 
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
+    cart_items = db.relationship('CartItem', backref='product')
     order_items = db.relationship('OrderItem', backref='product')
 
 class Category(db.Model, SerializerMixin):
@@ -78,7 +79,7 @@ class OrderItem(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)
-    quantity_price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Float, nullable=False)
 
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
@@ -95,6 +96,27 @@ class Customer(db.Model, SerializerMixin):
     address = db.Column(db.String, nullable=False)
 
     orders = db.relationship('Order', backref='customer')
+
+class Cart(db.Model, SerializerMixin):
+    __tablename__ = "carts"
+
+    serialize_rules=('-cart_items.cart')
+
+    id = db.Column(db.Integer, primary_key=True)
+    total_price = db.Column(db.Float, nullable=False)
+
+    cart_items = db.relationship('CartItem', backref='cart')
+
+class CartItem(db.Model, SerializerMixin):
+    __tablename__ = "cart_items"
+
+    serialize_rules=('-cart.cart_items', '-product.cart_items')
+
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    cart_id = db.Column(db.Integer, db.ForeignKey('carts.id'))
 
 
 

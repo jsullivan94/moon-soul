@@ -116,6 +116,28 @@ def get_product_by_id(id):
     )
 
 
+@app.post('/cart_items')
+def post_cart_item():
+    data = request.get_json()
+
+    new_cart_item = CartItem(
+        id = data.get('id'),
+        product_id = data.get('product_id'),
+        quantity = data.get('quantity'),
+        price = data.get('price'),
+        cart_id = data.get('cart_id')
+    )
+
+    db.session.add(new_cart_item)
+    db.session.commit()
+
+    return make_response(
+        jsonify(new_cart_item.to_dict()),
+        201
+    )
+
+
+
 
 
 if __name__ == '__main__':
