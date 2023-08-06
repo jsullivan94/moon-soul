@@ -7,7 +7,6 @@ function Events() {
 
     const [events, setEvents] = useState([])
 
-
     useEffect(() => {
         fetch('/events')
         .then(r => r.json())
@@ -21,7 +20,6 @@ function Events() {
     });
 
 
-    
     return (
         
         <div>

@@ -10,8 +10,8 @@ with app.app_context():
   
 
     # Create categories
-    category1 = Category(name='Electronics')
-    category2 = Category(name='Books')
+    category1 = Category(name='Cloths')
+    category2 = Category(name='Vinyl')
     db.session.add(category1)
     db.session.add(category2)
 
@@ -40,12 +40,12 @@ with app.app_context():
     db.session.add(event)
 
     # Create cart
-    cart = Cart(total_price=0.0)
+    cart = Cart()
     db.session.add(cart)
 
     # Create cart items
-    cart_item1 = CartItem(product_id=product1.id, quantity=1, price=999.99, cart_id=cart.id)
-    cart_item2 = CartItem(product_id=product2.id, quantity=1, price=19.99, cart_id=cart.id)
+    cart_item1 = CartItem(product_id=product1.id, quantity=1, price=999.99, size="large", cart_id=cart.id)
+    cart_item2 = CartItem(product_id=product2.id, quantity=1, price=19.99, size="medium", cart_id=cart.id)
     db.session.add(cart_item1)
     db.session.add(cart_item2)
 

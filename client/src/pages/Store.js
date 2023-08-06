@@ -1,13 +1,12 @@
 import ProductCard from "../components/ProductCard";
-import { useState, useEffect } from "react";
 
-function Store ( { products, setCart, cart }) {
+function Store ( { products }) {
 
     
     const items = products.map(product => {
         return(
             
-        <ProductCard setCart={setCart} cart={cart} key={product.id} {...product} />
+        <ProductCard  key={product.id} {...product} />
             
         )
     });

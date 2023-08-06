@@ -1,5 +1,6 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
+import uuid
 
 from config import db, bcrypt
 
@@ -100,23 +101,23 @@ class Customer(db.Model, SerializerMixin):
 class Cart(db.Model, SerializerMixin):
     __tablename__ = "carts"
 
-    serialize_rules=('-cart_items.cart')
+    serialize_rules=('-cart_items.cart',)
 
-    id = db.Column(db.Integer, primary_key=True)
-    total_price = db.Column(db.Float, nullable=False)
+    id = db.Column(db.String, primary_key=True, default=str(uuid.uuid4()))
 
     cart_items = db.relationship('CartItem', backref='cart')
 
 class CartItem(db.Model, SerializerMixin):
     __tablename__ = "cart_items"
 
-    serialize_rules=('-cart.cart_items', '-product.cart_items')
+    serialize_rules=('-cart.cart_items', '-product.cart_items',)
 
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
-    cart_id = db.Column(db.Integer, db.ForeignKey('carts.id'))
+    size = db.Column(db.String)
+    cart_id = db.Column(db.String, db.ForeignKey('carts.id'))
 
 
 

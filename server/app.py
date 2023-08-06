@@ -1,6 +1,7 @@
 from flask import request, make_response, jsonify, session, Flask
 from sqlalchemy.exc import IntegrityError
 from dotenv import load_dotenv
+import uuid
 
 
 import json
@@ -49,6 +50,12 @@ def create_payment():
         })
     except Exception as e:
         return jsonify(error=str(e)), 403
+    
+
+
+
+
+
 
 
 
@@ -116,26 +123,88 @@ def get_product_by_id(id):
     )
 
 
-@app.post('/cart_items')
+
+
+
+
+
+
+
+
+def get_or_create_cart_id():
+   
+    cart_id = request.cookies.get('cart_id')
+
+    if cart_id is None:
+ 
+        cart_id = str(uuid.uuid4()) 
+        return cart_id, True 
+
+    return cart_id, False
+
+@app.post('/add_to_cart')
 def post_cart_item():
+    cart_id, was_created = get_or_create_cart_id()
+
     data = request.get_json()
 
+    cart = Cart.query.filter_by(id=cart_id).first()
+
+    if not cart:
+        cart = Cart(id=cart_id)
+        db.session.add(cart)
+
     new_cart_item = CartItem(
-        id = data.get('id'),
         product_id = data.get('product_id'),
         quantity = data.get('quantity'),
         price = data.get('price'),
-        cart_id = data.get('cart_id')
+        size = data.get('size'),
+        cart_id = cart_id
     )
-
+    
     db.session.add(new_cart_item)
     db.session.commit()
 
-    return make_response(
+    response = make_response(
         jsonify(new_cart_item.to_dict()),
         201
     )
 
+    if was_created:
+        response.set_cookie('cart_id', cart_id)
+
+    return response
+
+
+@app.get('/get_cart_items')
+def get_cart_items():
+    cart_id = request.cookies.get('cart_id')
+
+    if not cart_id:
+        return jsonify([])  
+
+    cart_items = CartItem.query.filter_by(cart_id=cart_id).all()
+
+    cart_items_data = [item.to_dict() for item in cart_items]
+
+    return jsonify(cart_items_data)
+
+
+@app.delete('/delete_cart_item/<int:id>')
+def delete_cart_item(id):
+    cart_id = request.cookies.get('cart_id')
+
+    cart_item = CartItem.query.filter(CartItem.cart_id == cart_id, CartItem.id == id).first()
+
+
+    db.session.delete(cart_item)
+    db.session.commit()
+
+    if cart_item is None:
+        return jsonify({'message': 'Cart item not found'}), 404
+    
+
+    return jsonify({'message': 'Item successfully deleted'}), 200
 
 
 

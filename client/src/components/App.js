@@ -13,10 +13,8 @@ import ProductDetails from "../pages/ProductDetails";
 
 function App() {
 
-  const [cart, setCart] = useState([])  
   const [products, setProducts] = useState([])
-
-
+  
   useEffect(() => {
       fetch('/products')
       .then(r => r.json())
@@ -30,12 +28,12 @@ function App() {
       <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetails products={products} cart={cart} setCart={setCart} />} />
+          <Route path="/product/:id" element={<ProductDetails products={products}/>} />
           <Route path="/about" element={<About />} />
-          <Route path="/store" element={<Store products={products} setCart={setCart} cart={cart} />} />
+          <Route path="/store" element={<Store products={products} />} />
           {/* <Route path="/events" element={<Events />} /> */}
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/cart" element={<Cart cart={cart} />} />
+          <Route path="/cart" element={<Cart />} />
           </Routes>
       </BrowserRouter>
     </div>

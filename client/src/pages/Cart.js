@@ -1,16 +1,25 @@
-function Cart( { cart } ) {
+import ProductInCartCard from "../components/ProductInCartCard";
+import { useState, useEffect } from "react";
+
+
+
+function Cart() {
+
+    const [cart, setCart] = useState([])  
+
+    useEffect(() => {
+        fetch("/get_cart_items")
+        .then(r => r.json())
+        .then(data => setCart(data))
+    }, [])
     
-    const pInCart = cart.map(item => {
-        return (
-            <div>
-            <h1>{item.name}</h1>
-            <h2>{item.price}</h2>
-            <h4>{item.description}</h4>
-            </div>
-        )
-    })
+
+    const items = cart.map(item => 
+    <ProductInCartCard key={item.id} {...item} cart={cart} setCart={setCart} />
+    )
+    
     return (
-        <div>{pInCart}</div>
+        <div>{items}</div>
     )
     
 }
