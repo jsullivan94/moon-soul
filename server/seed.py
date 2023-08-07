@@ -37,7 +37,20 @@ with app.app_context():
 
     # Create event
     event = Event(image_path='/path/to/event.jpg', title='Big Sale', date=datetime.now() + timedelta(days=10), location='Online', price=0)
+    event2 = Event(image_path='/path/to/event.jpg', title='Big Sale', date=datetime.now() + timedelta(days=10), location='Online', price=0)
+    event3 = Event(image_path='/path/to/event.jpg', title='Big Sale', date=datetime.now() + timedelta(days=10), location='Online', price=0)
+    event4 = Event(image_path='/path/to/event.jpg', title='Big Sale', date=datetime.now() + timedelta(days=10), location='Online', price=0)
+    event5 = Event(image_path='/path/to/event.jpg', title='Big Sale', date=datetime.now() + timedelta(days=10), location='Online', price=0)
+    event6 = Event(image_path='/path/to/event.jpg', title='Big Sale', date=datetime.now() + timedelta(days=10), location='Online', price=0)
+    event7 = Event(image_path='/path/to/event.jpg', title='Big Sale', date=datetime.now() + timedelta(days=10), location='Online', price=0)
     db.session.add(event)
+    db.session.add(event2)
+    db.session.add(event3)
+    db.session.add(event4)
+    db.session.add(event5)
+    db.session.add(event6)
+    db.session.add(event7)
+
 
     # Create cart
     cart = Cart()

@@ -98,29 +98,43 @@
 /* nav bar */
 .navbar {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    background-color: #333;
-    color: white;
-    padding: 15px 0;
-}
-
-.navbar a, .navbar button {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-}
-
-.navbar button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
+    justify-content: space-between; /* This will push content to both ends of the container */
+    background-color: #350a0a; /* Dark grey background */
     padding: 10px;
 }
 
-.navbar a:hover, .navbar button:hover {
-    color: #ddd;
+.navbar .nav-links {
+    display: flex;
+    gap: 15px; /* This will provide spacing between each link and the button */
+}
+
+.navbar img {
+    height: 100px; /* Adjust this to your liking */
+    width: auto;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #FFF; /* White text */
+    transition: color 0.3s; /* Smooth color transition */
+}
+
+.navbar a:hover {
+    color: #e6d4d4; /* Lighter color when hovering */
+}
+
+.shop-icon {
+    background-color: #444; /* Slightly lighter than the navbar background */
+    border: none;
+    color: #FFF; /* White text */
+    padding: 5px 15px; /* Vertical and horizontal padding */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth background-color transition */
+}
+
+.shop-icon:hover {
+    background-color: #555; /* Slightly lighter color when hovering */
 }
 
 /* product details */
@@ -194,3 +208,94 @@
     color: #333;
 }
 
+/* Footer.css */
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #222;
+    color: #fff;
+    padding: 10px 0;
+    border-top: 5px solid #444;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row; /* This makes the icons line up horizontally */
+}
+
+.icon {
+    font-size: 24px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.icon:hover {
+    color: #888;
+}
+
+.footer > h2 {
+    margin-bottom: 10px;
+}
+
+
+/* news letter */
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  p {
+    color: red;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  input[type="email"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+    margin-bottom: 8px;
+    outline: none;
+  }
+  
+  input[type="email"]:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:active {
+    background-color: #004492;
+  }
+  

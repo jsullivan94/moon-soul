@@ -207,6 +207,26 @@ def delete_cart_item(id):
     return jsonify({'message': 'Item successfully deleted'}), 200
 
 
+@app.post('/news_letter')
+def post_nl_email():
+    data = request.get_json()
+
+    new_email = NewsLetter(
+        email = data.get('email')
+     )
+
+    db.session.add(new_email)
+    db.session.commit()
+
+    return make_response(
+        jsonify(new_email.to_dict()),
+        201
+    )
+
+
+
+
+
 
 
 if __name__ == '__main__':

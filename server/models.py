@@ -119,6 +119,13 @@ class CartItem(db.Model, SerializerMixin):
     size = db.Column(db.String)
     cart_id = db.Column(db.String, db.ForeignKey('carts.id'))
 
+class NewsLetter(db.Model, SerializerMixin):
+    __tablename__ = "emails"
+
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String, nullable=False)
+
+
 
 
 
