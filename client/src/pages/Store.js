@@ -2,7 +2,6 @@ import ProductCard from "../components/ProductCard";
 
 function Store ( { products }) {
 
-    
     const items = products.map(product => {
         return(
             
@@ -11,11 +10,9 @@ function Store ( { products }) {
         )
     });
 
-
-    
     return (
         
-        <div className="products-grid">
+        <div className="products-container">
             {items}
         </div>
     )

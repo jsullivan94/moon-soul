@@ -29,7 +29,7 @@ class Event(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     image_path = db.Column(db.String, nullable=True)
     title = db.Column(db.String, nullable=False)
-    date = db.Column(db.DateTime, nullable=False)
+    date = db.Column(db.String, nullable=False)
     location = db.Column(db.String, nullable=False)
     price = db.Column(db.Integer, nullable=True)
 
@@ -118,6 +118,7 @@ class CartItem(db.Model, SerializerMixin):
     price = db.Column(db.Float, nullable=False)
     size = db.Column(db.String)
     cart_id = db.Column(db.String, db.ForeignKey('carts.id'))
+    image_path = db.Column(db.String)
 
 class NewsLetter(db.Model, SerializerMixin):
     __tablename__ = "emails"

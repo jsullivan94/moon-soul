@@ -1,15 +1,17 @@
 /* event card */
 .event-card {
+    background-color: #2d0404;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 80%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    max-width: 1100px;
+    border: 4px solid #a79e3d;
     padding: 20px;
     margin: 10px auto;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2);
+   
 }
 
 .event-card-img {
@@ -24,188 +26,351 @@
 }
 
 .event-card-title {
-    font-size: 20px;
-    font-weight: bold;
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 35px;
     margin: 10px 0;
+    color: rgb(219, 204, 69);
 }
 
 .event-card-date,
 .event-card-location {
+    font-family: 'Reem Kufi Fun', sans-serif;
     font-size: 15px;
-    color: #888;
+    color: #d5d4b7;
 }
 
 .event-card-location {
+    font-family: 'Reem Kufi Fun', sans-serif;
     font-weight: bold;
-    color: #333;
+    color: #d5d4b7;
 }
 
 .event-card-price {
+    font-family: 'Reem Kufi Fun', sans-serif;
     font-size: 22px;
-    color: #ff5722;
+    color: #d5d4b7;
 }
 
 
 
 /* product card */
 
-.product-card {
+.products-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 200px;
-    height: 200px;
-    margin: 10px;
-    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start;  /* start the cards from the left */
+    max-width: 1100px;
+    width: 80%;
+    margin: 0 auto; 
+}
+
+.product-card {
+    width: 245px;  /* calculated width based on the max row width */
     box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f9f9f9;
+    margin: 15px;
+    padding: 15px;
+    border: 2px solid #a79e3d;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    background-color: #2d0404; /* example background color */
+    transition: transform 0.2s;
+}
+.product-card:hover {
+    transform: translateY(-5px); /* subtle lift on hover */
+    transform: translateY(-5px); /* subtle lift on hover */
+    color: inherit; /* ensure text color doesn't change on hover */
+    text-decoration: none; /* removes underline from Link component */
+    transition: transform 0.2s; /* for a subtle hover effect */
+}
+
+.product-card a:hover {
+    text-decoration: none; /* Removes underline */
+    color: inherit;
 }
 
 .product-img {
     width: 100%;
-    height: 100px; 
-    object-fit: cover;
+    max-height: 200px;
+    object-fit: cover; /* this will ensure the image covers the area without distortion */
+    border-radius: 8px; /* rounded corners for the image */
+    margin-bottom: 15px;
 }
 
-.product-name, 
-.product-price, 
-.product-description {
-    margin: 10px 0;
-}
-
-.cart-button {
-    align-self: center;
-    padding: 10px 20px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.product-name {
+    font-family: 'Reem Kufi Fun', sans-serif;
+    font-size: 18px;
+    margin-bottom: 10px;
+    overflow: hidden;
     text-align: center;
+    text-overflow: ellipsis; /* cuts off long names with ... */
+    white-space: nowrap; /* prevents wrapping to the next line */
+    width: 100%; /* ensures the above two properties work */
+    color: #d5d4b7; /* neutral dark gray, adjust as needed */
+    text-decoration: none; /* ensures text is not underlined */
 }
 
-.cart-button:hover {
-    background-color: #007B9A;
+.product-price {
+    font-family: 'Reem Kufi Fun', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #d5d4b7; /* neutral dark gray, adjust as needed */
+    text-decoration: none; /* ensures text is not underlined */
 }
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
+
 
 /* nav bar */
 .navbar {
+    background-color: #2d0404;
+    padding: 10px 0; /* Vertical padding, removed horizontal padding */   
+}
+
+.navbar-content {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* This will push content to both ends of the container */
-    background-color: #350a0a; /* Dark grey background */
-    padding: 10px;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1100px; /* or whatever maximum width you prefer */
+    margin: 0 auto; /* This will center the navbar content */
+    padding: 0 20px; /* Add horizontal padding here for breathing space */
 }
 
 .navbar .nav-links {
+    font-family: 'Reem Kufi Fun', sans-serif;
+    font-size: large;
+    
     display: flex;
-    gap: 15px; /* This will provide spacing between each link and the button */
+    gap: 25px; /* This will provide spacing between each link and the button */
 }
 
 .navbar img {
-    height: 100px; /* Adjust this to your liking */
+    height: 100px;
     width: auto;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* smooth transitions */
 }
 
+.navbar img:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
+}
 .navbar a {
     text-decoration: none;
-    color: #FFF; /* White text */
+    color: #d5d4b7;
     transition: color 0.3s; /* Smooth color transition */
 }
 
 .navbar a:hover {
-    color: #e6d4d4; /* Lighter color when hovering */
+    color: #c7c043; /* Lighter color when hovering */
 }
 
 .shop-icon {
-    background-color: #444; /* Slightly lighter than the navbar background */
+    background-color: #c7c043; /* Slightly lighter than the navbar background */
     border: none;
-    color: #FFF; /* White text */
+    border-radius: 3.5px;
+    color: #000000; /* White text */
     padding: 5px 15px; /* Vertical and horizontal padding */
     cursor: pointer;
     transition: background-color 0.3s; /* Smooth background-color transition */
 }
 
 .shop-icon:hover {
-    background-color: #555; /* Slightly lighter color when hovering */
+    background-color: #f6ff78; /* Slightly lighter color when hovering */
 }
 
 /* product details */
+/* Main container */
+.product-details-container {
+  display: flex;            /* Using Flexbox for main layout */
+  justify-content: center;  /* Centering content horizontally */
+  padding: 2rem;            /* Providing some padding */
+  flex-direction: column;
+}
 
-
+/* Image and main details */
 .product-details-page {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
+  flex: 1;                 /* Taking half the available space */
+  padding-right: 2rem;     /* Some padding to avoid content sticking together */
 }
 
 .product-img-page {
-    height: 400px;
-    width: 400px;
-    object-fit: cover;
+  max-width: 500px;          /* Making sure image doesn't overflow */
+  height: auto;
+  display: block;           /* Image centered */
+  margin: 0 auto;           /* Center image if it's smaller than container */
 }
 
-.product-name-page {
-    font-size: 2em;
-    margin-top: 0.5em;
+/* Product details text */
+.product-name-page, .product-price-page, .product-description-page {
+  font-family: 'Reem Kufi Fun', sans-serif;
+  color: #ffffff;
+  margin: 1rem 0;          /* Providing some vertical spacing between elements */
 }
 
-.product-price-page {
-    font-size: 1.5em;
-    color: #009900;
-    margin-bottom: 1em;
+/* Options on the right */
+.product-options-page {
+  flex: 1;                  /* Taking half the available space */
+  display: flex;
+  flex-direction: column;   /* Making inner elements stack vertically */
+  align-items: flex-start;  /* Aligning elements to start */
+  justify-content: center;  /* Centering them vertically */
 }
 
-.product-description-page {
-    font-size: 1em;
-    margin-bottom: 2em;
+#dropdown {
+  padding: 0.4rem ;               /* Padding for a comfortable touch/click area */
+  font-size: 1rem;                    /* Slightly larger font for readability */
+  border: 2px solid #ccc;             /* Border for visual definition */
+  border-radius: 4px;                 /* Rounded corners for a softer look */
+  appearance: none;                   /* Remove default appearance */
+  -webkit-appearance: none;           /* Remove default appearance for Webkit browsers */
+  -moz-appearance: none;              /* Remove default appearance for Firefox */
+  background-color: #f9f9f9;          /* A light background */
+  outline: none;                      /* Remove the focus outline */
+  cursor: pointer;                    /* Indicate it's clickable */
+  color: #333;                        /* A general text color */
+  width: 100px;                       /* Optional width setting */
+}
+#dropdown:hover {
+  border-color: #999;                 /* Slightly darker border on hover */
+}
+
+
+
+.quantity-control {
+  display: flex;
+  align-items: center;     /* Aligning buttons and quantity vertically */
+  margin: 1rem 0;          /* Space around quantity control */
+}
+
+.quantity-button {
+  background-color: #a79e3d;
+  padding: 10px;         /* Providing some size to the buttons */
+  margin: 0 0.5rem;        /* Space between buttons */
+}
+
+.quantity-display {
+  color: #ffffff;
+  padding: 0.5rem 1rem;    /* Giving it some size and making it look nice */
+  border: 1px solid #ddd;  /* A subtle border */
+  font-size: 1rem;         /* Font size */
 }
 
 .add-to-cart-btn {
-    background-color: #009900;
-    color: white;
-    border: none;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+  padding: 0.5rem 1rem;    /* Making button larger */
+  background-color: #a79e3d;  /* A dark color for contrast */
+  color: #fff;             /* White text for readability */
+  margin-top: 1rem;        /* Space between this button and quantity control */
+  cursor: pointer;         /* Hand cursor for interactivity */
+  border: none;            /* Removing default border */
+  border-radius: 4px;      /* Rounded corners for aesthetics */
+  margin-bottom: 15px;
 }
 
+.add-to-cart-btn:hover {
+  background-color: #555;  /* Slightly lighter color on hover */
+}
+
+  
+ /* cart */
+ .cart-empty{
+    font-family: 'Reem Kufi Fun', sans-serif;
+    color: rgb(151, 155, 27);
+    text-align: center;
+  }
+  .cart-header {
+    font-family: 'Reem Kufi Fun', sans-serif;
+  color: #ffffff; 
+  text-align: center; 
+  }
+
+  .checkout-btn {
+    display: block; /* or display: inline-block; based on your needs */
+    margin: 20px auto;
+    background-color: #a79e3d;
+    color: #000000;
+  }
+  .continue-shop {
+    display: block; /* or display: inline-block; based on your needs */
+    margin: 0 auto;
+    background-color: #a79e3d;
+    color: #000000;
+   
+}
+.continue-shop:hover {
+    background-color: #c4cb31;
+}
+
+.checkout-btn:hover {
+    background-color: #c4cb31;
+}
 /* product in cart */
 
+
+
 .cart-product-card {
-    border: 1px solid #ddd;
-    margin-bottom: 20px;
+    background-color: #2d0404;
+    display: flex;
+    justify-content: space-between; /* This will push child items to the extremes of the card */
+    align-items: center; /* This keeps everything vertically centered */
+    width: 80%;
+    max-width: 1100px;
+    border: 4px solid #a79e3d;
     padding: 20px;
-    width: 300px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px auto;
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2);
+}
+
+.cart-product-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.cart-product-size {
+    font-family: 'Reem Kufi Fun', sans-serif;
+    font-size: x-large;
+    color: #a79e3d;
+    margin-right: 100px;
+}
+
+.cart-product-quantity {
+    font-family: 'Reem Kufi Fun', sans-serif;
+    font-size: x-large;
+    color: #a79e3d;
+   
+
 }
 
 .cart-product-image {
-    width: 100%;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
-    margin-bottom: 15px;
+    border-radius: 5px;
 }
 
 .cart-product-name {
-    font-size: 20px;
-    margin-bottom: 10px;
+    font-family: 'Reem Kufi Fun', sans-serif;
+    color: #a79e3d;
+    margin: 10px 0;
 }
 
 .cart-product-price {
-    font-size: 18px;
-    color: #333;
+    font-family: 'Reem Kufi Fun', sans-serif;
+    color: #a79e3d;
+    font-size: x-large;
+    margin-left: 200px;
+
+}
+
+.remove-button {
+    padding: 8px 15px;
+    background-color: #a79e3d;
+    border: none;
+    border-radius: 4px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.remove-button:hover {
+    background-color: #c4cb31;
 }
 
 /* Footer.css */
@@ -221,11 +386,17 @@
     border-top: 5px solid #444;
 }
 
+.footer-title {
+  font-family: 'Reem Kufi Fun', sans-serif;
+  margin-bottom: 0px;
+}
+
 .icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row; /* This makes the icons line up horizontally */
+   
 }
 
 .icon {
@@ -233,6 +404,7 @@
     margin: 10px;
     cursor: pointer;
     transition: 0.3s;
+    margin-bottom: 0px;
 }
 
 .icon:hover {
@@ -240,28 +412,24 @@
 }
 
 .footer > h2 {
-    margin-bottom: 10px;
+    font-family: 'Reem Kufi Fun', sans-serif;
+    margin-bottom: 0px;
 }
 
 
 /* news letter */
 
-h2 {
+title {
+    font-family: 'Reem Kufi Fun', sans-serif;
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-  
-  p {
-    color: red;
-    margin-bottom: 8px;
+    margin-bottom: 0px;
     text-align: center;
   }
   
   form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
   }
   
@@ -271,31 +439,238 @@ h2 {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 250px;
-    margin-bottom: 8px;
+    margin-bottom: px;
     outline: none;
   }
   
-  input[type="email"]:focus {
+  /* input[type="email"]:focus {
     border-color: #007BFF;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
-  
-  button {
+   */
+    button {
     padding: 10px 20px;
     font-size: 16px;
     border: none;
-    background-color: #007BFF;
+    background-color: #2d0404;
     color: white;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin-left: 10px;
+  
   }
   
   button:hover {
-    background-color: #0056b3;
+    background-color: #7a1616;
   }
   
-  button:active {
-    background-color: #004492;
+
+
+  /* About.css */
+
+.about-container {
+    font-family: 'Reem Kufi Fun', sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.about-header-image {
+    width: 100%;
+    height:700px;
+    object-fit: cover;
+    background-position: center;
+    margin-bottom: 20px;
+}
+
+.about-title {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 24px;
+    margin: 20px 0;
+    color: rgb(219, 204, 69);
+}
+
+.about-profile-image {
+    border: 4px solid #a79e3d;
+    max-width: 150px;
+    height: auto;
+    /* border-radius: 50%; */
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+.about-description {
+    margin: 20px 0;
+    font-size: 16px;
+    color: #a79e3d;
+}
+
+/* payment */
+#payment-form {
+        flex-direction: column;
+        width: 30vw;
+        min-width: 500px;
+        align-self: center;
+        box-shadow: 0px 0px 0px 0.5px rgba(252, 252, 255, 0.1),
+          0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+        border-radius: 7px;
+        margin-top: 20px;
+        padding: 40px;
+      
+}
+
+.Checkout {
+    justify-content: center;
+    display: flex;
+}
+
+ /* Buttons and links */
+.pay-button {
+    background: #5469d4;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    border-radius: 4px;
+    border: 0;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    transition: all 0.2s ease;
+    box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+    width: 100%;
+    margin-top: 15px;
   }
   
+  .pay-button:hover {
+    filter: contrast(115%);
+  }
+  
+  .pay-button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .payment-complete {
+    color: #a79e3d;
+    font-family: 'Reem Kufi Fun', sans-serif;
+    text-align: center;
+  }
+
+  .payment-complete-home {
+    font-family: 'Reem Kufi Fun', sans-serif;
+    font-size: x-large;
+
+  }
+
+  .complete-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh; 
+  }
+
+  #payment-message {
+    font-family: 'Reem Kufi Fun', sans-serif;
+    font-size: x-large;
+    color: #a79e3d;
+
+  }
+
+  /* spinner/processing state, errors */
+/* .spinner,
+.spinner:before,
+.spinner:after {
+  border-radius: 50%;
+}
+
+.spinner {
+  color: #ffffff;
+  font-size: 22px;
+  text-indent: -99999px;
+  margin: 0px auto;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  box-shadow: inset 0 0 0 2px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.spinner:before,
+.spinner:after {
+  position: absolute;
+  content: '';
+}
+
+.spinner:before {
+  width: 10.4px;
+  height: 20.4px;
+  background: #5469d4;
+  border-radius: 20.4px 0 0 20.4px;
+  top: -0.2px;
+  left: -0.2px;
+  -webkit-transform-origin: 10.4px 10.2px;
+  transform-origin: 10.4px 10.2px;
+  -webkit-animation: loading 2s infinite ease 1.5s;
+  animation: loading 2s infinite ease 1.5s;
+}
+
+.spinner:after {
+  width: 10.4px;
+  height: 10.2px;
+  background: #5469d4;
+  border-radius: 0 10.2px 10.2px 0;
+  top: -0.1px;
+  left: 10.2px;
+  -webkit-transform-origin: 0px 10.2px;
+  transform-origin: 0px 10.2px;
+  -webkit-animation: loading 2s infinite ease;
+  animation: loading 2s infinite ease;
+}
+
+@keyframes loading {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    form {
+      width: 80vw;
+      min-width: initial;
+    }
+  }
+   */
+
+
+
+
+   /* photos */
+   .photos-container {
+    display: flex;
+    flex-wrap: wrap; /* allows images to wrap onto the next line if there's no room */
+    justify-content: center; /* centers images horizontally */
+    padding: 20px; /* some padding around the container for breathing space */
+}
+
+.photos-container img {
+  height: 500px;
+  width: auto;
+    margin: 30px; /* spacing around each image */
+    box-shadow: 0 4px 8px rgba(250, 245, 245, 0.521); /* a subtle shadow for a bit of depth */
+    transition: transform 0.3s; /* for a hover effect below */
+}
+
+.photos-container img:hover {
+    transform: scale(1.05); /* a small zoom effect on hover */
+}

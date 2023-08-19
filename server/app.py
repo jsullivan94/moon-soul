@@ -1,4 +1,4 @@
-from flask import request, make_response, jsonify, session, Flask
+from flask import request, make_response, jsonify, session, Flask, render_template
 from sqlalchemy.exc import IntegrityError
 from dotenv import load_dotenv
 import uuid
@@ -28,18 +28,18 @@ def calculate_order_amount(items):
         total += item['quantity'] * item['price']
 
     total_in_cents = int(total * 100)
-
+    print(total_in_cents)
     return total_in_cents
 
 
 
-@app.route('/create-payment-intent', methods=['POST'])
+@app.post('/create-payment-intent')
 def create_payment():
     try:
         data = json.loads(request.data)
-        # Create a PaymentIntent with the order amount and currency
+
         intent = stripe.PaymentIntent.create(
-            amount=calculate_order_amount(data['items']),
+            amount=calculate_order_amount(data),
             currency='usd',
             automatic_payment_methods={
                 'enabled': True,
@@ -47,10 +47,14 @@ def create_payment():
         )
         return jsonify({
             'clientSecret': intent['client_secret']
+
         })
+
     except Exception as e:
         return jsonify(error=str(e)), 403
     
+
+
 
 
 
@@ -159,6 +163,7 @@ def post_cart_item():
         quantity = data.get('quantity'),
         price = data.get('price'),
         size = data.get('size'),
+        image_path = data.get('image_path'),
         cart_id = cart_id
     )
     

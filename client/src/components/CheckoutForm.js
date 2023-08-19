@@ -11,6 +11,8 @@ import {
 
 
 
+
+
 function CheckoutForm() {
 
 
@@ -67,7 +69,8 @@ function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
+        return_url: `${window.location.origin}/payment-complete`,
+        receipt_email: email,
       },
     });
 
@@ -93,10 +96,10 @@ function CheckoutForm() {
     <form id="payment-form" onSubmit={handleSubmit}>
       <LinkAuthenticationElement
         id="link-authentication-element"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.value.email)}
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <button className="pay-button"disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>

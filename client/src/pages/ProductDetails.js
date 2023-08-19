@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 function ProductDetails({ products }) {
@@ -7,12 +7,12 @@ function ProductDetails({ products }) {
 
     const [size, setSize] = useState('')
     const [amount, setAmount] = useState(1)
+    const navigate = useNavigate()
 
     const cat = product.category_id
 
     function handleIncrease() {
         setAmount(prev => prev += 1)
-
     }
 
     function handleDecrease() {
@@ -23,7 +23,8 @@ function ProductDetails({ products }) {
         product_id: product.id,
         quantity: amount,
         price: product.price,
-        size: size
+        size: size,
+        image_path: product.image_path 
     }
 
     
@@ -36,18 +37,23 @@ function ProductDetails({ products }) {
             },
             body: JSON.stringify(itemToAdd)
         })
-        
-
+        .then(navigate('/cart'))
     };
 
     function handleChange(e) {
         setSize(e.target.value)
         
     }
-    console.log(size)
 
     return (
+        <div className="product-details-container">
         <div className="product-details-page">
+            <img src={product.image_path} alt={product.name} className="product-img-page"/>
+            <h1 className="product-name-page">{product.name}</h1>
+            <h2 className="product-price-page">${product.price}</h2>
+            <p className="product-description-page">{product.description}</p>
+        </div>
+        <div className="product-options-page">
             {cat === 1 ? 
             <select onChange={handleChange} id = "dropdown">
                 <option value="small">Small</option>
@@ -55,17 +61,14 @@ function ProductDetails({ products }) {
                 <option value="large">Large</option>
                 <option value="xl">XL</option>
             </select> : 
-            <select>
-                <option value="N/A">N/A</option>
-            </select>}
-            <img src={product.image_path} alt={product.name} className="product-img-page"/>
-            <h1 className="product-name-page">{product.name}</h1>
-            <h2 className="product-price-page">{product.price}</h2>
-            <p className="product-description-page">{product.description}</p>
+            null}
+            <div className="quantity-control">
+            <button className="quantity-button" onClick={() => handleDecrease()}>-</button>
+            <div className="quantity-display"> {amount} </div>
+            <button className="quantity-button" onClick={() => handleIncrease()}>+</button>
             <button className="add-to-cart-btn" onClick={handleClick}>Add to cart</button>
-            <button onClick={() => handleIncrease()}>+</button>
-            <div> {amount} </div>
-            <button onClick={() => handleDecrease()}>-</button>
+            </div>
+        </div>
         </div>
     )
 }

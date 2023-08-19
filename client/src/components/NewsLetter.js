@@ -32,16 +32,16 @@ const [email, setEmail] = useState("");
 
   return (
     <>
-      <h2>Subscribe to our newsletter!</h2>
+      <h2 className="title">Subscribe to our newsletter!</h2>
       {!isEmailValid ? <p>Please enter a valid email address</p> : null}
-      <form onSubmit={handleSubmit}>
-        <input
+      <form className="form" onSubmit={handleSubmit}>
+        <input 
           type="email"
           placeholder="Enter your email address here"
           value={email}
           onChange={handleInput}
         />
-        <button
+        <button 
           type="submit"
         >
           Subscribe
