@@ -6,7 +6,11 @@
       return (
         <form>
           <h3>Shipping</h3>
-          <AddressElement options={{mode: 'shipping'}} />
+          <AddressElement options={{
+            mode: 'shipping',
+            allowedCountries: ['US']
+          }}
+              />
         </form>
       );
     };

@@ -1,15 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 
 function ProductDetails({ products }) {
+    
     const { id } = useParams();
     const product = products.find(p => p.id === Number(id));
 
     const [size, setSize] = useState('')
     const [amount, setAmount] = useState(1)
     const navigate = useNavigate()
-
     const cat = product.category_id
+    
 
     function handleIncrease() {
         setAmount(prev => prev += 1)

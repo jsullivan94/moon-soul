@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 
 
 import CheckoutForm from "../components/CheckoutForm";
+import AddressForm from "../components/AddressForm";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -14,6 +15,7 @@ const stripePromise = loadStripe("pk_test_51NXRqNBuKh2FTrpXvl7QJdfEGjYnm4wAY5vak
 
 function Checkout( { cart }) {
   const [clientSecret, setClientSecret] = useState("");
+ 
  
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -38,6 +40,7 @@ function Checkout( { cart }) {
     <div className="Checkout">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
+          <AddressForm />
           <CheckoutForm />
         </Elements>
       )}
