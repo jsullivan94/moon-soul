@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 function ProductDetails({ products }) {
@@ -7,9 +7,16 @@ function ProductDetails({ products }) {
     const { id } = useParams();
     const product = products.find(p => p.id === Number(id));
 
+
     const [size, setSize] = useState('')
     const [amount, setAmount] = useState(1)
     const navigate = useNavigate()
+    
+    
+    if (!product) {
+        return <div>Loading...</div>;
+    }
+
     const cat = product.category_id
     
 
@@ -46,6 +53,9 @@ function ProductDetails({ products }) {
         setSize(e.target.value)
         
     }
+
+    
+    
 
     return (
         <div className="product-details-container">
