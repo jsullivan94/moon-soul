@@ -4,8 +4,10 @@
     
     const AddressForm = () => {
       return (
-        <form>
+        <form id="address-form">
+          <div>
           <h3>Shipping</h3>
+          </div>
           <AddressElement options={{
             mode: 'shipping',
             allowedCountries: ['US']

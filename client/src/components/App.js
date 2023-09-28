@@ -10,6 +10,7 @@ import ProductDetails from "../pages/ProductDetails";
 import Footer from "./Footer";
 import Photos from "../pages/Photos";
 import PaymentComplete from "../pages/PaymentComplete";
+import CheckoutForm from "./CheckoutForm";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
               <Navbar />
               <div style={{ flex: 1 }}>
                   <Routes>
+                      
                       <Route exact path="/" element={<Home />} />
                       <Route path="/product/:id" element={<ProductDetails products={products} />} />
                       <Route path="/about" element={<About />} />
