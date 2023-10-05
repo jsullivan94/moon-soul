@@ -32,7 +32,7 @@ git clone git@github.com:jsullivan94/moon-soul.git
 ```
 cd moon-soul
 ```
-#### Install the required dependencies using pipenv:
+#### Install the required dependencies:
 **Frontend:**
 ```
 cd client
