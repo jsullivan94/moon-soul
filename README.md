@@ -15,11 +15,11 @@ Welcome to the official repository for the Moon Soul band's web page. Discover m
 - **Payment:** Stripe API
 
 ## Setup and Installation
-#### Ensure you have pipenv installed. If not, install it using:
+### Ensure you have pipenv installed. If not, install it using:
 ```
 pip install pipenv
 ```
-#### Clone the repository:
+### Clone the repository:
 **Using HTTPS:** 
 ```
 git clone https://github.com/jsullivan94/moon-soul.git
@@ -28,11 +28,11 @@ git clone https://github.com/jsullivan94/moon-soul.git
 ``` 
 git clone git@github.com:jsullivan94/moon-soul.git
 ```
-#### Navigate to the project directory:
+### Navigate to the project directory:
 ```
 cd moon-soul
 ```
-#### Install the required dependencies:
+### Install the required dependencies:
 **Frontend:**
 ```
 cd client
@@ -43,11 +43,11 @@ npm install
 cd server
 pipenv install
 ```
-#### Activate the pipenv shell on backend:
+### Activate the pipenv shell on backend:
 ```
 pipenv shell
 ```
-#### Run the project:
+### Run the project:
 **Frontend:**
 ```
 npm start
