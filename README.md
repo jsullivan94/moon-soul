@@ -36,11 +36,15 @@ cd moon-soul
 **Frontend:**
 ```
 cd client
+```
+```
 npm install
 ```
 **Backend:**
 ```
 cd server
+```
+```
 pipenv install
 ```
 ### Activate the pipenv shell on backend:
