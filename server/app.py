@@ -18,7 +18,7 @@ load_dotenv()
 
 
 # stripe tests
-stripe.api_key = os.getenv("SK_TEST")
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 def calculate_order_amount(items):
     total = 0

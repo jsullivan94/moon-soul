@@ -60,5 +60,19 @@ npm start
 ```
 python app.py
 ```
+
+## Environment Variables
+**Stripe API:** The application uses Stripe for payment processing. You'll need to get both a secret key and a publishable key from your Stripe dashboard.
+
+- **STRIPE_SECRET_KEY:** Your Stripe secret key. This should never be committed to the repository or exposed publicly.
+- **STRIPE_PUBLISHABLE_KEY:** Your Stripe publishable key. This is safe to use in your frontend code.
+
+- Create a .env file in the root of your project directory.
+- Add the following line, replacing the placeholder with your actual key:
+```
+STRIPE_SECRET_KEY=your_secret_key_here
+```
+- Replace the key in Checkout.js with your publishable key.
+
 For a complete demo of the web app, refer to this demo video link: https://www.loom.com/share/41a00647c6a2474a9f463de8cb0d81a8
 
