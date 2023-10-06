@@ -1,4 +1,3 @@
-
 function EventCard({ date, image_path, location, price, title }) {
     return (
         <div className="event-card">

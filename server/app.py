@@ -2,23 +2,16 @@ from flask import request, make_response, jsonify, session, Flask, render_templa
 from sqlalchemy.exc import IntegrityError
 from dotenv import load_dotenv
 import uuid
-
-
 import json
 import os
 import stripe 
 
-
 from config import *
 from models import *
 
-
 load_dotenv()
-
-
-
-# stripe tests
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+
 
 def calculate_order_amount(items):
     total = 0
@@ -30,8 +23,6 @@ def calculate_order_amount(items):
     total_in_cents = int(total * 100)
     print(total_in_cents)
     return total_in_cents
-
-
 
 @app.post('/create-payment-intent')
 def create_payment():
@@ -49,90 +40,8 @@ def create_payment():
             'clientSecret': intent['client_secret']
 
         })
-
     except Exception as e:
         return jsonify(error=str(e)), 403
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@app.route('/')
-def index():
-    return '<h1>Moon Soul</h1>'
-
-@app.get('/admins')
-def get_all_admins():
-    admins = Admin.query.all()
-
-    data = [admin.to_dict() for admin in admins]
-
-    return make_response(
-        jsonify(data),
-        200
-    )
-
-
-@app.get('/events')
-def get_all_events():
-    events = Event.query.all()
-    
-    data = [event.to_dict() for event in events]
-
-    return make_response(
-        jsonify(data),
-        200
-    )
-
-@app.get('/events/<int:id>')
-def get_event_by_id(id):
-    event = Event.query.filter(Event.id == id).first()
-
-    return make_response(
-        jsonify(event.to_dict()),
-        200
-    )
-
-@app.get('/products')
-def get_all_products():
-    products = Product.query.all()
-
-    data = [product.to_dict() for product in products]
-
-    return make_response(
-        jsonify(data),
-        200
-    )
-
-@app.get('/products/<int:id>')
-def get_product_by_id(id):
-    product = Product.query.filter(Product.id == id).first()
-
-    return make_response(
-        jsonify(product.to_dict()),
-        200
-    )
-
-
-
-
-
-
-
-
 
 
 def get_or_create_cart_id():
@@ -143,8 +52,8 @@ def get_or_create_cart_id():
  
         cart_id = str(uuid.uuid4()) 
         return cart_id, True 
-
     return cart_id, False
+
 
 @app.post('/add_to_cart')
 def post_cart_item():
@@ -177,7 +86,7 @@ def post_cart_item():
 
     if was_created:
         response.set_cookie('cart_id', cart_id)
-
+        
     return response
 
 
@@ -208,8 +117,63 @@ def delete_cart_item(id):
     if cart_item is None:
         return jsonify({'message': 'Cart item not found'}), 404
     
-
     return jsonify({'message': 'Item successfully deleted'}), 200
+
+
+@app.get('/admins')
+def get_all_admins():
+    admins = Admin.query.all()
+
+    data = [admin.to_dict() for admin in admins]
+
+    return make_response(
+        jsonify(data),
+        200
+    )
+
+
+@app.get('/events')
+def get_all_events():
+    events = Event.query.all()
+    
+    data = [event.to_dict() for event in events]
+
+    return make_response(
+        jsonify(data),
+        200
+    )
+
+
+@app.get('/events/<int:id>')
+def get_event_by_id(id):
+    event = Event.query.filter(Event.id == id).first()
+
+    return make_response(
+        jsonify(event.to_dict()),
+        200
+    )
+
+
+@app.get('/products')
+def get_all_products():
+    products = Product.query.all()
+
+    data = [product.to_dict() for product in products]
+
+    return make_response(
+        jsonify(data),
+        200
+    )
+
+
+@app.get('/products/<int:id>')
+def get_product_by_id(id):
+    product = Product.query.filter(Product.id == id).first()
+
+    return make_response(
+        jsonify(product.to_dict()),
+        200
+    )
 
 
 @app.post('/news_letter')
@@ -227,11 +191,6 @@ def post_nl_email():
         jsonify(new_email.to_dict()),
         201
     )
-
-
-
-
-
 
 
 if __name__ == '__main__':

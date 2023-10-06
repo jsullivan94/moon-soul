@@ -1,17 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
-
 function ProductDetails({ products }) {
     
     const { id } = useParams();
     const product = products.find(p => p.id === Number(id));
-
-
     const [size, setSize] = useState('')
     const [amount, setAmount] = useState(1)
     const navigate = useNavigate()
-    
     
     if (!product) {
         return <div>Loading...</div>;
@@ -19,7 +15,6 @@ function ProductDetails({ products }) {
 
     const cat = product.category_id
     
-
     function handleIncrease() {
         setAmount(prev => prev += 1)
     }
@@ -36,7 +31,6 @@ function ProductDetails({ products }) {
         image_path: product.image_path 
     }
 
-    
     function handleClick() {
         fetch("/add_to_cart", {
             method: 'POST',
@@ -51,11 +45,7 @@ function ProductDetails({ products }) {
 
     function handleChange(e) {
         setSize(e.target.value)
-        
     }
-
-    
-    
 
     return (
         <div className="product-details-container">

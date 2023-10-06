@@ -1,18 +1,22 @@
-
-
 function ProductInCartCard({ cart, setCart, size, id, name, price, image_path, quantity }) {
 
     function handleClick() {
         fetch(`/delete_cart_item/${id}`, {
-         method: 'DELETE',
-         headers: {
-             'Content-Type': 'application/json',
-         },
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
-        .then(r => r.json)
-        .then(() => setCart(cart.filter(item => item.id !== id)))
-     }
-
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete item from cart');
+            }
+            setCart(cart.filter(item => item.id !== id));
+        })
+        .catch(error => {
+            console.error('There was a problem with the delete operation:', error.message);
+        });
+    }
 
     return (
         <div className="cart-product-card">

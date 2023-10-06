@@ -6,7 +6,6 @@ function PaymentComplete(props) {
 
   useEffect(() => {
     if (!stripePromise) return;
-
     stripePromise.then(async (stripe) => {
       const url = new URL(window.location);
       const clientSecret = url.searchParams.get('payment_intent_client_secret');

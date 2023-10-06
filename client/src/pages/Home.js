@@ -1,17 +1,20 @@
-import EventCard from "../components/EventCard";
 import { useState, useEffect } from 'react';
 
-
+import EventCard from "../components/EventCard";
 
 function Home() {
     const [events, setEvents] = useState([])
 
-
     useEffect(() => {
         fetch('/events')
-        .then(r => r.json())
-        .then(r => setEvents(r))
-    }, [])
+        .then(response => response.json())
+        .then(data => {
+            setEvents(data);
+        })
+        .catch(error => {
+            console.error("Error fetching events:", error);
+        });
+    }, []);
 
     const shows = events.map(show => {
         return(
@@ -19,18 +22,11 @@ function Home() {
         )
     });
 
-
-    
-    return (
-        
+    return (    
         <div>
             {shows}
         </div>
     )
-
-
-
-
 }
 
 export default Home;

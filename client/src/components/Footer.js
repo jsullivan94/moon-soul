@@ -1,4 +1,3 @@
-
 import {FaInstagram, FaSpotify} from 'react-icons/fa'
 import NewsLetter from './NewsLetter';
 
