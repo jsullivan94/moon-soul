@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from "react";
 import {
   PaymentElement,
-  LinkAuthenticationElement,
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
 
 
-
-
-
-
-
-
-function CheckoutForm() {
-
+function CheckoutForm( { clientSecret } ) {
 
   const stripe = useStripe();
   const elements = useElements();
 
-  const [email, setEmail] = useState('');
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,9 +19,9 @@ function CheckoutForm() {
       return;
     }
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
+    // const clientSecret = new URLSearchParams(window.location.search).get(
+    //   "payment_intent_client_secret"
+    // );
 
     if (!clientSecret) {
       return;
@@ -52,7 +43,7 @@ function CheckoutForm() {
           break;
       }
     });
-  }, [stripe]);
+  }, [stripe, clientSecret]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +61,6 @@ function CheckoutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: `${window.location.origin}/payment-complete`,
-        receipt_email: email,
       },
     });
 
@@ -94,10 +84,6 @@ function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <LinkAuthenticationElement
-        id="link-authentication-element"
-        onChange={(e) => setEmail(e.value.email)}
-      />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button className="pay-button"disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">

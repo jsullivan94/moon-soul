@@ -5,7 +5,7 @@ function ProductDetails({ products }) {
     
     const { id } = useParams();
     const product = products.find(p => p.id === Number(id));
-    const [size, setSize] = useState('')
+    const [size, setSize] = useState('Small')
     const [amount, setAmount] = useState(1)
     const navigate = useNavigate()
     
@@ -40,7 +40,7 @@ function ProductDetails({ products }) {
             },
             body: JSON.stringify(itemToAdd)
         })
-        .then(navigate('/cart'))
+        .then(() => navigate('/cart'))
     };
 
     function handleChange(e) {
@@ -48,30 +48,32 @@ function ProductDetails({ products }) {
     }
 
     return (
+    
         <div className="product-details-container">
-        <div className="product-details-page">
-            <img src={product.image_path} alt={product.name} className="product-img-page"/>
+            <div className="product-image-container">
+                <img id='details-image' src={product.image_path} alt={product.name} />
+            </div>
+            <div className="product-options-container">
             <h1 className="product-name-page">{product.name}</h1>
             <h2 className="product-price-page">${product.price}</h2>
             <p className="product-description-page">{product.description}</p>
-        </div>
-        <div className="product-options-page">
             {cat === 1 ? 
             <select onChange={handleChange} id = "dropdown">
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-                <option value="xl">XL</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+                <option value="XL">XL</option>
             </select> : 
             null}
             <div className="quantity-control">
             <button className="quantity-button" onClick={() => handleDecrease()}>-</button>
-            <div className="quantity-display"> {amount} </div>
+            <h2 className="quantity-display"> {amount} </h2>
             <button className="quantity-button" onClick={() => handleIncrease()}>+</button>
+            </div>
             <button className="add-to-cart-btn" onClick={handleClick}>Add to cart</button>
             </div>
         </div>
-        </div>
+       
     )
 }
 

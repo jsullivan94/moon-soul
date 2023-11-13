@@ -29,7 +29,7 @@ function App() {
               <Navbar />
               <div style={{ flex: 1 }}>
                   <Routes>
-                      <Route exact path="/" element={<Home />} />
+                      <Route path="/" element={<Home />} />
                       <Route path="/product/:id" element={<ProductDetails products={products} />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/store" element={<Store products={products} />} />

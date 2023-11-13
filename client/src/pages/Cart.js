@@ -12,7 +12,7 @@ function Cart({ cart, setCart }) {
             .catch(error => {
                 console.error("Error fetching cart items:", error);
             });
-    }, [setCart]); 
+    }, [setCart]);
 
     const items = cart.map(item => 
     <ProductInCartCard key={item.id} {...item} cart={cart} setCart={setCart} />
