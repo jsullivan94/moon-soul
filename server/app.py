@@ -67,10 +67,14 @@ def post_cart_item():
         cart = Cart(id=cart_id)
         db.session.add(cart)
 
+    price = data.get('price')
+    quantity = data.get('quantity')
+    total_price=price*quantity
+    
     new_cart_item = CartItem(
         product_id = data.get('product_id'),
         quantity = data.get('quantity'),
-        price = data.get('price'),
+        price = total_price,
         size = data.get('size'),
         image_path = data.get('image_path'),
         cart_id = cart_id
@@ -118,6 +122,36 @@ def delete_cart_item(id):
         return jsonify({'message': 'Cart item not found'}), 404
     
     return jsonify({'message': 'Item successfully deleted'}), 200
+
+
+@app.patch('/update_cart_item/<int:id>')
+def update_cart_item(id):
+    cart_id = request.cookies.get('cart_id')
+
+    cart_item = CartItem.query.filter(CartItem.cart_id == cart_id, CartItem.product_id == id).first()
+
+    if cart_item:
+        data=request.get_json()
+
+        new_quantity=data.get('quantity')
+        new_price=data.get('price')
+
+        cart_item.quantity += new_quantity
+        cart_item.price += new_price
+        
+        db.session.commit()
+
+    if cart_item is None:
+        return jsonify({'message': 'Cart item not found'}), 404
+    
+    response = make_response(
+        jsonify(cart_item.to_dict()),
+        201
+    )
+    return response
+
+
+
 
 
 @app.get('/admins')

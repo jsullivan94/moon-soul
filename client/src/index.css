@@ -11,7 +11,7 @@
   color: rgb(231, 203, 21);
 }
 
-.separator-line {
+.home-separator-line {
   border: 0; /* Remove default border */
   height: 2px; /* Height of the line */
   background-color:#ffffff; /* Line color */
@@ -87,7 +87,6 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: stretch; /* Stretch items vertically */
   width: 80%;
   max-width: 1100px;
   height: 200px; /* Set a fixed height for the card */
@@ -96,53 +95,41 @@
 }
 
 .event-card-img {
-  flex: 1; /* Control width proportion */
-  object-fit: cover; /* Cover the entire area of the container */
-  margin-right: 0;
+  flex: 1;
+  object-fit: cover; 
 }
 
 .event-card-content {
-  display: flex;
+  display: block;
   flex-direction: column;
   justify-content: space-between;
   flex: 2;
   padding: 20px;
 }
 
-.event-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%; 
-}
-
 .event-card-title {
   font-family: 'Reem Kufi Fun', sans-serif;
   font-size: 35px;
   color: rgb(231, 203, 21);
-  margin: 0; /* Adjust margin as needed */
+  margin: 0; 
 }
 
 .event-card-price {
   font-family: 'Reem Kufi Fun', sans-serif;
-  font-size: 20px;
+  font-size: 25px;
   color: #d5d4b7;
-  align-self: flex-end;
-  margin-top: 25px;
+  align-self: end;
+  margin-right: 15px;
 }
-
-/* Rest of your CSS remains the same */
 
 .event-card-date {
   font-family: 'Reem Kufi Fun', sans-serif;
-  font-weight: bold;
   font-size: 20px;
   color: #d5d4b7;
 }
 
 .event-card-location {
   font-family: 'Reem Kufi Fun', sans-serif;
-  font-weight: bold;
   font-size: 20px;
   color: #d5d4b7;
 }
@@ -156,59 +143,47 @@
     justify-content: flex-start;  /* start the cards from the left */
     max-width: 1100px;
     width: 80%;
-    margin: 0 auto; 
+    margin: 50px auto; 
 }
 
 .product-card {
-    width: 245px;  /* calculated width based on the max row width */
-    box-sizing: border-box;
+    width: 245px; 
+    height: 400px ;
     margin: 15px;
-    padding: 15px;
-    text-decoration: none;
     color: inherit;
-    background-color: #221a20; /* example background color */
+    background-color: #221a20;
     transition: transform 0.2s;
 }
 .product-card:hover {
-    transform: translateY(-5px); /* subtle lift on hover */
-    transform: translateY(-5px); /* subtle lift on hover */
-    color: inherit; /* ensure text color doesn't change on hover */
-    text-decoration: none; /* removes underline from Link component */
-    transition: transform 0.2s; /* for a subtle hover effect */
-}
-
-.product-card a:hover {
-    text-decoration: none; /* Removes underline */
-    color: inherit;
+    transform: translateY(-5px); 
+    color: inherit; 
+    transition: transform 0.2s;
 }
 
 .product-img {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover; /* this will ensure the image covers the area without distortion */
-    border-radius: 8px; /* rounded corners for the image */
+    width: 245px;
+    height: 245px;
+    object-fit: cover;
     margin-bottom: 15px;
 }
 
 .product-name {
     font-family: 'Reem Kufi Fun', sans-serif;
-    font-size: 18px;
-    margin-bottom: 10px;
-    overflow: hidden;
+    font-size: 25px;
     text-align: center;
-    text-overflow: ellipsis; /* cuts off long names with ... */
-    white-space: nowrap; /* prevents wrapping to the next line */
-    width: 100%; /* ensures the above two properties work */
-    color: #d5d4b7; /* neutral dark gray, adjust as needed */
-    text-decoration: none; /* ensures text is not underlined */
+    color: rgb(231, 203, 21);
 }
 
 .product-price {
     font-family: 'Reem Kufi Fun', sans-serif;
-    font-size: 16px;
+    font-size: 25px;
     font-weight: bold;
-    color: #d5d4b7; /* neutral dark gray, adjust as needed */
-    text-decoration: none; /* ensures text is not underlined */
+    text-align: center;
+    color: rgb(231, 203, 21);
+}
+
+#product-links {
+  text-decoration: none;
 }
 
 
@@ -228,10 +203,14 @@
     padding: 0 20px; /* Add horizontal padding here for breathing space */
 }
 
-.navbar .nav-links {
+.icon-container {
+  margin-left: 500px;
+
+}
+
+.nav-links {
     font-family: 'Reem Kufi Fun', sans-serif;
     font-size: large;
-    
     display: flex;
     gap: 25px; /* This will provide spacing between each link and the button */
 }
@@ -271,9 +250,10 @@
 }
 
 
+/* product details */
 .product-details-container {
-  display: flex;             /* Using Flexbox for main layout */
-  justify-content: center;  /* Centering content horizontally */ 
+  display: flex;             
+  justify-content: center; 
   flex-direction: row;
   margin: 100px;
   min-width: 1000px;
@@ -282,19 +262,19 @@
 .product-image-container {
   margin-right: 50px;    
 }
+
 #details-image {
   border: #d5d4b7;
   border-style: solid;
   height: 750px;
 }
 
-/* Product details text */
 .product-options-container {
   font-family: 'Reem Kufi Fun', sans-serif;
   color: #d5d4b7;  
   display: flex;
-  flex-direction: column;   /* Making inner elements stack vertically */
-  align-items: center;  /* Aligning elements to start */
+  flex-direction: column;   
+  align-items: center;  
   justify-content: center;
   background-color: #221a20;
   width: 500px;
@@ -303,63 +283,85 @@
   min-width: 500px;
 }
 
+.product-details-name {
+  margin-bottom: 50px;
+  font-size: 50px;
+}
 
+.product-details-description {
+  margin-bottom: 50px;
+  font-size: 25px;
+}
+
+.details-separator-line {
+  width: 400px;
+  height: 2px; 
+  background-color: #d5d4b7;
+  border: 0;
+  margin-bottom: 15px;
+}
 
 #dropdown {
-  padding: 0.4rem ;               /* Padding for a comfortable touch/click area */
-  font-size: 1rem;                    /* Slightly larger font for readability */
-  font-family: 'Reem Kufi Fun', sans-serif;;
-  border: 2px solid #ccc;             /* Border for visual definition */
-  border-radius: 8px;                 /* Rounded corners for a softer look */
-  background-color: #221a20;          /* A light background */
-  outline: none;                      /* Remove the focus outline */
-  cursor: pointer;                    /* Indicate it's clickable */
-  color: #d5d4b7;                        /* A general text color */
-  width: 100px;                       /* Optional width setting */
+  padding: 0.4rem ;               
+  font-size: 1rem;                    
+  font-family: 'Reem Kufi Fun', sans-serif;
+  border: 2px solid #d5d4b7;             
+  border-radius: 8px;               
+  background-color: #221a20;          
+  outline: none;                     
+  cursor: pointer;                  
+  color: #d5d4b7;                      
+  width: 100px;                      
 }
+
 #dropdown:hover {
-  border-color: #999;                 /* Slightly darker border on hover */
+  border-color: #999;                 
 }
 
-
+.product-details-price {
+  font-size: 50px;
+}
 
 .quantity-control {
   display: flex;
-  align-items: center;     /* Aligning buttons and quantity vertically */        /* Space around quantity control */
+  align-items: center;
 }
 
-.quantity-button {
-  background-color: #a79e3d;
-  color: #fff;
-  width: 30px; /* Adjust the width as needed */
+.details-quantity-button {
+  background-color: rgb(231, 203, 21);
+  color: #000000;
+  width: 30px; 
   text-align: center;
   font-size: 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  padding: 8px 0; /* Adjust the vertical padding as needed */
+  padding: 8px 0; 
+}
+
+.details-quantity-button:hover {
+  background-color: #d5d4b7;
 }
 
 .quantity-display {
-  color: #ffffff;
+  color: #d5d4b7;
   margin: 25px 25px;
-  font-size: 30px;         /* Font size */
+  font-size: 30px;         
 }
 
 .add-to-cart-btn {
-  margin-top: 100px;
-  padding: 15px 50px;   /* Making button larger */
-  background-color: #a79e3d;  /* A dark color for contrast */
-  color: #fff;             /* White text for readability */
-  margin-top: 1rem;        /* Space between this button and quantity control */
-  cursor: pointer;         /* Hand cursor for interactivity */
-  border: none;            /* Removing default border */
-  border-radius: 8px;      /* Rounded corners for aesthetics */
+  padding: 15px 50px;  
+  background-color: rgb(231, 203, 21);  
+  color: #000000;            
+  margin-top: 1rem;        
+  cursor: pointer;         
+  border: none;          
+  border-radius: 8px;     
 
 }
 
 .add-to-cart-btn:hover {
-  background-color: #555;  /* Slightly lighter color on hover */
+  background-color: #d5d4b7;  
 }
 
   
@@ -375,16 +377,23 @@
   text-align: center; 
   }
 
+  #continue-shop-link {
+    text-decoration: none;
+  }
+
+  #checkout-link {
+    text-decoration: none;
+  }
   .checkout-btn {
     display: block; /* or display: inline-block; based on your needs */
     margin: 20px auto;
-    background-color: #d5d4b7;
+    background-color: rgb(231, 203, 21);;
     color: #000000;
   }
   .continue-shop {
     display: block; /* or display: inline-block; based on your needs */
     margin: 0 auto;
-    background-color: #d5d4b7;
+    background-color: rgb(231, 203, 21);;
     color: #000000;
    
 }
@@ -411,58 +420,54 @@
     
 }
 
-.cart-product-card:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
 
 .cart-product-size {
     font-family: 'Reem Kufi Fun', sans-serif;
     font-size: x-large;
-    color: rgb(231, 203, 21);
+    color: #d5d4b7;
     margin-right: 100px;
 }
 
 .cart-product-quantity {
     font-family: 'Reem Kufi Fun', sans-serif;
     font-size: x-large;
-    color: rgb(231, 203, 21);
+    color: #d5d4b7;
    
 
 }
 
 .cart-product-image {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
-    border-radius: 5px;
 }
 
 .cart-product-name {
     font-family: 'Reem Kufi Fun', sans-serif;
-    color: rgb(231, 203, 21);
+    color: #d5d4b7;
     margin: 10px 0;
 }
 
 .cart-product-price {
     font-family: 'Reem Kufi Fun', sans-serif;
-    color: rgb(231, 203, 21);
+    color: #d5d4b7;
     font-size: x-large;
     margin-left: 200px;
 
 }
 
-.remove-button {
+.cart-remove-button {
     padding: 8px 15px;
-    background-color: #d5d4b7;
+    background-color: rgb(231, 203, 21);;
     border: none;
     border-radius: 4px;
-    color: rgb(0, 0, 0);
+    color: #000000;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.remove-button:hover {
-    background-color: #c4cb31;
+.cart-remove-button:hover {
+    background-color: #d5d4b7;
 }
 
 /* Footer.css */

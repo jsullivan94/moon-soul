@@ -9,11 +9,12 @@ function Navbar(){
                 <Link to="/">
                     <img src='/pictures/IMG_6816.png' alt='Moon Soul' />
                 </Link>
-            <div className="nav-links">
-                   <div className='icon-container'>
+                <div className='icon-container'>
                     <FaInstagram className="icon" onClick={() => window.open('https://www.instagram.com/moonsoulmusic/')} />
                     <FaSpotify className="icon" onClick={() => window.open('https://open.spotify.com/artist/7JJCj4PwTmJZdg53Z1Qznl')} />
                 </div>
+            <div className="nav-links">
+                   
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
                 <Link to="/photos">Photos</Link>

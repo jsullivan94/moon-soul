@@ -30,7 +30,7 @@ function App() {
               <div style={{ flex: 1 }}>
                   <Routes>
                       <Route path="/" element={<Home />} />
-                      <Route path="/product/:id" element={<ProductDetails products={products} />} />
+                      <Route path="/product/:id" element={<ProductDetails cart={cart} products={products} />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/store" element={<Store products={products} />} />
                       <Route path="/payment-complete" element={<PaymentComplete />} />

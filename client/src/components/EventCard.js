@@ -6,8 +6,9 @@ function EventCard({ date, image_path, location, price, title }) {
                 <h1 className="event-card-title">{title}</h1>
                 <h3 className="event-card-date">{date}</h3>
                 <h3 className="event-card-location">{location}</h3>
-                {price ? <h2 className="event-card-price">$ {price}</h2> : null}
             </div>
+            {price ? <h2 className="event-card-price">$ {price}</h2> : null}
+           
         </div>
     )
 }

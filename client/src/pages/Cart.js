@@ -21,7 +21,7 @@ function Cart({ cart, setCart }) {
     return (
         <div>
             <h1 className="cart-header" >Cart</h1>
-            <Link to='/store'>
+            <Link id='continue-shop-link' to='/store'>
             <button className="continue-shop" >Continue shopping</button>
             </Link>
              {cart.length === 0 ?   
@@ -29,7 +29,7 @@ function Cart({ cart, setCart }) {
                 : 
                 <div>
                 {items}
-                <Link to='/checkout'>
+                <Link id='checkout-link' to='/checkout'>
                 <button className="checkout-btn" >Checkout</button>
                 </Link>
                 </div>

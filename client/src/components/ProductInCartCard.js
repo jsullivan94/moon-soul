@@ -25,7 +25,7 @@ function ProductInCartCard({ cart, setCart, size, id, name, price, image_path, q
             <h3 className="cart-product-size">{size}</h3>
             <h2 className="cart-product-price">${price}</h2>
             <h3 className="cart-product-quantity">{quantity}</h3>
-            <button className="remove-button" onClick={handleClick}>Remove</button>
+            <button className="cart-remove-button" onClick={handleClick}>Remove</button>
         </div>
     );
 } 
