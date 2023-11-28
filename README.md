@@ -22,11 +22,11 @@ pip install pipenv
 ### Clone the repository:
 **Using HTTPS:** 
 ```
-git clone https://github.com/jsullivan94/moon-soul.git
+git clone https://github.com/jsullivan94/moonsoul.git
 ```
 **Using SSH:**
 ``` 
-git clone git@github.com:jsullivan94/moon-soul.git
+git clone git@github.com:jsullivan94/moonsoul.git
 ```
 ### Navigate to the project directory:
 ```
