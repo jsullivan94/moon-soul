@@ -30,7 +30,7 @@ git clone git@github.com:jsullivan94/moonsoul.git
 ```
 ### Navigate to the project directory:
 ```
-cd moon-soul
+cd moonsoul
 ```
 ### Install the required dependencies:
 **Frontend:**
