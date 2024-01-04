@@ -11,6 +11,7 @@ import ProductDetails from "../pages/ProductDetails";
 import Footer from "./Footer";
 import Photos from "../pages/Photos";
 import PaymentComplete from "../pages/PaymentComplete";
+import AdminSignIn from "../pages/AdminSignIn";
 
 function App() {
   const [products, setProducts] = useState([])
@@ -28,7 +29,7 @@ function App() {
           <BrowserRouter>
               <Navbar />
               <div style={{ flex: 1 }}>
-                  <Routes>
+                  <Routes>  
                       <Route path="/" element={<Home />} />
                       <Route path="/product/:id" element={<ProductDetails cart={cart} products={products} />} />
                       <Route path="/about" element={<About />} />
@@ -37,6 +38,7 @@ function App() {
                       <Route path="/checkout" element={<Checkout cart={cart} />} />
                       <Route path="/photos" element={<Photos />} />
                       <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
+                      <Route path="/admin" element={<AdminSignIn />} />
                   </Routes>
               </div>
               <Footer />
