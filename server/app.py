@@ -10,6 +10,7 @@ from config import *
 from models import *
 
 load_dotenv()
+app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 
@@ -42,6 +43,30 @@ def create_payment():
         })
     except Exception as e:
         return jsonify(error=str(e)), 403
+
+
+@app.get('/check_session')
+def check_session():
+    admin_id = session.get('admin_id')
+    admin = Admin.query.filter(Admin.id == admin_id).first()
+
+    if not admin:
+        return {'error': 'Unauthorized'}, 401
+    
+    return admin.to_dict(), 200
+
+@app.post('/signin')
+def sign_in():
+    data = request.get_json()
+    admin = Admin.query.filter(
+        Admin.username == data['username']
+    ).first()
+    
+    if not admin or not admin.authenticate(data['password']):
+        return {'error': 'Login failed'}, 401
+    
+    session['admin_id'] = admin.id
+    return admin.to_dict(), 201
 
 
 def get_or_create_cart_id():
@@ -149,21 +174,6 @@ def update_cart_item(id):
         201
     )
     return response
-
-
-
-
-
-@app.get('/admins')
-def get_all_admins():
-    admins = Admin.query.all()
-
-    data = [admin.to_dict() for admin in admins]
-
-    return make_response(
-        jsonify(data),
-        200
-    )
 
 
 @app.get('/events')

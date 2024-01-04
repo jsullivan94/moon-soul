@@ -2,26 +2,22 @@ from faker import Faker
 from config import db, app
 from models import Admin, Event, Product, Category, Order, OrderItem, Customer, CartItem, Cart
 from datetime import datetime, timedelta
+from config import bcrypt
 
 # Create a Faker instance
 fake = Faker()
 
 with app.app_context():
-     # Delete all categories
     Category.query.delete()
-    
-    # Delete all products
     Product.query.delete()
-    
-    # Delete all events
     Event.query.delete()
-    # Create categories
+   
+
     category1 = Category(name='Cloths')
     category2 = Category(name='Vinyl')
     db.session.add(category1)
     db.session.add(category2)
 
-    # Create products
     product1 = Product(name='Vinyl', price=35.00, inventory=10, image_path='/pictures/Moon_Soul.jpeg', description='Our latest record printed to vinyl!', category=category2)
     product2 = Product(name='MS T-Shirt', price=20.00, inventory=20, image_path='https://st3.depositphotos.com/17828278/33150/v/450/depositphotos_331503262-stock-illustration-no-image-vector-symbol-missing.jpg', description='Moon Soul swag', category=category1)
     product3 = Product(name='MS Longsleve', price=20.00, inventory=20, image_path='https://st3.depositphotos.com/17828278/33150/v/450/depositphotos_331503262-stock-illustration-no-image-vector-symbol-missing.jpg', description='Moon Soul swag', category=category1)
