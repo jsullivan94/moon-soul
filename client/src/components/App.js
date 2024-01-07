@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import Photos from "../pages/Photos";
 import PaymentComplete from "../pages/PaymentComplete";
 import AdminSignIn from "../pages/AdminSignIn";
+import Media from "../pages/Media";
 
 function App() {
   const [products, setProducts] = useState([])
@@ -39,6 +40,7 @@ function App() {
                       <Route path="/photos" element={<Photos />} />
                       <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
                       <Route path="/admin" element={<AdminSignIn />} />
+                      <Route path="/media" element={<Media />} />
                   </Routes>
               </div>
               <Footer />

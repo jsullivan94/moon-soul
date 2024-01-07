@@ -787,3 +787,18 @@ title {
 .form-label {
   color: #ccc;
 }
+
+
+
+/* media */
+.media-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.media-container img {
+  margin: 10px;
+  width: 200px; /* adjust as needed */
+  height: auto;
+}

@@ -5,6 +5,7 @@ import uuid
 import json
 import os
 import stripe 
+import requests
 
 from config import *
 from models import *
@@ -12,6 +13,25 @@ from models import *
 load_dotenv()
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+
+
+@app.get('/me/media')
+def get_media():
+    # Extract query parameters from the frontend request
+    fields = request.args.get('fields')
+    access_token = request.args.get('access_token')
+
+    # Forward these parameters in a request to the Instagram API
+    instagram_api_url = f"https://graph.instagram.com/me/media?fields={fields}&access_token={access_token}"
+    response = requests.get(instagram_api_url)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Send the Instagram API response back to the frontend
+        return jsonify(response.json())
+    else:
+        # Handle any errors
+        return jsonify({'error': 'Failed to fetch data from Instagram'}), response.status_code
 
 
 def calculate_order_amount(items):
