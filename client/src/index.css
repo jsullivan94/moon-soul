@@ -1,3 +1,16 @@
+
+.app {
+  width: 100vw;
+  height: 100vh
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+}
+
+
 .icon {
   font-size: 40px;
   margin: auto 10px;
@@ -14,10 +27,9 @@
 .home-separator-line {
   border: 0; /* Remove default border */
   height: 2px; /* Height of the line */
-  background-color:#ffffff; /* Line color */
-  margin: 0 15px; /* Space above and below the line */
+  background-color:#d5d4b7; /* Line color */
+  margin-right: 20px;
 }
-
 
 .home-content-container {
   display: flex;
@@ -26,8 +38,12 @@
   width: 100%;
   max-width: 1100px;
   margin: 0 auto; /* Centers the container horizontally */
+}
 
- 
+.home-text-content {
+  background-color: #221a20;
+  height: 560px;
+  margin-top: 45px
 }
 
 .home-text-content {
@@ -40,45 +56,71 @@
   display: flex; /* Use flexbox */
   justify-content: flex-end; /* Align children to the right */
 }
+
 .home-title {
   font-family: 'Reem Kufi Fun', sans-serif;
   text-align: center;
-  font-size: 70px;
-  color: rgb(231, 203, 21);
-  margin-bottom: 60px;
+  font-size: 65px;
+  color: rgb(245,195,40);
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-right: 15px;
 }
 
 .home-text {
-  margin-top: 70px;
+  margin-top: 30px;
   margin-bottom: 40px;
   font-family: 'Reem Kufi Fun', sans-serif;
   text-align: center;
-  font-size: xx-large;
-  color:#ffffff
-
+  font-size: 33px;
+  color:#d5d4b7;
+  margin-right: 15px;
 }
 
 .home-image {
   width: 100%;
-  margin: 25px auto;
+  margin: 70px auto;
   height: 600px;
   width: 600px;
+  margin-bottom: 25px;
+}
+
+.vinyl-ad-card {
+  background-color: #221a20;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 80%;
+  max-width: 1100px;
+  height: 500px; /* Set a fixed height for the card */
+  margin: 30px auto;
+  padding: 0;
+  border: 2px solid rgb(245,195,40);
+  transition: transform 0.3s ease;
+  margin-top: 0;
 }
 
 
+/* vinyl ad */
+.vinyl-ad-card:hover {
+  transform: scale(1.04); /* Slightly increase the size on hover */ 
+}
 
+.vinyl-ad-img {
+  flex: 1;
+  object-fit: cover; 
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.vinyl-ad-text {
+  font-family: 'Reem Kufi Fun', sans-serif;
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  flex: 2;
+  padding: 30px;
+  font-size: 100px;
+  color: rgb(245,195,40);
+}
 
 
 /* event card */
@@ -110,7 +152,7 @@
 .event-card-title {
   font-family: 'Reem Kufi Fun', sans-serif;
   font-size: 35px;
-  color: rgb(231, 203, 21);
+  color: rgb(245,195,40);
   margin: 0; 
 }
 
@@ -136,7 +178,6 @@
 
 
 /* product card */
-
 .products-container {
     display: flex;
     flex-wrap: wrap;
@@ -171,7 +212,7 @@
     font-family: 'Reem Kufi Fun', sans-serif;
     font-size: 25px;
     text-align: center;
-    color: rgb(231, 203, 21);
+    color: rgb(245,195,40);
 }
 
 .product-price {
@@ -179,7 +220,7 @@
     font-size: 25px;
     font-weight: bold;
     text-align: center;
-    color: rgb(231, 203, 21);
+    color: rgb(245,195,40);
 }
 
 #product-links {
@@ -205,17 +246,17 @@
 
 .icon-container {
   margin-left: 500px;
-
 }
 
 .nav-links {
     font-family: 'Reem Kufi Fun', sans-serif;
-    font-size: large;
+    font-size: 25px;
     display: flex;
     gap: 25px; /* This will provide spacing between each link and the button */
 }
 
 .navbar img {
+  margin-top: 5px;
     height: 100px;
     width: auto;
     transition: opacity 0.3s ease, transform 0.3s ease; /* smooth transitions */
@@ -232,7 +273,7 @@
 }
 
 .navbar a:hover {
-    color: rgb(231, 203, 21); /* Lighter color when hovering */
+    color: rgb(245,195,40); /* Lighter color when hovering */
 }
 
 .shop-icon {
@@ -246,7 +287,7 @@
 }
 
 .shop-icon:hover {
-    background-color: rgb(231, 203, 21); /* Slightly lighter color when hovering */
+    background-color: rgb(245,195,40); /* Slightly lighter color when hovering */
 }
 
 
@@ -264,7 +305,6 @@
 }
 
 #details-image {
-  border: #d5d4b7;
   border-style: solid;
   height: 750px;
 }
@@ -328,7 +368,7 @@
 }
 
 .details-quantity-button {
-  background-color: rgb(231, 203, 21);
+  background-color: rgb(245,195,40);
   color: #000000;
   width: 30px; 
   text-align: center;
@@ -351,29 +391,31 @@
 
 .add-to-cart-btn {
   padding: 15px 50px;  
-  background-color: rgb(231, 203, 21);  
+  background-color: rgb(245,195,40);  
   color: #000000;            
   margin-top: 1rem;        
   cursor: pointer;         
   border: none;          
-  border-radius: 8px;     
+  border-radius: 8px;  
+  transition: transform 0.3s; /* for a hover effect below */  
 
 }
 
 .add-to-cart-btn:hover {
-  background-color: #d5d4b7;  
+  background-color: #d5d4b7; 
+  transform: scale(1.1); /* Slightly increase the size on hover */
 }
 
   
  /* cart */
  .cart-empty{
     font-family: 'Reem Kufi Fun', sans-serif;
-    color: rgb(231, 203, 21);
+    color: rgb(245,195,40);
     text-align: center;
   }
   .cart-header {
     font-family: 'Reem Kufi Fun', sans-serif;
-  color: rgb(231, 203, 21); 
+  color: rgb(245,195,40); 
   text-align: center; 
   }
 
@@ -387,13 +429,13 @@
   .checkout-btn {
     display: block; /* or display: inline-block; based on your needs */
     margin: 20px auto;
-    background-color: rgb(231, 203, 21);;
+    background-color: rgb(245,195,40);
     color: #000000;
   }
   .continue-shop {
     display: block; /* or display: inline-block; based on your needs */
     margin: 0 auto;
-    background-color: rgb(231, 203, 21);;
+    background-color: rgb(245,195,40);
     color: #000000;
    
 }
@@ -458,7 +500,7 @@
 
 .cart-remove-button {
     padding: 8px 15px;
-    background-color: rgb(231, 203, 21);;
+    background-color: rgb(245,195,40);
     border: none;
     border-radius: 4px;
     color: #000000;
@@ -552,7 +594,7 @@ title {
 }
 
 .about-header-image {
-  border: 4px solid #a79e3d;
+  border: 4px solid rgb(245,195,40);
     width: 100%;
     height:700px;
     object-fit: cover;
@@ -568,7 +610,7 @@ title {
 }
 
 .about-profile-image {
-    border: 4px solid #a79e3d;
+    border: 4px solid rgb(245,195,40);
     max-width: 150px;
     height: auto;
     /* border-radius: 50%; */
@@ -579,7 +621,7 @@ title {
 .about-description {
     margin: 20px 0;
     font-size: 16px;
-    color: #a79e3d;
+    color: rgb(245,195,40);
 }
 
 /* payment */
@@ -634,7 +676,7 @@ title {
   }
 
   .payment-complete {
-    color: #a79e3d;
+    color: rgb(245,195,40);
     font-family: 'Reem Kufi Fun', sans-serif;
     text-align: center;
   }
@@ -656,7 +698,7 @@ title {
   #payment-message {
     font-family: 'Reem Kufi Fun', sans-serif;
     font-size: x-large;
-    color: #a79e3d;
+    color: rgb(245,195,40);
 
   }
 
@@ -792,13 +834,24 @@ title {
 
 /* media */
 .media-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  gap: 40px; /* increased space between grid items */
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 100px;
 }
 
 .media-container img {
-  margin: 10px;
-  width: 200px; /* adjust as needed */
-  height: auto;
+  width: 100%; /* image width equal to column width */
+  object-fit: cover; /* images cover the area without stretching */
+  aspect-ratio: 1 / 1; /* images remain square */
+  transition: transform 0.3s ease;
+  border: 2px solid #d5d4b7;
+  
+}
+
+.media-container img:hover {
+  transform: scale(1.1); /* Slightly increase the size on hover */
+  
 }

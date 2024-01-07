@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 
 import EventCard from "../components/EventCard";
+import VinylAd from '../components/VinylAd';
 
 function Home() {
     const [events, setEvents] = useState([])
-
-    
 
     useEffect(() => {
         fetch('/events')
@@ -32,11 +31,13 @@ function Home() {
         <hr class="home-separator-line"></hr>
         <p className='home-text'>Moon Soul is a raw, psychedelic soul band from New York City -- a spontaneous, high-energy outfit that blends the sounds of The Zombies, Fela Kuti, Tame Impala, and Sly & the Family Stone into something funky and totally original.</p>
     </div>
-    <div class="home-image-content">
-        <img className="home-image" src="pictures/RNI-Films-IMG-DC2A4323-26B0-4762-B251-CD8A0AE4943C.jpg" />
+    <div class="home-image-content" >
+        <img className="home-image" src="/pictures/RNI-Films-IMG-DC2A4323-26B0-4762-B251-CD8A0AE4943C.jpg" />
     </div> 
+    
         </div>
-            {shows}
+        <VinylAd />   
+        {shows}
         </div>
     )
 }

@@ -25,7 +25,7 @@ function Cart({ cart, setCart }) {
             <button className="continue-shop" >Continue shopping</button>
             </Link>
              {cart.length === 0 ?   
-                <h1 className="cart-empty">Your Cart is Empty!</h1>
+                <h1 className="cart-empty">Your cart is empty!</h1>
                 : 
                 <div>
                 {items}

@@ -26,7 +26,7 @@ function App() {
   }, [])
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'black' }}>
+      <div className='app' style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'black' }}>
           <BrowserRouter>
               <Navbar />
               <div style={{ flex: 1 }}>

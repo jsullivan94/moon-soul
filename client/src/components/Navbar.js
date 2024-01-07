@@ -7,7 +7,7 @@ function Navbar(){
         <div className="navbar">
             <div className="navbar-content">
                 <Link to="/">
-                    <img src='/pictures/IMG_6816.png' alt='Moon Soul' />
+                    <img src='/pictures/IMG_0449.PNG' alt='Moon Soul' />
                 </Link>
                 <div className='icon-container'>
                     <FaInstagram className="icon" onClick={() => window.open('https://www.instagram.com/moonsoulmusic/')} />
@@ -16,8 +16,8 @@ function Navbar(){
             <div className="nav-links">
                    
                 <Link to="/">Home</Link>
-                <Link to="/about">About</Link>
-                <Link to="/photos">Photos</Link>
+                {/* <Link to="/about">About</Link> */}
+                <Link to="/media">Media</Link>
                 <Link to="/store">Store</Link>
                 <Link to="/cart">
                     <FaCartShopping className="shop-icon" />
