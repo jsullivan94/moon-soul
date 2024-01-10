@@ -11,6 +11,30 @@ with app.app_context():
     Category.query.delete()
     Product.query.delete()
     Event.query.delete()
+
+    def add_admin_user():
+    # Create a new admin user instance
+        new_admin = Admin(
+        username='1234'  # Replace with desired username
+    )
+
+    # Set the password using the password_hash setter
+        new_admin.password_hash = '1234'  # Replace with desired password
+
+    # Add the new admin to the database
+        db.session.add(new_admin)
+
+    try:
+        # Commit the changes to the database
+        db.session.commit()
+        print("Admin user added successfully.")
+    except Exception as e:
+        # Handle any errors
+        print(f"Error adding admin user: {e}")
+        db.session.rollback()
+
+# Call the function to add the admin user
+    add_admin_user()
    
 
     category1 = Category(name='Cloths')

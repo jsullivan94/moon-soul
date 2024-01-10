@@ -207,6 +207,40 @@ def get_all_events():
         200
     )
 
+@app.post('/events')
+def post_event():
+    data = request.get_json()
+
+    new_event = Event(
+        image_path = data.get('image_path'),
+        title = data.get('title'),
+        date = data.get('date'),
+        location = data.get('location'),
+        price = data.get('price')
+
+     )
+
+    db.session.add(new_event)
+    db.session.commit()
+
+    return make_response(
+        jsonify(new_event.to_dict()),
+        201
+    )
+
+@app.delete('/events/<int:id>')
+def delete_event(id):
+    
+    event = Event.query.get(id)
+
+    if event is None:
+        return jsonify({'message': 'Event not found'}), 404
+
+    db.session.delete(event)
+    db.session.commit()
+
+    return jsonify({'message': 'Event successfully deleted'}), 200
+
 
 @app.get('/events/<int:id>')
 def get_event_by_id(id):
@@ -240,21 +274,21 @@ def get_product_by_id(id):
     )
 
 
-@app.post('/news_letter')
-def post_nl_email():
-    data = request.get_json()
+# @app.post('/news_letter')
+# def post_nl_email():
+#     data = request.get_json()
 
-    new_email = NewsLetter(
-        email = data.get('email')
-     )
+#     new_email = NewsLetter(
+#         email = data.get('email')
+#      )
 
-    db.session.add(new_email)
-    db.session.commit()
+#     db.session.add(new_email)
+#     db.session.commit()
 
-    return make_response(
-        jsonify(new_email.to_dict()),
-        201
-    )
+#     return make_response(
+#         jsonify(new_email.to_dict()),
+#         201
+#     )
 
 
 if __name__ == '__main__':

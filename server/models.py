@@ -27,7 +27,7 @@ class Event(db.Model, SerializerMixin):
     __tablename__ = "events"
 
     id = db.Column(db.Integer, primary_key=True)
-    image_path = db.Column(db.String, nullable=True)
+    image_path = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     date = db.Column(db.String, nullable=False)
     location = db.Column(db.String, nullable=False)
