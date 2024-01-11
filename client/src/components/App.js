@@ -13,6 +13,8 @@ import Photos from "../pages/Photos";
 import PaymentComplete from "../pages/PaymentComplete";
 import AdminSignIn from "../pages/AdminSignIn";
 import Media from "../pages/Media";
+import CheckoutForm from "./CheckoutForm";
+import AddressForm from "./AddressForm";
 
 function App() {
   const [products, setProducts] = useState([])
