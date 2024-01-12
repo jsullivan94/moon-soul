@@ -14,7 +14,6 @@ import PaymentComplete from "../pages/PaymentComplete";
 import AdminSignIn from "../pages/AdminSignIn";
 import Media from "../pages/Media";
 import CheckoutForm from "./CheckoutForm";
-import AddressForm from "./AddressForm";
 
 function App() {
   const [products, setProducts] = useState([])
@@ -38,7 +37,9 @@ function App() {
                       <Route path="/about" element={<About />} />
                       <Route path="/store" element={<Store products={products} />} />
                       <Route path="/payment-complete" element={<PaymentComplete />} />
-                      <Route path="/checkout" element={<Checkout cart={cart} />} />
+                      <Route path="/checkout" element={<Checkout cart={cart} />} >
+                      <Route path="payment" element={<CheckoutForm  />} />
+                      </Route>
                       <Route path="/photos" element={<Photos />} />
                       <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
                       <Route path="/admin" element={<AdminSignIn />} />

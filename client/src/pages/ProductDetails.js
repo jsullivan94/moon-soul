@@ -72,7 +72,7 @@ function ProductDetails({ products, cart }) {
             <div className="product-options-container">
             <h1 className="product-details-name">{product.name}</h1>
             <p className="product-details-description">{product.description}</p>
-            <hr class="details-separator-line"></hr>
+            <hr className="details-separator-line"></hr>
             <h2 className="product-details-price">${product.price}</h2>
             {cat === 1 ? 
             <select onChange={handleChange} 

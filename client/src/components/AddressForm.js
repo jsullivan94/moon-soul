@@ -1,9 +1,7 @@
-    import { Link, useNavigate, useLocation } from 'react-router-dom';
+    import { useNavigate } from 'react-router-dom';
     import React, { useState }from 'react';
     
-    
-
-const AddressForm = () => {
+const AddressForm = ( { setIsAddressSubmitted } ) => {
   const [address, setAddress] = useState({
     line1: '',
     line2: '',
@@ -13,19 +11,15 @@ const AddressForm = () => {
     country: 'US', // Default to US, change as needed
   });
   const navigate = useNavigate();
-  const location = useLocation();
-console.log("Current location:", location.pathname);
-
+  
   const handleChange = (e) => {
     setAddress({ ...address, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here, you can add validation for the address data
-    console.log(address); // For debugging, remove in production
+    setIsAddressSubmitted(true)
     
-
     navigate('/checkout/payment');
   };
 
