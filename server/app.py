@@ -50,19 +50,23 @@ def create_payment():
     try:
         data = json.loads(request.data)
 
+        total_in_cents = calculate_order_amount(data)
+        total_in_dollars = total_in_cents / 100  # Convert cents to dollars
+
         intent = stripe.PaymentIntent.create(
-            amount=calculate_order_amount(data),
+            amount=total_in_cents,
             currency='usd',
             automatic_payment_methods={
                 'enabled': True,
             },
         )
         return jsonify({
-            'clientSecret': intent['client_secret']
-
+            'clientSecret': intent['client_secret'],
+            'total_price': total_in_dollars  # Return the total price in dollars
         })
     except Exception as e:
         return jsonify(error=str(e)), 403
+
 
 
 @app.get('/check_session')
@@ -274,21 +278,55 @@ def get_product_by_id(id):
     )
 
 
-# @app.post('/news_letter')
-# def post_nl_email():
-#     data = request.get_json()
+@app.post('/order')
+def post_Order():
+    data = request.get_json()
 
-#     new_email = NewsLetter(
-#         email = data.get('email')
-#      )
+    address_data = data.get('address')
+    address = Address(
+        full_name=address_data.get('full_name'),
+        email=address_data.get('email'),
+        line1=address_data.get('line1'),
+        line2=address_data.get('line2'),
+        city=address_data.get('city'),
+        state=address_data.get('state'),
+        postal_code=address_data.get('postal_code'),
+        country=address_data.get('country')
+    )
 
-#     db.session.add(new_email)
-#     db.session.commit()
+       # Now that the new_Order is created, create a list of OrderItem instances
+    order_items_data = data.get('order_items')
+    order_items = []
+    for item_data in order_items_data:
+        order_item = OrderItem(
+            quantity=item_data.get('quantity'),
+            price=item_data.get('price'),
+            order=new_Order, 
+            product_id=item_data.get('product_id'),
+            order_id=new_Order.id,
+            size=item_data.get('size')
+        )
+        order_items.append(order_item)
 
-#     return make_response(
-#         jsonify(new_email.to_dict()),
-#         201
-#     )
+    # Create the Order instance first
+    new_Order = Order(
+        total_price=data.get('total_price'),
+        address=address,
+        address_id=address.id,
+        order_items=order_items 
+    )
+
+    db.session.add(new_Order)
+    db.session.commit()
+
+    return make_response(
+        jsonify(new_Order.to_dict()),
+        201
+    )
+
+
+
+
 
 
 if __name__ == '__main__':

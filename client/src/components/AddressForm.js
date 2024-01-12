@@ -1,25 +1,20 @@
     import { useNavigate } from 'react-router-dom';
-    import React, { useState }from 'react';
+    import React from 'react';
+
     
-const AddressForm = ( { setIsAddressSubmitted } ) => {
-  const [address, setAddress] = useState({
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    postal_code: '',
-    country: 'US', // Default to US, change as needed
-  });
+const AddressForm = ( { setLocalAddress, setIsAddressSubmitted, localAddress } ) => {
+
+  
   const navigate = useNavigate();
   
   const handleChange = (e) => {
-    setAddress({ ...address, [e.target.name]: e.target.value });
+    setLocalAddress({ ...localAddress, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     setIsAddressSubmitted(true)
-    
     navigate('/checkout/payment');
   };
 
@@ -30,37 +25,51 @@ const AddressForm = ( { setIsAddressSubmitted } ) => {
       </div>
       <input
         type="text"
+        name="full_name"
+        placeholder="Full Name"
+        value={localAddress.full_name}
+        onChange={handleChange}
+      />
+      <input
+        type="text"
+        name="email"
+        placeholder="Email"
+        value={localAddress.email}
+        onChange={handleChange}
+      />
+      <input
+        type="text"
         name="line1"
         placeholder="Address Line 1"
-        value={address.line1}
+        value={localAddress.line1}
         onChange={handleChange}
       />
       <input
         type="text"
         name="line2"
         placeholder="Address Line 2"
-        value={address.line2}
+        value={localAddress.line2}
         onChange={handleChange}
       />
       <input
         type="text"
         name="city"
         placeholder="City"
-        value={address.city}
+        value={localAddress.city}
         onChange={handleChange}
       />
       <input
         type="text"
         name="postal_code"
         placeholder="Zip Code"
-        value={address.postal_code}
+        value={localAddress.postal_code}
         onChange={handleChange}
       />
       <input
         type="text"
         name="country"
         placeholder="Country"
-        value={address.country}
+        value={localAddress.country}
         onChange={handleChange}
       />
     <button  type="submit" id="submit"></button>

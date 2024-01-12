@@ -1,6 +1,6 @@
 from faker import Faker
 from config import db, app
-from models import Admin, Event, Product, Category, Order, OrderItem, Customer, CartItem, Cart
+from models import Admin, Event, Product, Category, Order, OrderItem, CartItem, Cart
 from datetime import datetime, timedelta
 from config import bcrypt
 

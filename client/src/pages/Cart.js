@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from "react";   
 import { Link } from "react-router-dom";
 
 import ProductInCartCard from "../components/ProductInCartCard";
@@ -14,6 +14,7 @@ function Cart({ cart, setCart }) {
             });
     }, [setCart]);
 
+    
     const items = cart.map(item => 
     <ProductInCartCard key={item.id} {...item} cart={cart} setCart={setCart} />
     )

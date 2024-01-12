@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { ClientSecretContext } from "../pages/Checkout";
 
-function CheckoutForm() {
+function CheckoutForm( {localAddress} ) {
   const { clientSecret } = useContext(ClientSecretContext);
   const stripe = useStripe();
   const elements = useElements();
@@ -16,6 +16,7 @@ function CheckoutForm() {
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
+
 
     setIsLoading(true);
 
@@ -61,6 +62,8 @@ function CheckoutForm() {
         setMessage("Something went wrong.");
         break;
     }
+
+    
 
     setIsLoading(false);
   };

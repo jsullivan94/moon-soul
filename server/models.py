@@ -63,40 +63,30 @@ class Category(db.Model, SerializerMixin):
 class Order(db.Model, SerializerMixin):
     __tablename__ = "orders"
 
-    serialize_rules=('-order_items.order',)
+    serialize_rules = ('-order_items.order', '-address.order',)
 
     id = db.Column(db.Integer, primary_key=True)
     order_date = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
     total_price = db.Column(db.Float, nullable=False)
 
-    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+    address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'))
 
+    address = db.relationship('Address', backref='order', uselist=False, foreign_keys=[address_id])
     order_items = db.relationship('OrderItem', backref='order')
 
 class OrderItem(db.Model, SerializerMixin):
     __tablename__ = "order_items"
 
-    serialize_rules=('-order.order_items', '-product.order_items',)
+    serialize_rules=('-order.order_items', '-product.order_items', '-address.order_items',)
 
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
+    size = db.Column(db.String)
+    
 
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
-
-class Customer(db.Model, SerializerMixin):
-    __tablename__ = "customers"
-
-    serialize_rules=('-orders.customer',)
-
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String, nullable=False)
-    last_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
-    address = db.Column(db.String, nullable=False)
-
-    orders = db.relationship('Order', backref='customer')
 
 class Cart(db.Model, SerializerMixin):
     __tablename__ = "carts"
@@ -120,11 +110,23 @@ class CartItem(db.Model, SerializerMixin):
     cart_id = db.Column(db.String, db.ForeignKey('carts.id'))
     image_path = db.Column(db.String)
 
-class NewsLetter(db.Model, SerializerMixin):
-    __tablename__ = "emails"
+class Address(db.Model, SerializerMixin):
+    __tablename__ = "addresses"
+
+    serialize_rules = ('-orders.address',)
 
     id = db.Column(db.Integer, primary_key=True)
+    full_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
+    line1 = db.Column(db.String, nullable=False)
+    line2 = db.Column(db.String)
+    city = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
+    postal_code = db.Column(db.Integer, nullable=False)
+    country = db.Column(db.String, nullable=False) 
+
+   
+
 
 
 
