@@ -199,6 +199,33 @@ def update_cart_item(id):
     )
     return response
 
+@app.patch('/update_cart_item_from_cart/<int:id>')
+def update_cart_item_from_cart(id):
+    cart_id = request.cookies.get('cart_id')
+
+    cart_item = CartItem.query.filter(CartItem.cart_id == cart_id, CartItem.id == id).first()
+
+    if cart_item:
+        data=request.get_json()
+
+        new_quantity=data.get('quantity')
+        new_size=data.get('size')
+        
+        cart_item.quantity = new_quantity
+        cart_item.price = new_quantity * cart_item.product.price
+        cart_item.size = new_size
+        
+        db.session.commit()
+
+    if cart_item is None:
+        return jsonify({'message': 'Cart item not found'}), 404
+    
+    response = make_response(
+        jsonify(cart_item.to_dict()),
+        201
+    )
+    return response
+
 
 @app.get('/events')
 def get_all_events():

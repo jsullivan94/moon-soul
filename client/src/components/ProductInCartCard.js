@@ -30,7 +30,7 @@ function ProductInCartCard({ cart, setCart, size, id, name, price, image_path, q
     }
 
     function handlePatch() {
-    fetch(`/update_cart_item/${id}`, {
+    fetch(`/update_cart_item_from_cart/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -42,7 +42,13 @@ function ProductInCartCard({ cart, setCart, size, id, name, price, image_path, q
         }
         return response.json(); 
     })
-    .then(data => setCart(data))
+    .then(data => {
+        const updatedCart = cart.map(item => 
+            item.id === data.id ? data : item
+        );
+        setCart(updatedCart);
+        setInEdit((prev) => !prev)
+    })
     .catch(error => {
         console.error('There was a problem with the PATCH request:', error);
     });
@@ -69,7 +75,6 @@ function handleDecrease() {
             </div>
             <img className="cart-product-image" src={image_path} alt={name} />
             <div className="cart-product-card-content">
-            <h1 className="cart-product-name">{name}</h1>
             {size !== '' ? (
                  <div className="cart-product-size">{size}</div>
                 ) : (
@@ -84,25 +89,24 @@ function handleDecrease() {
             <div className="cart-product-card">
             <img className="cart-product-image" src={image_path} alt={name} />
             <div className="cart-product-card-content">
-            <h1 className="cart-product-name">{name}</h1>
                 {category_id === 1 ? 
             <select onChange={handleChange} 
                 value={editSize}
-                id="dropdown">
+                id="dropdown-edit">
                 <option value="Small">Small</option>
                 <option value="Medium">Medium</option>
                 <option value="Large">Large</option>
                 <option value="XL">XL</option>
             </select> : 
-            <div className="cart-product-size-placeholder"></div>}
-            <h2 className="cart-product-price">${price}</h2>
-            <div className="quantity-control">
-            <button className="details-quantity-button" onClick={() => handleDecrease()}>-</button>
-            <h2 className="quantity-display"> {editAmount} </h2>
-            <button className="details-quantity-button" onClick={() => handleIncrease()}>+</button>
+            <div className="cart-product-size-placeholder-edit"></div>}
+            <h2 className="cart-product-price-edit">${price}</h2>
+            <div className="quantity-control-edit">
+            <button className="details-quantity-button-edit" onClick={() => handleDecrease()}>-</button>
+            <h2 className="quantity-display-edit"> {editAmount} </h2>
+            <button className="details-quantity-button-edit" onClick={() => handleIncrease()}>+</button>
             </div>
             </div>
-            <button className="cart-remove-button" onClick={handlePatch}>Save</button>
+            <button className="cart-save-button" onClick={handlePatch}>Save</button>
             </div>
         )}
         </div>

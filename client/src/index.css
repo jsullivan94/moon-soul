@@ -1089,5 +1089,70 @@ title {
   /* Add more styles for the icon as needed */
 }
 
+.cart-product-price-edit {
+font-family: 'Reem Kufi Fun', sans-serif;
+  color: #d5d4b7;
+  font-size: 30px;
+  flex: 0 0 100px; /* Fixed width */
+  text-align: center; /* Center the text */
+  margin-right: 20px;
+  margin-left: 100px;
+}
+
+.cart-save-button {
+  padding: 8px 15px;
+  background-color: rgb(245,195,40);
+  width: 120px;
+  border: none;
+  border-radius: 4px;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 35px;
+  margin-right: 50px;
+  margin-left: 150px;
+
+}
+
+.cart-product-size-placeholder-edit {
+  flex: 0 0 60px; /* Same width as size */
+  margin-right: 200px;
+}
+
+.quantity-control-edit {
+  display: flex;
+  align-items: center;
+}
+
+.details-quantity-button-edit {
+  background-color: rgb(245,195,40);
+  color: #000000;
+  width: 30px; 
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 8px 0;
+}
+.quantity-display-edit {
+  color: #d5d4b7;
+  margin: 25px 25px;
+  font-size: 30px; 
+}
+
+#dropdown-edit {
+  padding: 0.4rem ;               
+  font-size: 1rem;                    
+  font-family: 'Reem Kufi Fun', sans-serif;
+  border: 2px solid #d5d4b7;             
+  border-radius: 8px;               
+  background-color: #221a20;          
+  outline: none;                     
+  cursor: pointer;                  
+  color: #d5d4b7;                      
+  width: 100px; 
+}
+
 
 
