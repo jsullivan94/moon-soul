@@ -14,7 +14,6 @@ function Cart({ cart, setCart }) {
             });
     }, [setCart]);
 
-    
     const items = cart.map(item => 
     <ProductInCartCard key={item.id} {...item} cart={cart} setCart={setCart} />
     )

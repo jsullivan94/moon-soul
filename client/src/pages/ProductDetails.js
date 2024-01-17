@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function ProductDetails({ products, cart }) {
     
     const { id } = useParams();
     const product = products.find(p => p.id === Number(id));
-    const [size, setSize] = useState('')
+    const [size, setSize] = useState('Small')
     const [amount, setAmount] = useState(1)
     const navigate = useNavigate()
 

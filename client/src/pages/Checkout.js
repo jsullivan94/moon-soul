@@ -7,13 +7,10 @@ import AddressForm from "../components/AddressForm";
 
 const stripePromise = loadStripe("pk_test_51NXRqNBuKh2FTrpXvl7QJdfEGjYnm4wAY5vak3ZsFzFrI5sQ9L0clXfrgG0g6LLebLCgqM25LP8rrCKTTNX22vyY00xj95ZvLg");
 
-
 function Checkout( { localAddress, setLocalAddress, cart, setTotalPrice } ) {
   const [clientSecret, setClientSecret] = useState("");
   const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
 
-   
-  
   useEffect(() => {
     if (!isAddressSubmitted || cart.length === 0) {
       return;
@@ -33,15 +30,17 @@ function Checkout( { localAddress, setLocalAddress, cart, setTotalPrice } ) {
 
         const data = await response.json();
         setClientSecret(data.clientSecret);
-        setTotalPrice(data.total_price);
+        setTotalPrice(data.total_price)
+        
+        
       } catch (error) {
-        console.error("There was an issue:", error);
-        // Handle error state here
+        console.error("There was an issue:", error)
       }
+      
     };
 
     fetchClientSecret();
-  }, [cart, isAddressSubmitted]);
+  }, [cart, isAddressSubmitted, setTotalPrice]);
 
   const appearance = {
     theme: 'night',
@@ -56,7 +55,6 @@ function Checkout( { localAddress, setLocalAddress, cart, setTotalPrice } ) {
         </Routes>
         {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          {/* Routes for components that require Elements (like PaymentElement) */}
           <Outlet />
         </Elements>
       )}
@@ -64,6 +62,7 @@ function Checkout( { localAddress, setLocalAddress, cart, setTotalPrice } ) {
     </div>
   );
 }
+
 export const ClientSecretContext = React.createContext();
 export default Checkout;
 

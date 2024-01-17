@@ -2,35 +2,51 @@ import React, { useState, useContext } from "react";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { ClientSecretContext } from "../pages/Checkout";
 
-function CheckoutForm( {localAddress} ) {
+function CheckoutForm({ totalPrice, localAddress, cart }) {
   const { clientSecret } = useContext(ClientSecretContext);
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // const orderData = {
+  //   total_price: totalPrice,
+  //   address: localAddress,
+  //   order_items: cart
+  // };
+
+  // if (message === 'succeeded'){
+  // fetch('/order', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(orderData),
+  // })
+  //   .then((res) => res.json())
+  //   .then(() => {
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   })
+  // }
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!stripe || !elements) {
-      // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
-
     setIsLoading(true);
-
+  
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
         return_url: `${window.location.origin}/payment-complete`,
       },
     });
 
     if (error) {
-      // This point will only be reached if there is an immediate error when
-      // confirming the payment. Otherwise, your customer will be redirected.
       if (error.type === "card_error" || error.type === "validation_error") {
         setMessage(error.message);
       } else {
@@ -40,12 +56,14 @@ function CheckoutForm( {localAddress} ) {
       return;
     }
 
-    // Retrieve payment intent status after form submission
     const paymentIntentResponse = await stripe.retrievePaymentIntent(clientSecret);
     if (paymentIntentResponse.error) {
       setMessage("Failed to retrieve payment intent status.");
       setIsLoading(false);
       return;
+    }
+
+    if (paymentIntentResponse.paymentIntent.status === 'succeeded') { 
     }
 
     switch (paymentIntentResponse.paymentIntent.status) {
@@ -62,8 +80,6 @@ function CheckoutForm( {localAddress} ) {
         setMessage("Something went wrong.");
         break;
     }
-
-    
 
     setIsLoading(false);
   };

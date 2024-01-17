@@ -282,6 +282,7 @@ def get_product_by_id(id):
 def post_Order():
     data = request.get_json()
 
+    # Create Address instance
     address_data = data.get('address')
     address = Address(
         full_name=address_data.get('full_name'),
@@ -294,7 +295,14 @@ def post_Order():
         country=address_data.get('country')
     )
 
-       # Now that the new_Order is created, create a list of OrderItem instances
+    # Create the Order instance
+    new_Order = Order(
+        total_price=data.get('total_price'),
+        address=address,
+        address_id=address.id
+    )
+
+    # Create a list of OrderItem instances
     order_items_data = data.get('order_items')
     order_items = []
     for item_data in order_items_data:
@@ -308,13 +316,7 @@ def post_Order():
         )
         order_items.append(order_item)
 
-    # Create the Order instance first
-    new_Order = Order(
-        total_price=data.get('total_price'),
-        address=address,
-        address_id=address.id,
-        order_items=order_items 
-    )
+    new_Order.order_items = order_items
 
     db.session.add(new_Order)
     db.session.commit()
@@ -323,7 +325,6 @@ def post_Order():
         jsonify(new_Order.to_dict()),
         201
     )
-
 
 
 

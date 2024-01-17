@@ -9,7 +9,6 @@ import Checkout from "../pages/Checkout";
 import Cart from "../pages/Cart";
 import ProductDetails from "../pages/ProductDetails";
 import Footer from "./Footer";
-import Photos from "../pages/Photos";
 import PaymentComplete from "../pages/PaymentComplete";
 import AdminSignIn from "../pages/AdminSignIn";
 import Media from "../pages/Media";
@@ -27,8 +26,17 @@ function App() {
     city: '',
     state: '',
     postal_code: '',
-    country: 'US', // Default to US, change as needed
+    country: 'US',
   });
+
+  useEffect(() => {
+    fetch("/get_cart_items")
+        .then(r => r.json())
+        .then(data => setCart(data))
+        .catch(error => {
+            console.error("Error fetching cart items:", error);
+        });
+}, [setCart]);
 
   useEffect(() => {
       fetch('/products')
@@ -36,6 +44,7 @@ function App() {
       .then(r => setProducts(r))
       .catch(error => console.error("Error fetching products:", error));
   }, [])
+
 
     return (
       <div className='app' style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'black' }}>
@@ -48,10 +57,9 @@ function App() {
                       <Route path="/about" element={<About />} />
                       <Route path="/store" element={<Store products={products} />} />
                       <Route path="/payment-complete" element={<PaymentComplete totalPrice={totalPrice} localAddress={localAddress} cart={cart} />} />
-                      <Route path="/checkout" element={<Checkout cart={cart} setLocalAddress={setLocalAddress} localAddress={localAddress} setTotalPrice={setTotalPrice} />} >
-                            <Route path="payment" element={<CheckoutForm localAddress={localAddress} />} />
+                      <Route path="/checkout" element={<Checkout totalPrice={totalPrice} cart={cart} setLocalAddress={setLocalAddress} localAddress={localAddress} setTotalPrice={setTotalPrice} />} >
+                            <Route path="payment" element={<CheckoutForm totalPrice={totalPrice} localAddress={localAddress} cart={cart} />} />
                       </Route>
-                      <Route path="/photos" element={<Photos />} />
                       <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
                       <Route path="/admin" element={<AdminSignIn />} />
                       <Route path="/media" element={<Media />} />
