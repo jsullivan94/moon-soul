@@ -1,22 +1,32 @@
-import { useEffect } from "react";   
+import { useEffect, useState } from "react";   
 import { Link } from "react-router-dom";
 
 import ProductInCartCard from "../components/ProductInCartCard";
 
 function Cart({ cart, setCart }) {
-
+    const [inEdit, setInEdit] = useState(false)
+    
     useEffect(() => {
         fetch("/get_cart_items")
             .then(r => r.json())
-            .then(data => setCart(data))
+            .then((data) => setCart(data))
             .catch(error => {
                 console.error("Error fetching cart items:", error);
             });
     }, [setCart]);
 
-    const items = cart.map(item => 
-    <ProductInCartCard key={item.id} {...item} cart={cart} setCart={setCart} />
-    )
+    const items = cart.map(item => {
+        return (
+            <ProductInCartCard 
+                key={item.id} 
+                inEdit={inEdit}
+                {...item} 
+                category_id={item.product.category_id} 
+                cart={cart} 
+                setCart={setCart} 
+            />
+        );
+    });
     
     return (
         <div>

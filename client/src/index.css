@@ -1012,6 +1012,7 @@ title {
 
 
 .cart-product-card {
+  position: relative;
   background-color: #221a20;
   display: flex;
   flex-direction: row;
@@ -1078,6 +1079,14 @@ title {
 .cart-product-size-placeholder {
   flex: 0 0 60px; /* Same width as size */
   margin-right: 200px;
+}
+
+.edit-icon-container {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  color: #d5d4b7;
+  /* Add more styles for the icon as needed */
 }
 
 
