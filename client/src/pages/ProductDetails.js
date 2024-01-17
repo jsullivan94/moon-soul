@@ -5,7 +5,7 @@ function ProductDetails({ products, cart }) {
     
     const { id } = useParams();
     const product = products.find(p => p.id === Number(id));
-    const [size, setSize] = useState('Small')
+    const [size, setSize] = useState(product?.category_id === 1 ? 'Small' : '');
     const [amount, setAmount] = useState(1)
     const navigate = useNavigate()
 
@@ -14,6 +14,7 @@ function ProductDetails({ products, cart }) {
     }
 
     const cat = product.category_id
+
     
     function handleIncrease() {
         setAmount(prev => prev += 1)

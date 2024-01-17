@@ -21,10 +21,16 @@ function ProductInCartCard({ cart, setCart, size, id, name, price, image_path, q
     return (
         <div className="cart-product-card">
             <img className="cart-product-image" src={image_path} alt={name} />
+            <div className="cart-product-card-content">
             <h1 className="cart-product-name">{name}</h1>
-            <h3 className="cart-product-size">{size}</h3>
+            {size !== '' ? (
+  <div className="cart-product-size">{size}</div>
+) : (
+  <div className="cart-product-size-placeholder"></div>
+)}
             <h2 className="cart-product-price">${price}</h2>
             <h3 className="cart-product-quantity">{quantity}</h3>
+            </div>
             <button className="cart-remove-button" onClick={handleClick}>Remove</button>
         </div>
     );

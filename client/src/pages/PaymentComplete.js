@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 
-function PaymentComplete(props) {
+function PaymentComplete( { stripePromise } ) {
   const [messageBody, setMessageBody] = useState('');
-  const { stripePromise, localAddress, cart, totalPrice } = props;
-
-  
 
   useEffect(() => {
     if (!stripePromise) return;

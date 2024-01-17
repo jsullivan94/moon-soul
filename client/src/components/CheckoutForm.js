@@ -15,7 +15,6 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
   //   order_items: cart
   // };
 
-  // if (message === 'succeeded'){
   // fetch('/order', {
   //   method: 'POST',
   //   headers: {
@@ -27,23 +26,26 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
   //   .then(() => {
   //   })
   //   .catch((err) => {
-  //     console.log(err);
+  //     console.log(err)
   //   })
-  // }
-  
+
+   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (!stripe || !elements) {
       return;
     }
-
+    
     setIsLoading(true);
+
   
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: `${window.location.origin}/payment-complete`,
-      },
+      }
+  
     });
 
     if (error) {
@@ -56,16 +58,15 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
       return;
     }
 
+    
+
     const paymentIntentResponse = await stripe.retrievePaymentIntent(clientSecret);
     if (paymentIntentResponse.error) {
       setMessage("Failed to retrieve payment intent status.");
       setIsLoading(false);
       return;
     }
-
-    if (paymentIntentResponse.paymentIntent.status === 'succeeded') { 
-    }
-
+  
     switch (paymentIntentResponse.paymentIntent.status) {
       case "succeeded":
         setMessage("Payment succeeded!");
@@ -80,8 +81,9 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
         setMessage("Something went wrong.");
         break;
     }
-
+    
     setIsLoading(false);
+    
   };
 
   const paymentElementOptions = {
