@@ -36,7 +36,7 @@ function App() {
         .catch(error => {
             console.error("Error fetching cart items:", error);
         });
-}, [setCart]);
+}, []);
 
   useEffect(() => {
       fetch('/products')
@@ -45,18 +45,17 @@ function App() {
       .catch(error => console.error("Error fetching products:", error));
   }, [])
 
-
     return (
       <div className='app' style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'black' }}>
           <BrowserRouter>
-              <Navbar />
               <div style={{ flex: 1 }}>
+              <Navbar />
                   <Routes>  
                       <Route path="/" element={<Home />} />
                       <Route path="/product/:id" element={<ProductDetails cart={cart} products={products} />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/store" element={<Store products={products} />} />
-                      <Route path="/payment-complete" element={<PaymentComplete totalPrice={totalPrice} localAddress={localAddress} cart={cart} />} />
+                      <Route path="/payment-complete" element={<PaymentComplete totalPrice={totalPrice} cart={cart} localAddress={localAddress}/>} />
                       <Route path="/checkout" element={<Checkout totalPrice={totalPrice} cart={cart} setLocalAddress={setLocalAddress} localAddress={localAddress} setTotalPrice={setTotalPrice} />} >
                             <Route path="payment" element={<CheckoutForm totalPrice={totalPrice} localAddress={localAddress} cart={cart} />} />
                       </Route>

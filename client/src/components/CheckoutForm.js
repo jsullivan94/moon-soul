@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { ClientSecretContext } from "../pages/Checkout";
 
@@ -9,27 +9,25 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const orderData = {
-  //   total_price: totalPrice,
-  //   address: localAddress,
-  //   order_items: cart
-  // };
-
-  // fetch('/order', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(orderData),
-  // })
-  //   .then((res) => res.json())
-  //   .then(() => {
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
-
-   
+  useEffect(() => {
+    fetch('/order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {total_price: totalPrice,
+        address: localAddress,
+        order_items: cart}),
+    })
+      .then((res) => res.json())
+      .then(() => {
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }, [])
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -45,8 +43,8 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
       confirmParams: {
         return_url: `${window.location.origin}/payment-complete`,
       }
-  
     });
+  
 
     if (error) {
       if (error.type === "card_error" || error.type === "validation_error") {
@@ -58,7 +56,7 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
       return;
     }
 
-    
+  
 
     const paymentIntentResponse = await stripe.retrievePaymentIntent(clientSecret);
     if (paymentIntentResponse.error) {

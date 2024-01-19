@@ -58,6 +58,13 @@ function AddressForm( { setLocalAddress, setIsAddressSubmitted, localAddress } )
       />
       <input className='address-form-input'
         type="text"
+        name="state"
+        placeholder="State"
+        value={localAddress.state}
+        onChange={handleChange}
+      />
+      <input className='address-form-input'
+        type="text"
         name="postal_code"
         placeholder="Zip Code"
         value={localAddress.postal_code}

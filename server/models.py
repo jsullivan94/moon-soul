@@ -122,7 +122,7 @@ class Address(db.Model, SerializerMixin):
     line2 = db.Column(db.String)
     city = db.Column(db.String, nullable=False)
     state = db.Column(db.String, nullable=False)
-    postal_code = db.Column(db.Integer, nullable=False)
+    postal_code = db.Column(db.String, nullable=False)
     country = db.Column(db.String, nullable=False) 
 
    
