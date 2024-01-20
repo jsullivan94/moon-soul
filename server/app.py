@@ -305,52 +305,81 @@ def get_product_by_id(id):
     )
 
 
+
 @app.post('/order')
-def post_Order():
-    data = request.get_json()
+def post_order():
+    try:
+        order_id = str(uuid.uuid4())
+        data = request.get_json()
 
-    new_Order = Order()
-   
-    address_data = data.get('address')
-    address = Address(
-        full_name=address_data.get('full_name'),
-        email=address_data.get('email'),
-        line1=address_data.get('line1'),
-        line2=address_data.get('line2'),
-        city=address_data.get('city'),
-        state=address_data.get('state'),
-        postal_code=address_data.get('postal_code'),
-        country=address_data.get('country')
-    )
+        new_Order = Order()
+        new_Order.id = order_id
 
-    new_Order.address=address
-    new_Order.address_id=address.id
-   
-    total_price=data.get('total_price')
-    new_Order.total_price=total_price
-    
-    order_items_data = data.get('order_items')
-    order_items = []
-    for item_data in order_items_data:
-        order_item = OrderItem(
-            quantity=item_data.get('quantity'),
-            price=item_data.get('price'),
-            order=new_Order, 
-            product_id=item_data.get('product_id'),
-            order_id=new_Order.id,
-            size=item_data.get('size')
+        address_data = data.get('address')
+        address = Address(
+            full_name=address_data.get('full_name'),
+            email=address_data.get('email'),
+            line1=address_data.get('line1'),
+            line2=address_data.get('line2'),
+            city=address_data.get('city'),
+            state=address_data.get('state'),
+            postal_code=address_data.get('postal_code'),
+            country=address_data.get('country')
         )
-        order_items.append(order_item)
 
-    new_Order.order_items = order_items
+        new_Order.address = address
+        new_Order.address_id = address.id
+        new_Order.total_price = data.get('total_price')
+        new_Order.status = data.get('status')
+        new_Order.tax = data.get('tax')
 
-    db.session.add(new_Order)
-    db.session.commit()
+        order_items = []
+        for item_data in data.get('order_items', []):
+            order_item = OrderItem(
+                quantity=item_data.get('quantity'),
+                price=item_data.get('price'),
+                order=new_Order, 
+                product_id=item_data.get('product_id'),
+                order_id=new_Order.id,
+                size=item_data.get('size')
+            )
+            order_items.append(order_item)
 
-    return make_response(
-        jsonify(new_Order.to_dict()),
-        201
-    )
+        db.session.add(new_Order)
+        db.session.add(address)
+        for item in order_items:
+            db.session.add(item)
+
+        db.session.commit()
+
+        response = make_response(jsonify(new_Order.to_dict()), 201)
+        response.set_cookie('order_id', order_id)
+        return response
+
+    except Exception as e:
+        # Log the exception for debugging
+        print(e)
+        return jsonify({'error': 'Order creation failed'}), 
+
+
+@app.patch('/update_order_status/<string:id>')
+def update_order_status(id):
+    order = Order.query.filter_by(id=id).first()
+
+    if order is None:
+        return jsonify({'message': 'Order not found'}), 404
+
+    data = request.get_json()
+    new_status = data.get('status')
+
+    if new_status:
+        order.status = new_status
+        db.session.commit()
+        response = make_response(jsonify(order.to_dict()), 200)
+        return response
+    else:
+        return jsonify({'message': 'No status provided'}), 400
+
 
 
 

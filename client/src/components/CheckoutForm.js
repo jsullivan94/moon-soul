@@ -8,36 +8,34 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [tax, setTax] = useState(0)
 
-  useEffect(() => {
-    fetch('/order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(
-        {total_price: totalPrice,
-        address: localAddress,
-        order_items: cart}),
-    })
-      .then((res) => res.json())
-      .then(() => {
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }, [])
+useEffect(() => {
+  fetch('/order', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(
+      {total_price: totalPrice,
+      address: localAddress,
+      order_items: cart,
+      status: "pending",
+      tax: tax})
+  })
+    .then((res) => res.json())
+}, [])
+  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!stripe || !elements) {
       return;
     }
     
     setIsLoading(true);
 
-  
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -45,7 +43,6 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
       }
     });
   
-
     if (error) {
       if (error.type === "card_error" || error.type === "validation_error") {
         setMessage(error.message);
@@ -56,15 +53,13 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
       return;
     }
 
-  
-
     const paymentIntentResponse = await stripe.retrievePaymentIntent(clientSecret);
     if (paymentIntentResponse.error) {
       setMessage("Failed to retrieve payment intent status.");
       setIsLoading(false);
       return;
     }
-  
+ 
     switch (paymentIntentResponse.paymentIntent.status) {
       case "succeeded":
         setMessage("Payment succeeded!");
@@ -79,9 +74,7 @@ function CheckoutForm({ totalPrice, localAddress, cart }) {
         setMessage("Something went wrong.");
         break;
     }
-    
     setIsLoading(false);
-    
   };
 
   const paymentElementOptions = {

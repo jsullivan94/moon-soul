@@ -15,6 +15,7 @@ function AddressForm( { setLocalAddress, setIsAddressSubmitted, localAddress } )
     setIsAddressSubmitted(true)
     navigate('/checkout/payment');
   };
+  
 
   return (
     <form onSubmit={handleSubmit} id="address-form">

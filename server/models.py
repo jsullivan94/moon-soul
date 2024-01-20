@@ -65,9 +65,11 @@ class Order(db.Model, SerializerMixin):
 
     serialize_rules = ('-order_items.order', '-address.order',)
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True, default=str(uuid.uuid4()))
     order_date = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
     total_price = db.Column(db.Float, nullable=False)
+    status = db.Column(db.String, nullable=False)
+    tax = db.Column(db.Float, nullable=False)
 
     address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'))
 
@@ -85,7 +87,7 @@ class OrderItem(db.Model, SerializerMixin):
     size = db.Column(db.String)
     
 
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
+    order_id = db.Column(db.String, db.ForeignKey('orders.id'), default=str(uuid.uuid4()))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
 
 class Cart(db.Model, SerializerMixin):
