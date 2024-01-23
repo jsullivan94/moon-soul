@@ -41,7 +41,6 @@ class Product(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     price = db.Column(db.Float, nullable=False)
-    inventory = db.Column(db.Integer)
     image_path = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
 
@@ -79,14 +78,15 @@ class Order(db.Model, SerializerMixin):
 class OrderItem(db.Model, SerializerMixin):
     __tablename__ = "order_items"
 
-    serialize_rules=('-order.order_items', '-product.order_items', '-address.order_items',)
+    serialize_rules=('-order.order_items', '-product.order_items', '-address.order_items', '-size.order_items',)
 
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
-    size = db.Column(db.String)
     
-
+    
+    size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'))
+    size = db.relationship('Size', backref='order_items')
     order_id = db.Column(db.String, db.ForeignKey('orders.id'), default=str(uuid.uuid4()))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
 
@@ -108,9 +108,11 @@ class CartItem(db.Model, SerializerMixin):
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
-    size = db.Column(db.String)
     cart_id = db.Column(db.String, db.ForeignKey('carts.id'))
     image_path = db.Column(db.String)
+
+    size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'))
+    size = db.relationship('Size', backref='cart_items')
 
 class Address(db.Model, SerializerMixin):
     __tablename__ = "addresses"
@@ -126,6 +128,28 @@ class Address(db.Model, SerializerMixin):
     state = db.Column(db.String, nullable=False)
     postal_code = db.Column(db.String, nullable=False)
     country = db.Column(db.String, nullable=False) 
+
+class Size(db.Model, SerializerMixin):
+    __tablename__ = "sizes"
+
+    serialize_rules = ('-inventory.size', '-order_items.size', '-cart_items.size',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=True) 
+    gender_category = db.Column(db.String, nullable=True) 
+
+class Inventory(db.Model, SerializerMixin):
+    __tablename__ = "inventory"
+    serialize_rules = ('-product.inventory', '-size.inventory',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'))
+    quantity = db.Column(db.Integer, nullable=False)
+
+    product = db.relationship('Product', backref='inventory')
+    size = db.relationship('Size', backref='inventory')
 
    
 
