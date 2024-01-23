@@ -1,8 +1,9 @@
 from faker import Faker
 from config import db, app
-from models import Admin, Event, Product, Category, Order, OrderItem, CartItem, Cart
+from models import Admin, Event, Product, Category, Order, OrderItem, CartItem, Cart, Size, Inventory
 from datetime import datetime, timedelta
 from config import bcrypt
+import random
 
 # Create a Faker instance
 fake = Faker()
@@ -11,6 +12,11 @@ with app.app_context():
     Category.query.delete()
     Product.query.delete()
     Event.query.delete()
+    Admin.query.delete()
+    Size.query.delete()
+    Inventory.query.delete()
+
+    db.session.commit()
 
     def add_admin_user():
     # Create a new admin user instance
@@ -35,12 +41,15 @@ with app.app_context():
 
 # Call the function to add the admin user
     add_admin_user()
+
+    
    
 
     category1 = Category(name='Cloths')
     category2 = Category(name='Vinyl')
     db.session.add(category1)
     db.session.add(category2)
+    db.session.commit() 
 
     product1 = Product(name='Vinyl', price=35.00, image_path='/pictures/albumcover.png', description='Our latest record printed to vinyl!', category=category2)
     product2 = Product(name='MS T-Shirt', price=20.00, image_path='https://st3.depositphotos.com/17828278/33150/v/450/depositphotos_331503262-stock-illustration-no-image-vector-symbol-missing.jpg', description='Moon Soul swag', category=category1)
@@ -50,6 +59,45 @@ with app.app_context():
     db.session.add(product2)
     db.session.add(product3)
     db.session.add(product4)
+    db.session.commit()
+
+
+
+# ... [rest of your imports and existing code] ...
+
+# Define some sample sizes
+    sizes = ['Small', 'Medium', 'Large', 'XL']
+    genders = ['Mens', 'Womens']
+    size_objects = []
+
+# Create Size instances
+    for gender in genders:
+        for size_name in sizes:
+            size = Size(name=f"{size_name} - {gender}", gender_category=gender, description=f"{size_name} size for {gender}")
+            db.session.add(size)
+            size_objects.append(size)
+        db.session.commit()
+
+# Assuming you have your products already created
+    products = [product1, product2, product3, product4]  # Add all your product variables here
+
+# Add random inventory for each product-size combination
+    for product in products:
+        for size in size_objects:
+        # Randomly assign inventory, with some sizes possibly having 0 inventory
+            quantity = random.choice([0, 5, 10, 15, 20])
+            inventory = Inventory(product_id=product.id, size_id=size.id, quantity=quantity)
+            db.session.add(inventory)
+    db.session.commit()
+
+# Commit the changes to the database
+    try:
+        db.session.commit()
+        print("Sizes and inventory added successfully.")
+    except Exception as e:
+        print(f"Error adding sizes and inventory: {e}")
+        db.session.rollback()
+
 
     event = Event(image_path='https://i.ytimg.com/vi/nfvaPGOyKzs/sddefault.jpg', title='Uptown Night Market', date='10/12/23-4:30PM', location=' 701 W 133rd St, New York, NY 10027')
     event2 = Event(image_path='https://media.timeout.com/images/105502877/image.jpg', title='Queens Night Market', date='10/07/23-4:30PM', location='4701 111th St, Queens, NY 11368')

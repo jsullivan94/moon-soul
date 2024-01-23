@@ -1,14 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaRegEdit } from "react-icons/fa";
 
-function ProductInCartCard({ cart, setCart, size, id, name, price, image_path, quantity, category_id }) {
+function ProductInCartCard({ cart, setCart, size, size_id, id, name, price, image_path, quantity, category_id }) {
     const [editSize, setEditSize] = useState(size);
     const [editAmount, setEditAmount] = useState(quantity)
     const [inEdit, setInEdit] = useState(false)
+    const [sizesData, setSizesData] = useState([]);
+
+    useEffect(() => {
+        fetch('/sizes')  
+            .then(response => response.json())
+            .then(data => setSizesData(data))
+            .catch(error => console.error('Error fetching sizes:', error));
+            console.log(sizesData)
+    }, [sizesData]);
+
+    const getSizeNameFromId = (size_id) => {
+        const size = sizesData.find(s => s.id === size_id);
+        return size ? size.name : '';
+    };
 
     const editedItem = {
         quantity: editAmount,
-        size: editSize,
+        size_id: editSize,
     }
 
     function handleDelete() {
@@ -65,7 +79,7 @@ function handleDecrease() {
     function handleChange(e) {
         setEditSize(e.target.value)
     }
-
+ 
     return (
         <div>
         {!inEdit ? (
@@ -76,7 +90,7 @@ function handleDecrease() {
             <img className="cart-product-image" src={image_path} alt={name} />
             <div className="cart-product-card-content">
             {size !== '' ? (
-                 <div className="cart-product-size">{size}</div>
+                 <div className="cart-product-size">{getSizeNameFromId(size_id)}</div>
                 ) : (
                 <div className="cart-product-size-placeholder"></div>
                 )}
@@ -90,13 +104,10 @@ function handleDecrease() {
             <img className="cart-product-image" src={image_path} alt={name} />
             <div className="cart-product-card-content">
                 {category_id === 1 ? 
-            <select onChange={handleChange} 
-                value={editSize}
-                id="dropdown-edit">
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
-                <option value="XL">XL</option>
+            <select  id="dropdown-edit" onChange={handleChange} value={editSize}> 
+                {sizesData.map(size => (
+                        <option key={size.id} value={size.id}>{size.name}</option>
+                    ))}
             </select> : 
             <div className="cart-product-size-placeholder-edit"></div>}
             <h2 className="cart-product-price-edit">${price}</h2>

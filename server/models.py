@@ -36,7 +36,7 @@ class Event(db.Model, SerializerMixin):
 class Product(db.Model, SerializerMixin):
     __tablename__ = "products"
 
-    serialize_rules=('-order_items.product', '-category.product', '-order_items.order', '-cart_items.product')
+    serialize_rules=('-order_items.product', '-category.product', '-order_items.order', '-cart_items.product', '-inventory.product',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -112,7 +112,6 @@ class CartItem(db.Model, SerializerMixin):
     image_path = db.Column(db.String)
 
     size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'))
-    size = db.relationship('Size', backref='cart_items')
 
 class Address(db.Model, SerializerMixin):
     __tablename__ = "addresses"
@@ -132,7 +131,7 @@ class Address(db.Model, SerializerMixin):
 class Size(db.Model, SerializerMixin):
     __tablename__ = "sizes"
 
-    serialize_rules = ('-inventory.size', '-order_items.size', '-cart_items.size',)
+    serialize_rules = ('-inventory.size', '-order_items.size',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)

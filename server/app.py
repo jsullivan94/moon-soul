@@ -124,7 +124,7 @@ def post_cart_item():
         product_id = data.get('product_id'),
         quantity = data.get('quantity'),
         price = total_price,
-        size = data.get('size'),
+        size_id = data.get('size_id'),
         image_path = data.get('image_path'),
         cart_id = cart_id
     )
@@ -209,11 +209,11 @@ def update_cart_item_from_cart(id):
         data=request.get_json()
 
         new_quantity=data.get('quantity')
-        new_size=data.get('size')
+        new_size_id=data.get('size_id')
         
         cart_item.quantity = new_quantity
         cart_item.price = new_quantity * cart_item.product.price
-        cart_item.size = new_size
+        cart_item.size_id = new_size_id
         
         db.session.commit()
 
@@ -379,6 +379,57 @@ def update_order_status(id):
         return response
     else:
         return jsonify({'message': 'No status provided'}), 400
+    
+@app.get('/size_inventory/<int:id>/mens')
+def get_size_inventory_mens(id):
+    try:
+        # Fetching inventory records for a given product and men's sizes
+        inventory_records = db.session.query(Inventory, Size).join(Size).filter(
+            Inventory.product_id == id,
+            Size.gender_category == 'Mens'  # Filter for men's sizes
+        ).all()
+        
+        # Constructing a response
+        size_inventory = [
+            {"size": {"id": size.id, "name": size.name}, "quantity": inventory.quantity}
+            for inventory, size in inventory_records
+        ]
+        return jsonify(size_inventory)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+@app.get('/size_inventory/<int:id>/womens')
+def get_size_inventory_womens(id):
+    try:
+        # Fetching inventory records for a given product and women's sizes
+        inventory_records = db.session.query(Inventory, Size).join(Size).filter(
+            Inventory.product_id == id,
+            Size.gender_category == 'Womens'  # Filter for women's sizes
+        ).all()
+        
+        # Constructing a response
+        size_inventory = [
+            {"size": {"id": size.id, "name": size.name}, "quantity": inventory.quantity}
+            for inventory, size in inventory_records
+        ]
+        return jsonify(size_inventory)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.get('/sizes')
+def get_all_sizes():
+    sizes = Size.query.all()
+
+    data = [size.to_dict() for size in sizes]
+
+    return make_response(
+        jsonify(data),
+        200
+    )
+
+    
+    
 
 
 

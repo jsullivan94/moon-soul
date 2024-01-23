@@ -324,12 +324,12 @@ body {
 }
 
 .product-details-name {
-  margin-bottom: 50px;
+  margin-bottom: 15px;
   font-size: 50px;
 }
 
 .product-details-description {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   font-size: 25px;
 }
 
@@ -338,7 +338,7 @@ body {
   height: 2px; 
   background-color: #d5d4b7;
   border: 0;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 
 #dropdown {
@@ -354,12 +354,31 @@ body {
   width: 100px;                      
 }
 
+#gender-dropdown {
+  padding: 0.4rem ;               
+  font-size: 1rem;                    
+  font-family: 'Reem Kufi Fun', sans-serif;
+  border: 2px solid #d5d4b7;             
+  border-radius: 8px;               
+  background-color: #221a20;          
+  outline: none;                     
+  cursor: pointer;                  
+  color: #d5d4b7;                      
+  width: 100px; 
+  margin-bottom: 15px;
+}
+
 #dropdown:hover {
+  border-color: #999;                 
+}
+
+#gender-dropdown:hover {
   border-color: #999;                 
 }
 
 .product-details-price {
   font-size: 50px;
+  margin-bottom: 20px;
 }
 
 .quantity-control {
