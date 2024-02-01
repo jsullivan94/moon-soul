@@ -84,11 +84,16 @@ with app.app_context():
 # Add random inventory for each product-size combination
     for product in products:
         for size in size_objects:
+            if product.category_id == 1:
         # Randomly assign inventory, with some sizes possibly having 0 inventory
-            quantity = random.choice([0, 5, 10, 15, 20])
-            inventory = Inventory(product_id=product.id, size_id=size.id, quantity=quantity)
+                quantity = random.choice([0, 5, 10, 15, 20])
+                inventory = Inventory(product_id=product.id, size_id=size.id, quantity=quantity)
+                db.session.add(inventory)
+        db.session.commit()
+        if product.category_id == 2:
+            quantity = random.choice([5, 10, 15, 20])
+            inventory = Inventory(product_id=product.id, quantity=quantity)
             db.session.add(inventory)
-    db.session.commit()
 
 # Commit the changes to the database
     try:

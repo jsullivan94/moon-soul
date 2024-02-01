@@ -13,7 +13,7 @@ function ProductInCartCard({ cart, setCart, size, size_id, id, name, price, imag
             .then(data => setSizesData(data))
             .catch(error => console.error('Error fetching sizes:', error));
             console.log(sizesData)
-    }, [sizesData]);
+    }, []);
 
     const getSizeNameFromId = (size_id) => {
         const size = sizesData.find(s => s.id === size_id);

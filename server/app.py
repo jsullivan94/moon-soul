@@ -50,19 +50,42 @@ def create_payment():
     try:
         data = json.loads(request.data)
 
-        total_in_cents = calculate_order_amount(data)
-        total_in_dollars = total_in_cents / 100  # Convert cents to dollars
+        # address = data.get('localAddress')
+        original_total_in_cents = calculate_order_amount(data['cart'])
+        original_total_in_dollars = original_total_in_cents / 100  # Convert cents to dollars
+
+        # shipping_address = {
+        #     'name': address['full_name'],
+        #     'line1': address['line1'],
+        #     'city': address['city'],
+        #     'state': address['state'],
+        #     'postal_code': address['postal_code'],
+        #     'country': address['country']
+        # }
+        # if 'line2' in address:
+        #     shipping_address['line2'] = address['line2']
+
+            # print(shipping_address)
 
         intent = stripe.PaymentIntent.create(
-            amount=total_in_cents,
+            amount=original_total_in_cents,
             currency='usd',
+            # shipping=shipping_address,
             automatic_payment_methods={
                 'enabled': True,
             },
+            # automatic_tax={'enabled': True},
         )
+
+        charged_total_in_cents = intent['amount']
+
+        tax_amount_in_cents = charged_total_in_cents - original_total_in_cents
+        tax_amount_in_dollars = tax_amount_in_cents / 100
+
         return jsonify({
             'clientSecret': intent['client_secret'],
-            'total_price': total_in_dollars  # Return the total price in dollars
+            'total_price': original_total_in_dollars, 
+            'tax_amount': tax_amount_in_dollars
         })
     except Exception as e:
         return jsonify(error=str(e)), 403
@@ -380,6 +403,7 @@ def update_order_status(id):
     else:
         return jsonify({'message': 'No status provided'}), 400
     
+    
 @app.get('/size_inventory/<int:id>/mens')
 def get_size_inventory_mens(id):
     try:
@@ -416,6 +440,7 @@ def get_size_inventory_womens(id):
         return jsonify(size_inventory)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
     
 @app.get('/sizes')
 def get_all_sizes():

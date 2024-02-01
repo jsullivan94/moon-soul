@@ -9,6 +9,7 @@ function ProductDetails({ products, cart }) {
     const [amount, setAmount] = useState(1)
     const [mensInventory, setMensInventory] = useState({});
     const [womensInventory, setWomensInventory] = useState({});
+    const [vinylInventory, setVinylInventory] = useState({});
     const [gender, setGender] = useState('Mens')
     const navigate = useNavigate()
 
@@ -41,6 +42,15 @@ function ProductDetails({ products, cart }) {
                 })
                 .catch(error => console.error('Error fetching womens inventory:', error));
         }
+        else if (product?.category_id === 2) {
+            fetch(`/products/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const inventory = data.inventory[0].quantity;
+                    setVinylInventory(inventory);  
+                })
+                .catch(error => console.error('Error fetching mens inventory:', error));
+        }
     }, [id, product?.category_id]);
 
     const currentInventory = gender === 'Mens' ? mensInventory : womensInventory;
@@ -70,18 +80,34 @@ function ProductDetails({ products, cart }) {
     };
 
     const cat = product.category_id
+    
 
     
     function handleIncrease() {
+        if (cat === 1) {
         const selectedInventory = gender === 'Mens' ? mensInventory : womensInventory;
         const availableStock = selectedInventory[size];
+        console.log(amount)
+        console.log(availableStock)
     
-        if (amount < availableStock) {
+        if (amount < availableStock.quantity) {
             setAmount(prevAmount => prevAmount + 1);
         } else {
             alert("Sorry, you've reached the maximum available stock for this size.");
         }
     }
+    else {
+        const availableStock = vinylInventory;
+        console.log(amount)
+        console.log(vinylInventory)
+    
+        if (amount < availableStock) {
+            setAmount(prevAmount => prevAmount + 1);
+        } else {
+            alert("Sorry, you've reached the maximum available stock for this item.");
+        }
+    }
+}
 
     function handleDecrease() {
         amount > 1 ? setAmount(prev => prev -= 1) : setAmount(1)

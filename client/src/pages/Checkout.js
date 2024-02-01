@@ -7,9 +7,10 @@ import AddressForm from "../components/AddressForm";
 
 const stripePromise = loadStripe("pk_test_51NXRqNBuKh2FTrpXvl7QJdfEGjYnm4wAY5vak3ZsFzFrI5sQ9L0clXfrgG0g6LLebLCgqM25LP8rrCKTTNX22vyY00xj95ZvLg");
 
-function Checkout( { localAddress, setLocalAddress, cart, setTotalPrice } ) {
+function Checkout( { setTax, localAddress, setLocalAddress, cart, setTotalPrice } ) {
   const [clientSecret, setClientSecret] = useState("");
   const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
+  
 
   useEffect(() => {
     if (!isAddressSubmitted || cart.length === 0) {
@@ -21,7 +22,7 @@ function Checkout( { localAddress, setLocalAddress, cart, setTotalPrice } ) {
         const response = await fetch("/create-payment-intent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(cart),
+          body: JSON.stringify({ localAddress, cart }),
         });
 
         if (!response.ok) {
@@ -31,6 +32,7 @@ function Checkout( { localAddress, setLocalAddress, cart, setTotalPrice } ) {
         const data = await response.json();
         setClientSecret(data.clientSecret);
         setTotalPrice(data.total_price)
+        setTax(data.tax_amount)
         
         
       } catch (error) {
@@ -40,7 +42,7 @@ function Checkout( { localAddress, setLocalAddress, cart, setTotalPrice } ) {
     };
 
     fetchClientSecret();
-  }, [cart, isAddressSubmitted, setTotalPrice]);
+  }, [cart, isAddressSubmitted, setTotalPrice, setTax, localAddress]);
 
   const appearance = {
     theme: 'night',

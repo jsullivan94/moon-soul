@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";   
+import { useEffect } from "react";   
 import { Link } from "react-router-dom";
 
 import ProductInCartCard from "../components/ProductInCartCard";
 
 function Cart({ cart, setCart }) {
-    const [inEdit, setInEdit] = useState(false)
+    
     
     useEffect(() => {
         fetch("/get_cart_items")
@@ -19,7 +19,6 @@ function Cart({ cart, setCart }) {
         return (
             <ProductInCartCard 
                 key={item.id} 
-                inEdit={inEdit}
                 {...item} 
                 category_id={item.product.category_id} 
                 cart={cart} 

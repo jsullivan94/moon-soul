@@ -18,6 +18,7 @@ function App() {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([]) 
   const [totalPrice, setTotalPrice] = useState(0); 
+  const [tax, setTax] = useState(0);
   const [localAddress, setLocalAddress] = useState({
     full_name: '',
     email: '',
@@ -56,8 +57,8 @@ function App() {
                       <Route path="/about" element={<About />} />
                       <Route path="/store" element={<Store products={products} />} />
                       <Route path="/payment-complete" element={<PaymentComplete totalPrice={totalPrice} cart={cart} localAddress={localAddress}/>} />
-                      <Route path="/checkout" element={<Checkout totalPrice={totalPrice} cart={cart} setLocalAddress={setLocalAddress} localAddress={localAddress} setTotalPrice={setTotalPrice} />} >
-                            <Route path="payment" element={<CheckoutForm totalPrice={totalPrice} localAddress={localAddress} cart={cart} />} />
+                      <Route path="/checkout" element={<Checkout setTax={setTax} totalPrice={totalPrice} cart={cart} setLocalAddress={setLocalAddress} localAddress={localAddress} setTotalPrice={setTotalPrice} />} >
+                            <Route path="payment" element={<CheckoutForm tax={tax} totalPrice={totalPrice} localAddress={localAddress} cart={cart} />} />
                       </Route>
                       <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
                       <Route path="/admin" element={<AdminSignIn />} />
