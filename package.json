@@ -1,0 +1,11 @@
+{
+    "name": "moon-soul",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "cd client && npm install && npm run build",
+      "start": "python server/app.py"
+    },
+    "engines": {
+      "node": "14.x"
+    }
+  }
