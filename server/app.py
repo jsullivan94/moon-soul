@@ -1,4 +1,4 @@
-from flask import request, make_response, jsonify, session, Flask, render_template
+from flask import request, make_response, jsonify, session, Flask, render_template, send_from_directory
 from sqlalchemy.exc import IntegrityError
 from dotenv import load_dotenv
 import uuid
@@ -13,6 +13,14 @@ from models import *
 load_dotenv()
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists("client/build/" + path):
+        return send_from_directory('client/build', path)
+    else:
+        return send_from_directory('client/build', 'index.html')
 
 @app.route('/config/stripe')
 def get_stripe_config():
