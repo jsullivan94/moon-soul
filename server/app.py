@@ -12,7 +12,7 @@ from models import *
 
 load_dotenv()
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
