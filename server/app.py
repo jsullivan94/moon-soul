@@ -14,6 +14,11 @@ load_dotenv()
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
+@app.route('/config/stripe')
+def get_stripe_config():
+    return jsonify({
+        'stripePublishableKey': os.environ.get('STRIPE_PUBLISHABLE_KEY')
+    })
 
 @app.get('/me/media')
 def get_media():

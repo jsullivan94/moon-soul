@@ -5,14 +5,22 @@ import { Routes, Route, Outlet  } from "react-router-dom";
 
 import AddressForm from "../components/AddressForm";
 
-const stripePromise = loadStripe("pk_test_51NXRqNBuKh2FTrpXvl7QJdfEGjYnm4wAY5vak3ZsFzFrI5sQ9L0clXfrgG0g6LLebLCgqM25LP8rrCKTTNX22vyY00xj95ZvLg");
-
 function Checkout( { setTax, localAddress, setLocalAddress, cart, setTotalPrice } ) {
   const [clientSecret, setClientSecret] = useState("");
   const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
+  const [stripe, setStripe] = useState(null);
   
 
   useEffect(() => {
+    fetch('/config/stripe')
+      .then((response) => response.json())
+      .then((config) => {
+        loadStripe(config.stripePublishableKey).then(setStripe);
+      })
+      .catch((error) => {
+        console.error('Error fetching Stripe config:', error);
+      });
+      
     if (!isAddressSubmitted || cart.length === 0) {
       return;
     }
@@ -56,7 +64,7 @@ function Checkout( { setTax, localAddress, setLocalAddress, cart, setTotalPrice 
           <Route index element={<AddressForm setLocalAddress={setLocalAddress} localAddress={localAddress} setIsAddressSubmitted={setIsAddressSubmitted} />} />
         </Routes>
         {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
+        <Elements options={options} stripe={stripe}>
           <Outlet />
         </Elements>
       )}
