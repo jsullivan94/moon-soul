@@ -32,7 +32,7 @@ function Home() {
         <p className='home-text'>Moon Soul is a raw, psychedelic soul band from New York City -- a spontaneous, high-energy outfit that blends the sounds of The Zombies, Fela Kuti, Tame Impala, and Sly & the Family Stone into something funky and totally original.</p>
     </div>
     <div className="home-image-content" >
-        <img className="home-image" src="/build/pictures/RNI-Films-IMG-DC2A4323-26B0-4762-B251-CD8A0AE4943C.jpg" alt='band' />
+        <img className="home-image" src="../build/pictures/RNI-Films-IMG-DC2A4323-26B0-4762-B251-CD8A0AE4943C.jpg" alt='band' />
     </div> 
     
         </div>

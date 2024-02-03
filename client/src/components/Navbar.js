@@ -7,7 +7,7 @@ function Navbar(){
         <div className="navbar">
             <div className="navbar-content">
                 <Link to="/">
-                    <img src='/build/pictures/IMG_0449.PNG' alt='Moon Soul' />
+                    <img src='../build/pictures/IMG_0449.PNG' alt='Moon Soul' />
                 </Link>
                 <div className='icon-container'>
                     <FaInstagram className="icon" onClick={() => window.open('https://www.instagram.com/moonsoulmusic/')} />
