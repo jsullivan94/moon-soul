@@ -14,13 +14,9 @@ load_dotenv()
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists("client/build/" + path):
-        return send_from_directory('client/build', path)
-    else:
-        return send_from_directory('client/build', 'index.html')
+@app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/config/stripe')
 def get_stripe_config():
