@@ -2,7 +2,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 import uuid
 
-from config import db, bcrypt
+from app import db, bcrypt
 
 class Admin(db.Model, SerializerMixin):
     __tablename__ = "admin"
