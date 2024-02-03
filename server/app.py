@@ -12,9 +12,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_cors import CORS
 
-from models import *
-
-
 app = Flask(__name__, static_folder='../client/build', static_url_path='/')
 CORS(app, supports_credentials=True)
 uri = os.getenv("DATABASE_URL", "sqlite:///app.db")  # or other relevant config var
@@ -34,14 +31,20 @@ db.init_app(app)
 
 bcrypt = Bcrypt(app)
 
+from models import *
+
 
 load_dotenv()
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
-@app.route('/')
-def serve():
-    return send_from_directory(app.static_folder, 'index.html')
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/config/stripe')
 def get_stripe_config():
