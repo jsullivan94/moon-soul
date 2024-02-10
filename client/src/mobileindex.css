@@ -45,7 +45,7 @@
   
   .home-text-content {
     background-color: #221a20;
-    height: 160px;
+    height: 135px;
     margin-top: 0px
   }
   
@@ -64,7 +64,7 @@
   .home-title {
     font-family: 'Reem Kufi Fun', sans-serif;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     color: rgb(245,195,40);
     margin-bottom: 0px;
     margin-top: 0px;
@@ -72,19 +72,19 @@
   }
   
   .home-text {
-    margin-top: 15px;
+    margin-top: 0px;
     margin-bottom: 40px;
     font-family: 'Reem Kufi Fun', sans-serif;
     text-align: center;
-    font-size: 8px;
+    font-size: 7px;
     color:#d5d4b7;
     margin-right: 0px;
   }
   
   .home-image {
     width: 100%;
-    height: 200px;
-    width: 200px;
+    height: 175px;
+    width: 175px;
     margin-bottom: 25px;
   }
   
@@ -154,7 +154,7 @@
   
   .event-card-title {
     font-family: 'Reem Kufi Fun', sans-serif;
-    font-size: 12px;
+    font-size: 10px;
     color: rgb(245,195,40);
     margin: 0; 
   }
@@ -334,7 +334,7 @@
     margin-bottom: 0px;
   }
   
-  #dropdown {
+  #size-dropdown {
     padding: 0.4rem ;               
     font-size: 10px;                    
     font-family: 'Reem Kufi Fun', sans-serif;

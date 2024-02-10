@@ -136,15 +136,14 @@ class Size(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True) 
-    gender_category = db.Column(db.String, nullable=True) 
 
 class Inventory(db.Model, SerializerMixin):
     __tablename__ = "inventory"
     serialize_rules = ('-product.inventory', '-size.inventory',)
 
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
-    size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    size_id = db.Column(db.Integer, db.ForeignKey('sizes.id'), nullable=True)
     quantity = db.Column(db.Integer, nullable=False)
 
     product = db.relationship('Product', backref='inventory')

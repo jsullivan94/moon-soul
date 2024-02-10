@@ -63,37 +63,38 @@ with app.app_context():
 
 
 
-# ... [rest of your imports and existing code] ...
+# ... [your imports and setup code] ...
 
 # Define some sample sizes
-    sizes = ['Small', 'Medium', 'Large', 'XL']
-    genders = ['Mens', 'Womens']
+    sizes = ['Small', 'Medium', 'Large', 'XL', 'XXL']
     size_objects = []
 
-# Create Size instances
-    for gender in genders:
-        for size_name in sizes:
-            size = Size(name=f"{size_name} - {gender}", gender_category=gender, description=f"{size_name} size for {gender}")
-            db.session.add(size)
-            size_objects.append(size)
-        db.session.commit()
+# Create Size instances without gender
+    for size_name in sizes:
+        size = Size(name=size_name, description=f"Unisex {size_name} size")
+        db.session.add(size)
+        size_objects.append(size)
+    db.session.commit()
 
 # Assuming you have your products already created
     products = [product1, product2, product3, product4]  # Add all your product variables here
-
-# Add random inventory for each product-size combination
-    for product in products:
-        for size in size_objects:
-            if product.category_id == 1:
-        # Randomly assign inventory, with some sizes possibly having 0 inventory
-                quantity = random.choice([0, 5, 10, 15, 20])
-                inventory = Inventory(product_id=product.id, size_id=size.id, quantity=quantity)
-                db.session.add(inventory)
-        db.session.commit()
+    
+    for product in products:            
         if product.category_id == 2:
             quantity = random.choice([5, 10, 15, 20])
             inventory = Inventory(product_id=product.id, quantity=quantity)
             db.session.add(inventory)
+
+    # Add random inventory for each product-size combination
+    for product in products:
+        for size in size_objects:
+            if product.category_id == 1:  # Assuming category_id 1 is for clothing
+                # Randomly assign inventory, with some sizes possibly having 0 inventory
+                quantity = random.choice([0, 5, 10, 15, 20])
+                inventory = Inventory(product_id=product.id, size_id=size.id, quantity=quantity)
+                db.session.add(inventory)
+
+
 
 # Commit the changes to the database
     try:

@@ -213,12 +213,12 @@ def delete_cart_item(id):
 @app.patch('/update_cart_item/<int:id>')
 def update_cart_item(id):
     cart_id = request.cookies.get('cart_id')
+    data=request.get_json()
+    size_id=data.get('size_id')
 
-    cart_item = CartItem.query.filter(CartItem.cart_id == cart_id, CartItem.product_id == id).first()
+    cart_item = CartItem.query.filter(CartItem.cart_id == cart_id, CartItem.product_id == id, CartItem.size_id == size_id).first()
 
     if cart_item:
-        data=request.get_json()
-
         new_quantity=data.get('quantity')
         new_price=data.get('price')
 
@@ -418,34 +418,15 @@ def update_order_status(id):
         return jsonify({'message': 'No status provided'}), 400
     
     
-@app.get('/size_inventory/<int:id>/mens')
-def get_size_inventory_mens(id):
-    try:
-        # Fetching inventory records for a given product and men's sizes
-        inventory_records = db.session.query(Inventory, Size).join(Size).filter(
-            Inventory.product_id == id,
-            Size.gender_category == 'Mens'  # Filter for men's sizes
-        ).all()
-        
-        # Constructing a response
-        size_inventory = [
-            {"size": {"id": size.id, "name": size.name}, "quantity": inventory.quantity}
-            for inventory, size in inventory_records
-        ]
-        return jsonify(size_inventory)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    
 
-@app.get('/size_inventory/<int:id>/womens')
-def get_size_inventory_womens(id):
+@app.get('/size_inventory/<int:product_id>')
+def get_size_inventory(product_id):
     try:
-        # Fetching inventory records for a given product and women's sizes
+        # Fetching inventory records for a given product regardless of size gender
         inventory_records = db.session.query(Inventory, Size).join(Size).filter(
-            Inventory.product_id == id,
-            Size.gender_category == 'Womens'  # Filter for women's sizes
+            Inventory.product_id == product_id
         ).all()
-        
+
         # Constructing a response
         size_inventory = [
             {"size": {"id": size.id, "name": size.name}, "quantity": inventory.quantity}
@@ -454,7 +435,6 @@ def get_size_inventory_womens(id):
         return jsonify(size_inventory)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
     
 @app.get('/sizes')
 def get_all_sizes():
