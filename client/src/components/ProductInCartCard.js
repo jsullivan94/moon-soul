@@ -1,19 +1,50 @@
 import { useState, useEffect } from "react";
 import { FaRegEdit } from "react-icons/fa";
 
-function ProductInCartCard({ cart, setCart, size, size_id, id, name, price, image_path, quantity, category_id }) {
+function ProductInCartCard({ cart, setCart, size, size_id, id, name, price, image_path, quantity, category_id, product }) {
     const [editSize, setEditSize] = useState(size);
     const [editAmount, setEditAmount] = useState(quantity)
     const [inEdit, setInEdit] = useState(false)
     const [sizesData, setSizesData] = useState([]);
+    const [inventory, setInventory] = useState([]);
 
     useEffect(() => {
         fetch('/sizes')  
             .then(response => response.json())
             .then(data => setSizesData(data))
             .catch(error => console.error('Error fetching sizes:', error));
-            console.log(sizesData)
     }, []);
+
+    useEffect(() => {
+        if (product?.category_id === 1) {
+            fetch(`/size_inventory/${product.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const newInventory = {};
+                    data.forEach(item => {
+                        newInventory[item.size.name] = { quantity: item.quantity, id: item.size.id };
+                    });
+                    setInventory(newInventory);
+                })
+                .catch(error => console.error('Error fetching inventory:', error));
+        } else if (product?.category_id === 2) {
+                        fetch(`/products/${product.id}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                const inventory = data.inventory[0].quantity;
+                                setInventory(inventory);  
+                            })
+                            .catch(error => console.error('Error fetching inventory:', error));
+                    }
+    }, [id, product?.category_id]);
+   
+    
+
+// console.log(size)
+// console.log(cart)
+
+    
 
     const getSizeNameFromId = (size_id) => {
         const size = sizesData.find(s => s.id === size_id);
@@ -70,15 +101,40 @@ function ProductInCartCard({ cart, setCart, size, size_id, id, name, price, imag
 
 
 function handleIncrease() {
-    setEditAmount(prev => prev + 1);
+    if (product.category_id === 1) {
+        // Assuming editSize holds the size ID, find the corresponding size name.
+        const sizeName = getSizeNameFromId(editSize); // Make sure this returns the correct size name matching the keys in the inventory object.
+        const availableStock = inventory[sizeName]?.quantity;
+    //     console.log("Size name:", sizeName);
+    // console.log("Available stock:", inventory[sizeName]?.quantity);
+
+        if (availableStock !== undefined && editAmount < availableStock) {
+            setEditAmount(prevAmount => prevAmount + 1);
+        } else {
+            // This alert will only show if the condition fails (i.e., trying to exceed available stock).
+            alert("Sorry, you've reached the maximum available stock for this size.");
+        }
+    } else if (product.category_id === 2) {
+        // Handle products that don't have sizes, similar logic as before.
+        if (editAmount < inventory) { // Assuming inventory holds a numeric value for these products.
+            setEditAmount(prevAmount => prevAmount + 1);
+        } else {
+            alert("Sorry, you've reached the maximum available stock for this item.");
+        }
+    }
 }
+
 
 function handleDecrease() {
     setEditAmount(prev => prev > 1 ? prev - 1 : 1);
 }
     function handleChange(e) {
+        if (e.target.value !== null) {
         setEditSize(e.target.value)
-    }
+        }else {
+            setEditSize('Small')
+        }
+}
  
     return (
         <div>

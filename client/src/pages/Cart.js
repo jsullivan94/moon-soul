@@ -23,6 +23,7 @@ function Cart({ cart, setCart }) {
                 category_id={item.product.category_id} 
                 cart={cart} 
                 setCart={setCart} 
+                product={item.product}
             />
         );
     });

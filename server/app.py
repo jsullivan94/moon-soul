@@ -422,12 +422,10 @@ def update_order_status(id):
 @app.get('/size_inventory/<int:product_id>')
 def get_size_inventory(product_id):
     try:
-        # Fetching inventory records for a given product regardless of size gender
         inventory_records = db.session.query(Inventory, Size).join(Size).filter(
             Inventory.product_id == product_id
         ).all()
 
-        # Constructing a response
         size_inventory = [
             {"size": {"id": size.id, "name": size.name}, "quantity": inventory.quantity}
             for inventory, size in inventory_records
@@ -435,6 +433,17 @@ def get_size_inventory(product_id):
         return jsonify(size_inventory)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.get('/inventory')
+def get_all_inventory():
+    inventories = Inventory.query.all()
+
+    data = [item.to_dict() for item in inventories]
+
+    return make_response(
+        jsonify(data),
+        200
+    )
     
 @app.get('/sizes')
 def get_all_sizes():
