@@ -16,14 +16,7 @@ app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
-
+print("Static folder set to:", app.static_folder)
 @app.route('/config/stripe')
 def get_stripe_config():
     return jsonify({
@@ -458,6 +451,13 @@ def get_all_sizes():
     )
 
     
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
     
 
 
