@@ -2,8 +2,8 @@
     "name": "moon-soul",
     "version": "1.0.0",
     "scripts": {
-      "build": "cd client && npm install && npm run build",
-      "start": "python server/app.py"
+      "start": "python server/app.py",
+      "heroku-postbuild": "cd client && npm install && npm run build"
     },
     "engines": {
       "node": "14.x"
