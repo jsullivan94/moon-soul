@@ -6,8 +6,12 @@ from sqlalchemy import MetaData
 from flask_cors import CORS
 import os
 
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
 
-app = Flask(__name__, static_folder='../client/build', static_url_path='')
+client_build_dir = os.path.abspath(os.path.join(current_file_dir, '..', 'client', 'build'))
+
+
+app = Flask(__name__, static_folder=client_build_dir, static_url_path='')
 app.debug = False
 CORS(app, supports_credentials=True)
 uri = os.getenv("DATABASE_URL", "sqlite:///app.db")  # or other relevant config var
