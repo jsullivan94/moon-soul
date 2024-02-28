@@ -50,7 +50,7 @@ function PrivacyPolicy() {
   
           <li>
             <h2>Contact Us</h2>
-            <p>If you have any questions about this Privacy Policy or have questions about an order, please contact us at moonsoulmusician@gmail.com.</p>
+            <p>If you have any questions about this Privacy Policy, have questions about an order or would like to request the deletion of your data, please contact us at moonsoulmusician@gmail.com.</p>
           </li>
         </ol>
       </div>

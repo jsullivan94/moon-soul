@@ -14,14 +14,19 @@ from config import *
 load_dotenv()
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
+instagram_secret = os.environ.get('INSTAGRAM_APP_SECRET')
+ig_access_token = os.environ.get('IG_ACCESS_TOKEN')
 
 
-print("Static folder set to:", app.static_folder)
 @app.route('/config/stripe')
 def get_stripe_config():
     return jsonify({
         'stripePublishableKey': os.environ.get('STRIPE_PUBLISHABLE_KEY')
     })
+
+
+
+    
 
 @app.get('/me/media')
 def get_media():
@@ -454,25 +459,13 @@ def get_all_sizes():
 @app.route('/', defaults={'path': 'index.html'})
 @app.route('/<path:path>')
 def static_file(path):
-    # Construct an absolute path to the 'client/build' directory
     build_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'client', 'build'))
     
-    # Check if the requested path (file) exists
     if path != "index.html" and os.path.exists(os.path.join(build_dir, path)):
         return send_from_directory(build_dir, path)
     else:
-        # Fallback to serving 'index.html' for SPA routing
         return send_from_directory(build_dir, 'index.html')
 
-
-    
-# @app.route('/', defaults={'path': 'index.html'})
-# @app.route('/<path:path>')
-# def serve(path):
-#     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-#         return send_from_directory(app.static_folder, path)
-#     else:
-#         return send_from_directory(app.static_folder, 'index.html')
 
 
     
