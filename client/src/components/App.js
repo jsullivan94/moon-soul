@@ -13,6 +13,7 @@ import PaymentComplete from "../pages/PaymentComplete";
 import AdminSignIn from "../pages/AdminSignIn";
 import Media from "../pages/Media";
 import CheckoutForm from "./CheckoutForm";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
 
 function App() {
   const [products, setProducts] = useState([])
@@ -47,7 +48,7 @@ function App() {
   }, [])
 
     return (
-      <div className='app' style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'black' }}>
+      <div className='app' >
           <BrowserRouter>
               <div style={{ flex: 1 }}>
               <Navbar />
@@ -63,6 +64,7 @@ function App() {
                       <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
                       <Route path="/admin" element={<AdminSignIn />} />
                       <Route path="/media" element={<Media />} />
+                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   </Routes>
               </div>
               <Footer />

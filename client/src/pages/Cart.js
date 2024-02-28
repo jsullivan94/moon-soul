@@ -29,7 +29,7 @@ function Cart({ cart, setCart }) {
     });
     
     return (
-        <div>
+        <div id="cart">
             <h1 className="cart-header" >Cart</h1>
             <Link id='continue-shop-link' to='/store'>
             <button className="continue-shop" >Continue shopping</button>

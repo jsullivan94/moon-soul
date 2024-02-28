@@ -449,16 +449,30 @@ def get_all_sizes():
         jsonify(data),
         200
     )
+    
+
+@app.route('/', defaults={'path': 'index.html'})
+@app.route('/<path:path>')
+def static_file(path):
+    # Construct an absolute path to the 'client/build' directory
+    build_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'client', 'build'))
+    
+    # Check if the requested path (file) exists
+    if path != "index.html" and os.path.exists(os.path.join(build_dir, path)):
+        return send_from_directory(build_dir, path)
+    else:
+        # Fallback to serving 'index.html' for SPA routing
+        return send_from_directory(build_dir, 'index.html')
 
 
     
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+# @app.route('/', defaults={'path': 'index.html'})
+# @app.route('/<path:path>')
+# def serve(path):
+#     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+#         return send_from_directory(app.static_folder, path)
+#     else:
+#         return send_from_directory(app.static_folder, 'index.html')
 
 
     

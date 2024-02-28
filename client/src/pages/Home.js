@@ -24,7 +24,7 @@ function Home() {
     });
 
     return (    
-        <div>
+        <div id='home-page'>
             <div className="home-content-container">
     <div className="home-text-content">
         <h1 className='home-title'>MOON SOUL</h1>
