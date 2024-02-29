@@ -1,6 +1,6 @@
 
 .app {
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -884,24 +884,24 @@ title {
 /* media */
 .media-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-  gap: 40px; /* increased space between grid items */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px; 
   max-width: 1200px;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 75px;
+  margin-bottom: 75px;
 }
 
 .media-container img {
-  width: 100%; /* image width equal to column width */
-  object-fit: cover; /* images cover the area without stretching */
-  aspect-ratio: 1 / 1; /* images remain square */
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
   transition: transform 0.3s ease;
   border: 2px solid #d5d4b7;
-  
 }
 
 .media-container img:hover {
-  transform: scale(1.1); /* Slightly increase the size on hover */
+  transform: scale(1.1);
   
 }
 
