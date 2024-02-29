@@ -1,6 +1,7 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 import uuid
+from datetime import datetime, timedelta
 
 from config import db, bcrypt
 
@@ -148,6 +149,15 @@ class Inventory(db.Model, SerializerMixin):
 
     product = db.relationship('Product', backref='inventory')
     size = db.relationship('Size', backref='inventory')
+
+class IGToken(db.Model, SerializerMixin):
+    __tablename__ = "ig_token"
+
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String, nullable=False)
+    expires_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now() + timedelta(days=60))
+    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp(), nullable=False)
+
 
    
 

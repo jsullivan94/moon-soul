@@ -1,12 +1,14 @@
 from faker import Faker
 from config import db, app
-from models import Admin, Event, Product, Category, Order, OrderItem, CartItem, Cart, Size, Inventory
+from models import Admin, Event, Product, Category, Order, OrderItem, CartItem, Cart, Size, Inventory, IGToken
 from datetime import datetime, timedelta
 from config import bcrypt
 import random
+import os
 
 # Create a Faker instance
 fake = Faker()
+ig_access_token = os.environ.get('IG_ACCESS_TOKEN')
 
 with app.app_context():
     Category.query.delete()
@@ -16,6 +18,10 @@ with app.app_context():
     Size.query.delete()
     Inventory.query.delete()
 
+    db.session.commit()
+
+    access_token = IGToken(token=ig_access_token)
+    db.session.add(access_token)
     db.session.commit()
 
     def add_admin_user():

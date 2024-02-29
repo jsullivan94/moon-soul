@@ -7,7 +7,7 @@ function Media() {
 const [media, setMedia] = useState([])
 
 useEffect(() => {
-    fetch('/me/media?fields=id,media_url,thumbnail_url,permalink,media_type&access_token=IGQWRNWFcxNTE5VEtfbWVWTVV3OWhCUTFkZADVNWHlHdlc4ZA0FOUzRVV2UzNG8wM1IySF9KZAjFES3FPcHpaU3d2NjVMNjY0ZAGI5SElJVUlmOHVBaFBncFE1UUlNRlF3ekUxcVZAON1V2M1V5SDBPNkNjaF9aVmstNnpLYkxrWFBLSVNlQQZDZD')
+    fetch('/me/media?fields=id,media_url,thumbnail_url,permalink,media_type')
       .then(response => response.json())
       .then(responseData => {
         // Check if the responseData object has a 'data' key

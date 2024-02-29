@@ -15,27 +15,43 @@ load_dotenv()
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 instagram_secret = os.environ.get('INSTAGRAM_APP_SECRET')
-ig_access_token = os.environ.get('IG_ACCESS_TOKEN')
 
 
-@app.route('/config/stripe')
-def get_stripe_config():
-    return jsonify({
-        'stripePublishableKey': os.environ.get('STRIPE_PUBLISHABLE_KEY')
-    })
 
-
+@app.route('/refresh_token')
+def refresh_token():
+    token = IGToken.query.first()
+    if not token:
+        return jsonify({'error': 'Token not found'}), 404
+    long_lived_access_token = token.token
+    refresh_url = 'https://graph.instagram.com/refresh_access_token'
+    
+    params = {
+        'grant_type': 'ig_refresh_token',
+        'access_token': long_lived_access_token
+    }
+    
+    response = requests.get(refresh_url, params=params)
+    
+    if response.status_code == 200:
+        new_token_info = response.json()
+        
+        return jsonify(new_token_info)
+    else:
+        return jsonify({'error': 'Failed to refresh token', 'status_code': response.status_code})
 
     
-
 @app.get('/me/media')
 def get_media():
-    # Extract query parameters from the frontend request
+    
     fields = request.args.get('fields')
-    access_token = request.args.get('access_token')
+    token = IGToken.query.first()
+    if not token:
+        return jsonify({'error': 'Token not found'}), 404
+    long_lived_access_token = token.token
 
     # Forward these parameters in a request to the Instagram API
-    instagram_api_url = f"https://graph.instagram.com/me/media?fields={fields}&access_token={access_token}"
+    instagram_api_url = f"https://graph.instagram.com/me/media?fields={fields}&access_token={long_lived_access_token}"
     response = requests.get(instagram_api_url)
 
     # Check if the request was successful
@@ -46,6 +62,12 @@ def get_media():
         # Handle any errors
         return jsonify({'error': 'Failed to fetch data from Instagram'}), response.status_code
 
+
+@app.route('/config/stripe')
+def get_stripe_config():
+    return jsonify({
+        'stripePublishableKey': os.environ.get('STRIPE_PUBLISHABLE_KEY')
+    })
 
 def calculate_order_amount(items):
     total = 0
