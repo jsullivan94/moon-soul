@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 
-
-
-
 function Media() {
 const [media, setMedia] = useState([])
 
@@ -10,9 +7,9 @@ useEffect(() => {
     fetch('/me/media?fields=id,media_url,thumbnail_url,permalink,media_type')
       .then(response => response.json())
       .then(responseData => {
-        // Check if the responseData object has a 'data' key
+       
         if (responseData.data && Array.isArray(responseData.data)) {
-          setMedia(responseData.data); // Set media to the array inside 'data'
+          setMedia(responseData.data);
         }
       })
       .catch(error => console.error("Error fetching media:", error));
