@@ -145,7 +145,7 @@ function handleDecrease() {
             </div>
             <img className="cart-product-image" src={image_path} alt={name} />
             <div className="cart-product-card-content">
-            {size !== '' ? (
+            {category_id !== 2 ? (
                  <div className="cart-product-size">{getSizeNameFromId(size_id)}</div>
                 ) : (
                 <div className="cart-product-size-placeholder"></div>
