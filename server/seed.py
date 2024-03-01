@@ -58,13 +58,10 @@ with app.app_context():
     db.session.commit() 
 
     product1 = Product(name='Vinyl', price=35.00, image_path='/photos/albumcover.png', description='Our latest record printed to vinyl!', category=category2)
-    product2 = Product(name='MS T-Shirt', price=20.00, image_path='https://st3.depositphotos.com/17828278/33150/v/450/depositphotos_331503262-stock-illustration-no-image-vector-symbol-missing.jpg', description='Moon Soul swag', category=category1)
-    product3 = Product(name='MS Longsleve', price=20.00, image_path='https://st3.depositphotos.com/17828278/33150/v/450/depositphotos_331503262-stock-illustration-no-image-vector-symbol-missing.jpg', description='Moon Soul swag', category=category1)
-    product4 = Product(name='MS Hoodie', price=20.00, image_path='https://st3.depositphotos.com/17828278/33150/v/450/depositphotos_331503262-stock-illustration-no-image-vector-symbol-missing.jpg', description='Moon Soul swag', category=category1)
+    product2 = Product(name='MS T-Shirt', price=20.00, image_path='/photos/WIERDO-TEE.jpg', description='Moon Soul swag', category=category1)
+    
     db.session.add(product1)
     db.session.add(product2)
-    db.session.add(product3)
-    db.session.add(product4)
     db.session.commit()
 
 
@@ -83,7 +80,7 @@ with app.app_context():
     db.session.commit()
 
 # Assuming you have your products already created
-    products = [product1, product2, product3, product4]  # Add all your product variables here
+    products = [product1, product2]  # Add all your product variables here
     
     for product in products:            
         if product.category_id == 2:
