@@ -1,10 +1,8 @@
 import { useEffect } from "react";   
 import { Link } from "react-router-dom";
-
 import ProductInCartCard from "../components/ProductInCartCard";
 
 function Cart({ cart, setCart }) {
-    
     
     useEffect(() => {
         fetch("/get_cart_items")

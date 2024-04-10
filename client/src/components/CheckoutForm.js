@@ -89,7 +89,6 @@ useEffect(() => {
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>
       </button>
-      {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
   );

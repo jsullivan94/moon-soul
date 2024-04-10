@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Home from "../pages/Home";
 import Navbar from "./Navbar";
 import Store from "../pages/Store";
-import About from "../pages/About";
 import Checkout from "../pages/Checkout";
 import Cart from "../pages/Cart";
 import ProductDetails from "../pages/ProductDetails";
@@ -55,7 +54,6 @@ function App() {
                   <Routes>  
                       <Route path="/" element={<Home />} />
                       <Route path="/product/:id" element={<ProductDetails cart={cart} products={products} />} />
-                      <Route path="/about" element={<About />} />
                       <Route path="/store" element={<Store products={products} />} />
                       <Route path="/payment-complete" element={<PaymentComplete totalPrice={totalPrice} cart={cart} localAddress={localAddress}/>} />
                       <Route path="/checkout" element={<Checkout setTax={setTax} totalPrice={totalPrice} cart={cart} setLocalAddress={setLocalAddress} localAddress={localAddress} setTotalPrice={setTotalPrice} />} >

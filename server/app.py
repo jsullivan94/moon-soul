@@ -438,8 +438,19 @@ def update_order_status(id):
     else:
         return jsonify({'message': 'No status provided'}), 400
     
-    
 
+@app.get('/order')
+def get_all_orders():
+    orders = Order.query.all()
+    
+    data = [order.to_dict() for order in orders]
+
+    return make_response(
+        jsonify(data),
+        200
+    )
+    
+    
 @app.get('/size_inventory/<int:product_id>')
 def get_size_inventory(product_id):
     try:

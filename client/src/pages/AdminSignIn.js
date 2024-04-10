@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import EventCard from "../components/EventCard";
+import OrderCard from "../components/OrderCard";
 
 function AdminSignIn() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     const [admin, setAdmin] = useState(false)
     const [events, setEvents] = useState([])
+    const [orders, setOrders] = useState([])
+    
 
     useEffect(() => {
         fetch("/check_session").then((r) => {
@@ -27,15 +29,29 @@ function AdminSignIn() {
         });
     }, []);
 
+    useEffect(() => {
+      fetch('/order')
+      .then(response => response.json())
+      .then(data => {
+          setOrders(data);
+      });
+    }, []);
+
     const shows = events.map(show => {
       return(
       <EventCard key={show.id} {...show} admin={admin} setEvents={setEvents} events={events} />
       )
   });
-    
+
+  const allOrders = orders.map(order => {
+    return(
+    <OrderCard key={order.id}  {...order} status={order.status} admin={admin} />
+    )
+});
+ 
+
       function handleSignin(e) {
         e.preventDefault();
-        setIsLoading(true);
         fetch("/signin", {
           method: "POST",
           headers: {
@@ -43,7 +59,6 @@ function AdminSignIn() {
           },
           body: JSON.stringify({ username, password }),
         }).then((r) => {
-          setIsLoading(false);
           if (r.ok) {
             r.json().then(() => setAdmin(true));
           } 
@@ -79,7 +94,7 @@ function AdminSignIn() {
         price: ''
     });
 
-    const handleChange = (e) => {
+    function handleChange(e) {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
@@ -87,8 +102,6 @@ function AdminSignIn() {
     };
 
     
-
-
     return (
         <div>
           {!admin ?  
@@ -163,6 +176,7 @@ function AdminSignIn() {
           <div>
           {admin ? [shows] : null}
           </div>
+          {allOrders}
         </div> 
     )
 } 

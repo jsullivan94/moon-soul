@@ -11,7 +11,7 @@ function ProductCard( { id, name, price, image_path, }) {
             </div>
         </Link>
     )
-    } 
+} 
     
     export default ProductCard;
     
