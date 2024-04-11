@@ -38,14 +38,11 @@ function ProductInCartCard({ cart, setCart, size_id, id, name, price, image_path
                     }
     }, [id, product?.category_id]);
    
-
-
-    const getSizeNameFromId = (size_id) => {
-        const size = sizesData.find(s => s.id === size_id);
-        return size ? size.name : '';
+    const getSizeNameFromId = (sizeId) => {
+        const size = sizesData.find(s => s.id === parseInt(sizeId, 10));
+        return size ? size.name : null; 
     };
 
-   
     const editedItem = {
         quantity: editAmount,
         size_id: editSize,
@@ -94,26 +91,18 @@ function ProductInCartCard({ cart, setCart, size_id, id, name, price, image_path
     });
 }
 
-
 function handleIncrease() {
     if (product.category_id === 1) {
-        // Assuming editSize holds the size ID, find the corresponding size name.
-        const sizeName = getSizeNameFromId(editSize); // Make sure this returns the correct size name matching the keys in the inventory object.
+        const sizeName = getSizeNameFromId(editSize);
         const availableStock = inventory[sizeName]?.quantity;
-    //     console.log("Size name:", sizeName);
-    // console.log("Available stock:", inventory[sizeName]?.quantity);
-    console.log(availableStock)
-    console.log(editSize)
-
+        
         if (availableStock !== undefined && editAmount < availableStock) {
             setEditAmount(prevAmount => prevAmount + 1);
         } else {
-            // This alert will only show if the condition fails (i.e., trying to exceed available stock).
             alert("Sorry, you've reached the maximum available stock for this size.");
         }
     } else if (product.category_id === 2) {
-        // Handle products that don't have sizes, similar logic as before.
-        if (editAmount < inventory) { // Assuming inventory holds a numeric value for these products.
+        if (editAmount < inventory) { 
             setEditAmount(prevAmount => prevAmount + 1);
         } else {
             alert("Sorry, you've reached the maximum available stock for this item.");
@@ -121,18 +110,16 @@ function handleIncrease() {
     }
 }
 
-
 function handleDecrease() {
     setEditAmount(prev => prev > 1 ? prev - 1 : 1);
 }
     function handleChange(e) {
         if (e.target.value !== null) {
         setEditSize(e.target.value)
-        }else {
-            setEditSize('Small')
+        setEditAmount(1)
         }
 }
- 
+
     return (
         <div>
         {!inEdit ? (
@@ -159,7 +146,7 @@ function handleDecrease() {
                 {category_id === 1 ? 
             <select  id="dropdown-edit" onChange={handleChange} value={editSize}> 
                 {sizesData.map(size => (
-                        <option key={size.id} value={size.id}>{size.name}</option>
+                        <option key={size.id} value={size.id} disabled={inventory[getSizeNameFromId(size.id)].quantity === 0}>{size.name}</option>
                     ))}
             </select> : 
             <div className="cart-product-size-placeholder-edit"></div>}
@@ -176,9 +163,5 @@ function handleDecrease() {
         </div>
     );
     }
-
-
-        
-
 
 export default ProductInCartCard;
