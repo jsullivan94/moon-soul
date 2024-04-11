@@ -3,9 +3,7 @@ function Order({ id, order_date, total_price, tax, status, address_id, address }
     status: "shipped"
   };
 
-  function handleSubmit(e) {
-    e.preventDefault();
-   
+  function handleClick() {
     const isConfirmed = window.confirm("Are you sure you want to update the status to shipped?");
     
     if (isConfirmed) {
@@ -26,7 +24,6 @@ function Order({ id, order_date, total_price, tax, status, address_id, address }
             console.error('Fetch error:', error);
         });
     }
-  
 }
 
   const renderAddressDetails = (address) => {
@@ -44,7 +41,7 @@ function Order({ id, order_date, total_price, tax, status, address_id, address }
       <h3>Tax: {tax}</h3>
       <h3>Address ID: {address_id}</h3>
       {address && <div>{renderAddressDetails(address)}</div>}
-      <button onClick={handleSubmit}>Update Status to Shipped?</button>
+      <button onClick={handleClick}>Update Status to Shipped?</button>
     </div>
   );
 }

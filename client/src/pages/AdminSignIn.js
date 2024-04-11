@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import EventCard from "../components/EventCard";
 import OrderCard from "../components/OrderCard";
+import InventoryCard from "../components/InventoryCard";
 
 function AdminSignIn() {
     const [username, setUsername] = useState("");
@@ -8,7 +9,7 @@ function AdminSignIn() {
     const [admin, setAdmin] = useState(false)
     const [events, setEvents] = useState([])
     const [orders, setOrders] = useState([])
-    
+    const [inventory, setInventory] = useState([])
 
     useEffect(() => {
         fetch("/check_session").then((r) => {
@@ -30,6 +31,14 @@ function AdminSignIn() {
     }, []);
 
     useEffect(() => {
+      fetch('/inventory')
+      .then(response => response.json())
+      .then(data => (
+        setInventory(data)
+      ))
+    }, []);
+
+    useEffect(() => {
       fetch('/order')
       .then(response => response.json())
       .then(data => {
@@ -45,10 +54,15 @@ function AdminSignIn() {
 
   const allOrders = orders.map(order => {
     return(
-    <OrderCard key={order.id}  {...order} status={order.status} admin={admin} />
+    <OrderCard key={order.id} {...order} status={order.status} admin={admin} />
     )
 });
- 
+
+  const allInventory = inventory.map(item => {
+    return(
+      <InventoryCard key={item.id} {...item} size={item.size}/>
+    )
+  });
 
       function handleSignin(e) {
         e.preventDefault();
@@ -176,7 +190,10 @@ function AdminSignIn() {
           <div>
           {admin ? [shows] : null}
           </div>
-          {allOrders}
+          <h1 style={{ color: 'white' }}>Orders</h1>
+          {admin ? allOrders : null}
+          <h1 style={{ color: 'white' }}>Inventory</h1>
+          {admin ? allInventory : null}
         </div> 
     )
 } 

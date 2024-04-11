@@ -116,7 +116,7 @@ function handleDecrease() {
     function handleChange(e) {
         if (e.target.value !== null) {
         setEditSize(e.target.value)
-        setEditAmount(1)
+        setEditAmount(() => 1)
         }
 }
 

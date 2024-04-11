@@ -415,7 +415,6 @@ def post_order():
         return response
 
     except Exception as e:
-        # Log the exception for debugging
         print(e)
         return jsonify({'error': 'Order creation failed'}), 
 
@@ -466,6 +465,7 @@ def get_size_inventory(product_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
+
 @app.get('/inventory')
 def get_all_inventory():
     inventories = Inventory.query.all()
@@ -476,6 +476,25 @@ def get_all_inventory():
         jsonify(data),
         200
     )
+
+@app.patch('/inventory/<int:id>')
+def update_inventory_by_id(id):
+    inventory = Inventory.query.filter(Inventory.id == id).first()
+
+    if inventory is None:
+        return jsonify({'message': 'Inventory not found'}), 404
+    
+    data = request.get_json()
+    new_quantity = data.get('new_quantity')
+
+    if new_quantity:
+        inventory.quantity = new_quantity
+        db.session.commit()
+        response = make_response(jsonify(inventory.to_dict()), 200)
+        return response
+    else:
+        return jsonify({'message': 'Inventory not updated'}), 400
+    
     
 @app.get('/sizes')
 def get_all_sizes():

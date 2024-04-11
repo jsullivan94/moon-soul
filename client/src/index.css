@@ -931,6 +931,16 @@
   color: #d5d4b7;
 }
 
+#all-inventory {
+  background-color: #29202c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+  color: #d5d4b7;
+}
+
 @media (min-width: 430) {
   .app {
   height: 100vh;

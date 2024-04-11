@@ -1,13 +1,8 @@
-from faker import Faker
 from config import db, app
-from models import Admin, Event, Product, Category, Order, OrderItem, CartItem, Cart, Size, Inventory, IGToken
-from datetime import datetime, timedelta
-from config import bcrypt
+from models import Admin, Event, Product, Category, Size, Inventory, IGToken
 import random
 import os
 
-# Create a Faker instance
-fake = Faker()
 ig_access_token = os.environ.get('IG_ACCESS_TOKEN')
 
 with app.app_context():
@@ -24,33 +19,6 @@ with app.app_context():
     db.session.add(access_token)
     db.session.commit()
 
-    def add_admin_user():
-    # Create a new admin user instance
-        new_admin = Admin(
-        username='1234'  # Replace with desired username
-    )
-
-    # Set the password using the password_hash setter
-        new_admin.password_hash = '1234'  # Replace with desired password
-
-    # Add the new admin to the database
-        db.session.add(new_admin)
-
-    try:
-        # Commit the changes to the database
-        db.session.commit()
-        print("Admin user added successfully.")
-    except Exception as e:
-        # Handle any errors
-        print(f"Error adding admin user: {e}")
-        db.session.rollback()
-
-# Call the function to add the admin user
-    add_admin_user()
-
-    
-   
-
     category1 = Category(name='Cloths')
     category2 = Category(name='Vinyl')
     db.session.add(category1)
@@ -65,22 +33,16 @@ with app.app_context():
     db.session.commit()
 
 
-
-# ... [your imports and setup code] ...
-
-# Define some sample sizes
     sizes = ['Small', 'Medium', 'Large', 'XL', 'XXL']
     size_objects = []
 
-# Create Size instances without gender
     for size_name in sizes:
         size = Size(name=size_name, description=f"Unisex {size_name} size")
         db.session.add(size)
         size_objects.append(size)
     db.session.commit()
 
-# Assuming you have your products already created
-    products = [product1, product2]  # Add all your product variables here
+    products = [product1, product2] 
     
     for product in products:            
         if product.category_id == 2:
@@ -88,18 +50,14 @@ with app.app_context():
             inventory = Inventory(product_id=product.id, quantity=quantity)
             db.session.add(inventory)
 
-    # Add random inventory for each product-size combination
     for product in products:
         for size in size_objects:
-            if product.category_id == 1:  # Assuming category_id 1 is for clothing
-                # Randomly assign inventory, with some sizes possibly having 0 inventory
+            if product.category_id == 1: 
                 quantity = random.choice([0, 5, 10, 15, 20])
                 inventory = Inventory(product_id=product.id, size_id=size.id, quantity=quantity)
                 db.session.add(inventory)
 
 
-
-# Commit the changes to the database
     try:
         db.session.commit()
         print("Sizes and inventory added successfully.")

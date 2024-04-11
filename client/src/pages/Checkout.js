@@ -50,7 +50,7 @@ function Checkout( { setTax, localAddress, setLocalAddress, cart, setTotalPrice 
     };
 
     fetchClientSecret();
-  }, [cart, isAddressSubmitted, setTotalPrice, setTax, localAddress]);
+  }, [cart, isAddressSubmitted, setTotalPrice, setTax]);
 
   const appearance = {
     theme: 'night',
