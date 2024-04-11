@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { FaRegEdit } from "react-icons/fa";
 
-function ProductInCartCard({ cart, setCart, size, size_id, id, name, price, image_path, quantity, category_id, product }) {
-    const [editSize, setEditSize] = useState(size);
+function ProductInCartCard({ cart, setCart, size_id, id, name, price, image_path, quantity, category_id, product }) {
+    const [editSize, setEditSize] = useState(size_id);
     const [editAmount, setEditAmount] = useState(quantity)
     const [inEdit, setInEdit] = useState(false)
     const [sizesData, setSizesData] = useState([]);
@@ -31,7 +31,6 @@ function ProductInCartCard({ cart, setCart, size, size_id, id, name, price, imag
                         fetch(`/products/${product.id}`)
                             .then(response => response.json())
                             .then(data => {
-                                console.log(data);
                                 const inventory = data.inventory[0].quantity;
                                 setInventory(inventory);  
                             })
@@ -39,18 +38,14 @@ function ProductInCartCard({ cart, setCart, size, size_id, id, name, price, imag
                     }
     }, [id, product?.category_id]);
    
-    
 
-// console.log(size)
-// console.log(cart)
-
-    
 
     const getSizeNameFromId = (size_id) => {
         const size = sizesData.find(s => s.id === size_id);
         return size ? size.name : '';
     };
 
+   
     const editedItem = {
         quantity: editAmount,
         size_id: editSize,
@@ -107,6 +102,8 @@ function handleIncrease() {
         const availableStock = inventory[sizeName]?.quantity;
     //     console.log("Size name:", sizeName);
     // console.log("Available stock:", inventory[sizeName]?.quantity);
+    console.log(availableStock)
+    console.log(editSize)
 
         if (availableStock !== undefined && editAmount < availableStock) {
             setEditAmount(prevAmount => prevAmount + 1);

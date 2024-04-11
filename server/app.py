@@ -244,7 +244,7 @@ def update_cart_item(id):
         new_price=data.get('price')
 
         cart_item.quantity += new_quantity
-        cart_item.price += new_price
+        cart_item.price += new_price * new_quantity
         
         db.session.commit()
 
