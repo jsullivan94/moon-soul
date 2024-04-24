@@ -284,6 +284,19 @@ def update_cart_item_from_cart(id):
     )
     return response
 
+@app.delete('/delete_cart/<string:cart_id>')
+def delete_cart(cart_id):
+
+    cart = Cart.query.filter(Cart.id == cart_id).first()
+
+    if cart is None:
+        return jsonify({'message': 'Cart not found'}), 404
+
+    db.session.delete(cart)
+    db.session.commit()
+
+    return jsonify({'message': 'Cart deleted'}), 200
+
 
 @app.get('/events')
 def get_all_events():

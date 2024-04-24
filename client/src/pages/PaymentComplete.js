@@ -8,6 +8,8 @@ function PaymentComplete() {
     status: "complete"
   }
 
+  const cartCookie = Cookies.get('cart_id')
+
   useEffect(() => {
     if (id) {
       fetch(`/update_order_status/${id}`, {
@@ -23,11 +25,32 @@ function PaymentComplete() {
           }
           return response.json(); 
       })
+      .then(data => {
+        console.log('Order status updated', data);
+      
+
+      fetch(`/delete_cart/${cartCookie}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          console.log(data.message);
+        }
+      })
       .catch(error => {
-          console.error('Fetch error:', error);
+          console.error('Error deleting cart:', error);
       });
+    })
+    .catch(error => {
+      console.log('Error updating cart status', error)
+    })
+   
     } 
-  }, [id]); 
+  }, [id, cartCookie]); 
  
   return (
     <div className='complete-container'>
