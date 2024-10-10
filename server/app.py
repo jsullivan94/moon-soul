@@ -50,16 +50,12 @@ def get_media():
         return jsonify({'error': 'Token not found'}), 404
     long_lived_access_token = token.token
 
-    # Forward these parameters in a request to the Instagram API
     instagram_api_url = f"https://graph.instagram.com/me/media?fields={fields}&access_token={long_lived_access_token}"
     response = requests.get(instagram_api_url)
 
-    # Check if the request was successful
     if response.status_code == 200:
-        # Send the Instagram API response back to the frontend
         return jsonify(response.json())
     else:
-        # Handle any errors
         return jsonify({'error': 'Failed to fetch data from Instagram'}), response.status_code
 
 
@@ -74,10 +70,9 @@ def calculate_order_amount(items):
 
     for item in items:
         
-        total += item['quantity'] * item['price']
+        total += item['price']
 
     total_in_cents = int(total * 100)
-    print(total_in_cents)
     return total_in_cents
 
 @app.post('/create-payment-intent')
@@ -88,7 +83,7 @@ def create_payment():
         # address = data.get('localAddress')
         original_total_in_cents = calculate_order_amount(data['cart'])
         original_total_in_dollars = original_total_in_cents / 100  # Convert cents to dollars
-
+    
         # shipping_address = {
         #     'name': address['full_name'],
         #     'line1': address['line1'],
